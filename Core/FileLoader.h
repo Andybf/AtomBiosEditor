@@ -23,11 +23,15 @@ struct FIRMWARE_FILE {
 };
 
 //Definicção de métodos
+//Métodos Ações
 - (NSString*)InitLoader;
 - (BOOL)CheckFirmwareSize;
 - (BOOL)CheckFirmwareSignature;
 - (BOOL)CheckFirmwareArchitecture;
 
+
+//Métodos Acessores
+- (struct FIRMWARE_FILE)getFirmwareStruct;
 - (FILE *)getFile;
 - (NSString*)getFileName;
 int DisplayAlert(NSString * , NSString * );

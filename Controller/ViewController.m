@@ -9,41 +9,49 @@
 #import "ViewController.h"
 #import "FileLoader.h"
 #import "TableOverviewController.h"
+#import "../Core/Library/TableLoader.h"
 
-extern FileLoader * loader;
+extern FileLoader * file;
 extern TableOverviewController * tbloverview;
 
-@implementation ViewController
+@implementation ViewController {
+    struct ATOM_BASE_TABLE atomTable;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
 }
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
-    
     // Update the view, if already loaded.
 }
 
 
 - (IBAction)btnOpenFileTriggered: (id)sender {
-    loader = [[FileLoader alloc] init];
-    NSString * msg = [loader InitLoader];
-    if (![loader CheckFirmwareSize]) {
+    file = [[FileLoader alloc] init];
+    NSString * msg = [file InitLoader];
+    
+    if (![file CheckFirmwareSize]) {
         exit(1);
-    } else if (![loader CheckFirmwareSignature]) {
+    } else if (![file CheckFirmwareSignature]) {
         exit(2);
-    } else if (![loader CheckFirmwareArchitecture]) {
+    } else if (![file CheckFirmwareArchitecture]) {
         exit(3);
     }
     
-    [self initOverviewInfo: msg];
+    //carregando o conteúdo do firmware na memória
+    
+    TableLoader * tblLoader = [[TableLoader alloc] init];
+    
+    [tblLoader loadMainTable:[file getFirmwareStruct]];
+    
+    [self initOverviewInfo: msg :  [tblLoader getAtomBaseTableStruct]];
     
 }
-- (void) initOverviewInfo: (NSString*)txt {
+- (void) initOverviewInfo: (NSString*)filePath : (struct ATOM_BASE_TABLE)atomTable {
     printf("Info: Method InitOverviewInfo Triggered!\n");
-    if ([loader getFile] != NULL) {
-        [_labelFilePath setStringValue:txt];
+    if ([file getFile] != NULL) {
+        [_labelFilePath setStringValue:filePath];
         [_labelRomMsg setStringValue:@"rom"];
     } else {
         NSLog(@"Error: file is null!");

@@ -28,7 +28,6 @@
 @property (weak) IBOutlet NSTextField *labelChecksum;
 @property (weak) IBOutlet NSTextField *labelUefiSupprot;
 
-- (void) initOverviewInfo: (NSString*)txt;
 
 
 @end

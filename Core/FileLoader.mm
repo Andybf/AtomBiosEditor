@@ -82,6 +82,10 @@
 
 
 //Metodos Acessores
+- (struct FIRMWARE_FILE)getFirmwareStruct {
+    return FW;
+}
+
 - (FILE *)getFile {
     return FW.file;
 }

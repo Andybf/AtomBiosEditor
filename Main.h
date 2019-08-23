@@ -12,7 +12,7 @@
 #import "Core/FileLoader.h"
 #import "Controller/TableOverviewController.h"
 
-FileLoader * loader;
+FileLoader * file;
 TableOverviewController * tbloverview;
 
 

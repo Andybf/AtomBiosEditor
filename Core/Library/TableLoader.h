@@ -11,6 +11,8 @@
 
 #include "ABELibrary.h"
 
+@interface TableLoader : NSObject
+
 //Endereços
 #define OFFSET_ROM_BASE_TABLE     0x04
 #define OFFSET_ROM_CHECKSUM       0x21
@@ -92,8 +94,13 @@ struct ATOM_BASE_TABLE {
 
 //Definição de métodos
 // Main Table
-struct ATOM_BASE_TABLE loadMainTable         (struct FIRMWARE_FILE );
+- (struct ATOM_BASE_TABLE)loadMainTable : (struct FIRMWARE_FILE) FW;
 void                   loadCmmdAndDataTables (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
 void                   loadOffsetsTable      (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
+
+//Métodos Acessores
+- (struct ATOM_BASE_TABLE)getAtomBaseTableStruct;
+
+@end
 
 #endif /* MainTableLoader_h */

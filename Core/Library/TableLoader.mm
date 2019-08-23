@@ -10,6 +10,8 @@
 #include "ABELibrary.h"
 #include "../FileLoader.h"
 
+@implementation TableLoader
+
 const char * tableNames[] = {
     // Command table names
     "ASIC_Init",                   "GetDisplaySurfaceSize",             "ASIC_RegistersInit",
@@ -56,9 +58,11 @@ const char * tableNames[] = {
     "PowerSourceInfo"
 };
 
+struct ATOM_BASE_TABLE atomTable;
+
 //Carrega as informações do firmware na memória. Necessário para fazer as demais operações no programa
-struct ATOM_BASE_TABLE loadMainTable(struct FIRMWARE_FILE FW) {
-    struct ATOM_BASE_TABLE atomTable;
+- (struct ATOM_BASE_TABLE)loadMainTable : (struct FIRMWARE_FILE) FW {
+    
     //propriedade                                          arquivo      endereço inicial            quant bytes        Endianness
     atomTable.size           = HexToDec(GetFileData(FW.file, OFFSET_ROM_BASE_TABLE,           2,              0),4);
     atomTable.checksum       = HexToDec(GetFileData(FW.file, OFFSET_ROM_CHECKSUM,             1,              0),2);
@@ -114,3 +118,9 @@ void loadCmmdAndDataTables (struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE * at
         fseek(  FW.file, posOffTbl+2, SEEK_SET);
     }
 }
+
+- (struct ATOM_BASE_TABLE)getAtomBaseTableStruct {
+    return atomTable;
+}
+
+@end
