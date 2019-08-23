@@ -26,8 +26,9 @@
 @property (weak) IBOutlet NSTextField *labelDevId;
 @property (weak) IBOutlet NSTextField *labelSubId;
 @property (weak) IBOutlet NSTextField *labelVendId;
-@property (weak) IBOutlet NSTextField *labelChecksum;
-@property (weak) IBOutlet NSTextField *labelUefiSupprot;
+@property (weak) IBOutlet NSButton *checkChecksumStatus;
+@property (weak) IBOutlet NSButton *checkUefiSupport;
+
 
 - (void) DisplayAlert : (NSString *) title : (NSString *) info;
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW;

@@ -14,6 +14,20 @@
 extern TableOverviewController * tbloverview;
 extern int HexToDec(char[], int);
 
+const char * CompanyNames[11][2] = {
+    {"1002","AMD/ATI"},
+    {"106B","Apple"},
+    {"1043","Asus"},
+    {"1849","ASRock"},
+    {"1028","Dell"},
+    {"1458","Gigabyte"},
+    {"1787","HIS"},
+    {"1462","MSI"},
+    {"148C","PowerColor"},
+    {"174B","Sapphire"},
+    {"1682","XFX"},
+};
+
 @implementation ViewController {
     struct ATOM_BASE_TABLE atomTable;
 }
@@ -48,6 +62,7 @@ extern int HexToDec(char[], int);
             printf("Info: File loadded: %s\n",FW.pathName);
             
             if (! CheckFirmwareSize(FW.fileInfo) ) {
+                [self DisplayAlert: @"Invalid File Size!" : @"The size of the file selected is invalid, the file must be between 64KB and 256KB."];
                 exit(1);
             }
             if (! CheckFirmwareSignature(FW.file) ) {
@@ -89,30 +104,27 @@ extern int HexToDec(char[], int);
     [_labelBiosVersion setStringValue: [NSString stringWithUTF8String: atomTable.biosVersion]];
     [_labelDevId       setStringValue: [NSString stringWithUTF8String: (char *)atomTable.deviceId]];
     [_labelSubId       setStringValue: [NSString stringWithUTF8String: (char *)atomTable.subsystemId]];
-    [_labelVendId      setStringValue: [NSString stringWithUTF8String: (char *)atomTable.subsystemVendorId]];
     
-}
-/*
-char * InitLoader() {
-    //Criando objeto NSOpenPanel
-    NSOpenPanel* openPanel = [NSOpenPanel openPanel];
-    //Configuração
-    openPanel.allowsMultipleSelection = false;
-    openPanel.canChooseDirectories = false;
-    openPanel.canChooseFiles = true;
+    short vendor = VerifySubsystemCompanyName(atomTable,CompanyNames);
+    char vendorstr[32];
+    sprintf(vendorstr, "%s - %s",CompanyNames[vendor][1],(char *)atomTable.subsystemVendorId);
+    [_labelVendId      setStringValue: [NSString stringWithUTF8String: vendorstr]];
     
-    //Instanciando o painel
-    if ([openPanel runModal] == NSModalResponseOK) {
-        self->FW.pathName = openPanel.URL.path;
-        if (!(self->FW.file = fopen((const char*)[self->FW.pathName UTF8String],"r"))) { //carregando o arquivo para dentro da memoria
-            DisplayAlert(@"File not found!",@"Please check if the file exists in the path.");
-        } else {
-            //Carregando informações sobre o arquivo
-            stat([FW.pathName UTF8String],&FW.fileInfo);
-            printf("Info: File loadded!\n");
-        }
+    if (atomTable.uefiSupport != 0) {
+        [_checkUefiSupport setState: NSControlStateValueOn];
+        [_checkUefiSupport setTitle: @"Supported!"];
+    } else {
+        [_checkUefiSupport setState: NSControlStateValueOff];
+        [_checkUefiSupport setTitle: @"Unsupported!"];
     }
-    return FW.pathName;
+    
+    char chk[16];
+    sprintf(chk, "Valid! - 0x%02X", atomTable.checksum);
+    if ( VerifyChecksum(FW, atomTable) != 0) {
+        [_checkChecksumStatus setState: NSControlStateValueOn];
+        [_checkChecksumStatus setTitle: [NSString stringWithUTF8String: chk ] ];
+    }
+    //[_labelChecksum    setStringValue: [NSString stringWithUTF8String: (char *)atomTable.checksum]];
+    
 }
-*/
 @end

@@ -12,7 +12,6 @@
 #include "FileLoader.h"
 #include "ABELibrary.h"
 
-
 //Endereços
 #define OFFSET_ROM_BASE_TABLE     0x04
 #define OFFSET_ROM_CHECKSUM       0x21
@@ -35,14 +34,12 @@
 typedef unsigned short ushort;
 // an integer value between 0 and 255 (1 byte of size)
 typedef unsigned char byte;
-// an array of characters between -128 and 127 (undetermined size)
-typedef char * string;
 
 // Estruturas de dados do firmware
 struct ATOM_ABSTRACT_TABLE {
     
     char id[3];
-    string name;
+    char * name;
     
     ushort offset;
     ushort size;
@@ -97,6 +94,9 @@ struct ATOM_BASE_TABLE {
 struct ATOM_BASE_TABLE loadMainTable         (struct FIRMWARE_FILE );
 void                   loadCmmdAndDataTables (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
 void                   loadOffsetsTable      (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
+short                  VerifyChecksum        (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE );
+short                  VerifySubsystemCompanyName(struct ATOM_BASE_TABLE , char * CompanyNames[11][2]);
+
 
 
 #endif /* MainTableLoader_h */

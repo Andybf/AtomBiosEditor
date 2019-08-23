@@ -70,6 +70,12 @@ struct ATOM_BASE_TABLE loadMainTable(struct FIRMWARE_FILE FW) {
     strcpy((char*)atomTable.subsystemVendorId, GetFileData(FW.file, atomTable.romInfoOffset+0x18,    2,              0));
     strcpy((char*)atomTable.deviceId,          GetFileData(FW.file, atomTable.romInfoOffset+0x28,    4,              0));
     
+    // Checking UEFI Support
+    if( strcmp(GetFileData(FW.file, QUANTITY_64KB, 0x2, 0), STATIC_ROM_MAGIC_NUMBER) == 0 ) {
+        atomTable.uefiSupport = 1;
+    } else {
+        atomTable.uefiSupport = 0;
+    }
     loadOffsetsTable(     FW, &atomTable);
     loadCmmdAndDataTables(FW, &atomTable);
     return atomTable;
@@ -111,6 +117,30 @@ void loadCmmdAndDataTables (struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE * at
         c++;
         fseek(  FW.file, posOffTbl+2, SEEK_SET);
     }
+}
+
+// Vefirica o checksum do firmware
+short VerifyChecksum(struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE atomTable) {
+    fseek(FW.file, 0x0, SEEK_SET);
+    int chksum = 0;
+    for (int c=0; c<FW.fileInfo.st_size / 2; c++ ) {
+        chksum += fgetc(FW.file);
+    }
+    chksum = atomTable.checksum - chksum & 0xFF;
+    if (chksum == atomTable.checksum){
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+short VerifySubsystemCompanyName(struct ATOM_BASE_TABLE atomTable, char * CompanyNames[11][2]) {
+    for (int a=0; a<11; a++) {
+        if ( strcmp((char*)atomTable.subsystemVendorId, CompanyNames[a][0]) == 0 ) {
+            return a;
+        }
+    }
+    return -1;
 }
 
 

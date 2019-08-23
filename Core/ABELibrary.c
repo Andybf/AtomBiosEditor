@@ -8,20 +8,6 @@
 
 #include "ABELibrary.h"
 
-const char * CompanyNames[11][2] = {
-    {"1002","AMD/ATI"},
-    {"106B","Apple"},
-    {"1043","Asus"},
-    {"1849","ASRock"},
-    {"1028","Dell"},
-    {"1458","Gigabyte"},
-    {"1787","HIS"},
-    {"1462","MSI"},
-    {"148C","PowerColor"},
-    {"174B","Sapphire"},
-    {"1682","XFX"},
-};
-
 // Transforma um vetor de caracteres[4] com hexadecimais em um numero decimal
 int HexToDec(char input[6],int quantHex) {
     int c, d, asciiCode, output = 0;
