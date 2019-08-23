@@ -58,6 +58,29 @@
     };
 }
 
+- (BOOL)CheckFirmwareArchitecture {
+    printf("Info: Architecture:  ");
+    if (strcmp(STATIC_ROM_ARCH_TERASCALE2,GetFileData(FW.file, 0x2, 2, 0)) == 0 ) {
+        printf("TeraScale 2\n       Warning:  Architecture is not supported!\n");
+        return YES;
+    } else if (strcmp(STATIC_ROM_ARCH_CGN1,GetFileData(FW.file, 0x2, 2, 0)) == 0 ) {
+        printf("CGN 1.0 - 2.0\n");
+        return YES;
+    } else if (strcmp(STATIC_ROM_ARCH_CGN3,GetFileData(FW.file, 0x2, 2, 0)) == 0 ) {
+        printf("CGN 3.0\n");
+        return YES;
+    } else if (strcmp(STATIC_ROM_ARCH_CGN4,GetFileData(FW.file, 0x2, 2, 0)) == 0 ) {
+        printf("CGN 4.0\n       Warning:  Architecture is not supported!\n");
+        return YES;
+    } else {
+        printf("\n");
+        DisplayAlert(@"Architecture not supported!",@"This firmware architecture is not support by this program.");
+        return NO;
+    }
+    return NO;
+}
+
+
 //Metodos Acessores
 - (FILE *)getFile {
     return FW.file;

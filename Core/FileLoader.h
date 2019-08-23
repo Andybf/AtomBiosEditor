@@ -26,6 +26,7 @@ struct FIRMWARE_FILE {
 - (NSString*)InitLoader;
 - (BOOL)CheckFirmwareSize;
 - (BOOL)CheckFirmwareSignature;
+- (BOOL)CheckFirmwareArchitecture;
 
 - (FILE *)getFile;
 - (NSString*)getFileName;

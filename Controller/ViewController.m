@@ -29,16 +29,19 @@ extern TableOverviewController * tbloverview;
 - (IBAction)btnOpenFileTriggered: (id)sender {
     loader = [[FileLoader alloc] init];
     NSString * msg = [loader InitLoader];
-    [self initOverviewInfo: msg];
     if (![loader CheckFirmwareSize]) {
         exit(1);
     } else if (![loader CheckFirmwareSignature]) {
         exit(2);
+    } else if (![loader CheckFirmwareArchitecture]) {
+        exit(3);
     }
+    
+    [self initOverviewInfo: msg];
     
 }
 - (void) initOverviewInfo: (NSString*)txt {
-    printf("/nInfo: Method InitOverviewInfo Triggered!");
+    printf("Info: Method InitOverviewInfo Triggered!\n");
     if ([loader getFile] != NULL) {
         [_labelFilePath setStringValue:txt];
         [_labelRomMsg setStringValue:@"rom"];
