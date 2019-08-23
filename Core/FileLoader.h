@@ -9,35 +9,28 @@
 #ifndef Loader_h
 #define Loader_h
 
-#import <Foundation/Foundation.h>
-#import <Cocoa/Cocoa.h>
-#import <sys/stat.h>
+#include <stdio.h>
+#include <sys/stat.h>
 
-@interface FileLoader : NSObject
+#include "ABELibrary.h"
 
 // Estruturas da dados auxiliares
 struct FIRMWARE_FILE {
     FILE * file;
-    NSString *pathName;
+    const char * pathName;
     struct stat fileInfo;
 };
 
 //Definicção de métodos
 //Métodos Ações
-- (NSString*)InitLoader;
-- (BOOL)CheckFirmwareSize;
-- (BOOL)CheckFirmwareSignature;
-- (BOOL)CheckFirmwareArchitecture;
+short CheckFirmwareSize(struct stat);
+short CheckFirmwareSignature(FILE *);
+short CheckFirmwareArchitecture(FILE *);
 
 
 //Métodos Acessores
-- (struct FIRMWARE_FILE)getFirmwareStruct;
-- (FILE *)getFile;
-- (NSString*)getFileName;
-int DisplayAlert(NSString * , NSString * );
-
-
-@end
-
+struct FIRMWARE_FILE getFirmwareStruct(void);
+FILE * getFile(void);
+const char* getFileName(void);
 
 #endif /* Loader_h */

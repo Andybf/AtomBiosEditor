@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "../Core/FileLoader.h"
 
 //          Nome da Classe  Herda de:
 @interface ViewController : NSViewController {
@@ -28,6 +29,8 @@
 @property (weak) IBOutlet NSTextField *labelChecksum;
 @property (weak) IBOutlet NSTextField *labelUefiSupprot;
 
+- (void) DisplayAlert : (NSString *) title : (NSString *) info;
+- (void) initOverviewInfo: (struct FIRMWARE_FILE)FW;
 
 
 @end

@@ -10,8 +10,8 @@
 #import <Cocoa/Cocoa.h>
 #import "Main.h"
 
-FileLoader * l;
 TableOverviewController * tbloverview;
+int HexToDec(char[], int);
 
 int main(int argc, const char * argv[]) {
     return NSApplicationMain(argc, argv);

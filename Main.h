@@ -12,8 +12,7 @@
 #import "Core/FileLoader.h"
 #import "Controller/TableOverviewController.h"
 
-FileLoader * file;
 TableOverviewController * tbloverview;
-
+int HexToDec(char[], int);
 
 #endif /* Main_h */

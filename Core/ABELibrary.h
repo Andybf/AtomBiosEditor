@@ -9,7 +9,6 @@
 #ifndef ABELibrary_h
 #define ABELibrary_h
 
-#import <CoreFoundation/CoreFoundation.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

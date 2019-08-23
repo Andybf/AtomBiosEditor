@@ -15,13 +15,10 @@
 
 @end
 
-extern FileLoader * l;
 
 @implementation AppDelegate
 
 - (IBAction)openMenuItemClicked:(id)sender {
-    l = [[FileLoader alloc] init];
-    [l InitLoader];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
