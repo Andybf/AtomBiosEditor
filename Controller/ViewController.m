@@ -32,7 +32,9 @@ extern TableOverviewController * tbloverview;
     [self initOverviewInfo: msg];
     if (![loader CheckFirmwareSize]) {
         exit(1);
-    } else if (loader ch)
+    } else if (![loader CheckFirmwareSignature]) {
+        exit(2);
+    }
     
 }
 - (void) initOverviewInfo: (NSString*)txt {

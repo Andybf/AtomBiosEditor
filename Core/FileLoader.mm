@@ -7,8 +7,9 @@
 //
 
 #import "FileLoader.h"
-#import "../Controller/WindowController.h"
 #import "Library/ABELibrary.h"
+#import "../Controller/WindowController.h"
+
 
 @implementation FileLoader {
     struct FIRMWARE_FILE FW;
@@ -49,7 +50,7 @@
 
 - (BOOL)CheckFirmwareSignature {
     //Verificando validade do firmware
-    if (strcmp(STATIC_ROM_MAGIC_NUMBER,GetFileData(FW.file, 0x0, 0x2, 0)) != 0) {
+    if (strcmp(STATIC_ROM_MAGIC_NUMBER, GetFileData(FW.file, 0x0, 0x2, 0)) != 0) {
         DisplayAlert(@"Invalid Firmware Signature!",@"The firmware signature indicates that the file file is corrupted or another kind of binary data.");
         return NO;
     } else {

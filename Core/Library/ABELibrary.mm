@@ -8,7 +8,7 @@
 
 #include "ABELibrary.h"
 
-char * CompanyNames[11][2] = {
+const char * CompanyNames[11][2] = {
     {"1002","AMD/ATI"},
     {"106B","Apple"},
     {"1043","Asus"},
@@ -74,5 +74,6 @@ char * GetFileData(FILE * firmware, int posInicial, int quantBytes, short endian
     }
     return formated_output;
 }
+
 
 
