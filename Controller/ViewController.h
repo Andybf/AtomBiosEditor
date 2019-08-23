@@ -11,14 +11,14 @@
 
 //          Nome da Classe  Herda de:
 @interface ViewController : NSViewController {
-    
 }
+
 
 //Elementos da StoryBoard
 @property (weak) IBOutlet NSButton *btnOpenFile;
 
+// Overview Tab
 @property (weak) IBOutlet NSTextField *labelFilePath;
-
 @property (weak) IBOutlet NSTextField *labelRomMsg;
 @property (weak) IBOutlet NSTextField *labelPartNumber;
 @property (weak) IBOutlet NSTextField *labelCompDate;
@@ -28,6 +28,10 @@
 @property (weak) IBOutlet NSTextField *labelVendId;
 @property (weak) IBOutlet NSButton *checkChecksumStatus;
 @property (weak) IBOutlet NSButton *checkUefiSupport;
+
+
+
+// Tables Tab
 
 
 - (void) DisplayAlert : (NSString *) title : (NSString *) info;

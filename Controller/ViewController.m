@@ -7,11 +7,10 @@
 //
 
 #import "ViewController.h"
-#import "TableOverviewController.h"
 #import "../Core/TableLoader.h"
 #import "../Core/FileLoader.h"
+#import "AtomTablesController.h"
 
-extern TableOverviewController * tbloverview;
 extern int HexToDec(char[], int);
 
 const char * CompanyNames[11][2] = {
@@ -75,7 +74,9 @@ const char * CompanyNames[11][2] = {
             }
         }
         [self initOverviewInfo : FW];
+        
     }
+    
 }
 
 - (void) DisplayAlert : (NSString *) title : (NSString *) info  {
@@ -90,12 +91,9 @@ const char * CompanyNames[11][2] = {
 }
 
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW {
-    printf("Info: Method InitOverviewInfo Triggered!\n");
-    
     //carregando o conteúdo do firmware na memória
     struct ATOM_BASE_TABLE atomTable;
     atomTable = loadMainTable(FW);
-     
     [_labelFilePath setStringValue: [NSString stringWithUTF8String: FW.pathName]];
     
     [_labelRomMsg      setStringValue: [NSString stringWithUTF8String: atomTable.romMessage]];
@@ -117,14 +115,12 @@ const char * CompanyNames[11][2] = {
         [_checkUefiSupport setState: NSControlStateValueOff];
         [_checkUefiSupport setTitle: @"Unsupported!"];
     }
-    
     char chk[16];
     sprintf(chk, "Valid! - 0x%02X", atomTable.checksum);
     if ( VerifyChecksum(FW, atomTable) != 0) {
         [_checkChecksumStatus setState: NSControlStateValueOn];
         [_checkChecksumStatus setTitle: [NSString stringWithUTF8String: chk ] ];
     }
-    //[_labelChecksum    setStringValue: [NSString stringWithUTF8String: (char *)atomTable.checksum]];
-    
 }
+
 @end

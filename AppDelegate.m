@@ -7,8 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "Core/FileLoader.h"
-#import "WindowController.h"
 
 
 @interface AppDelegate ()

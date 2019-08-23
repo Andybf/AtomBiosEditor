@@ -10,9 +10,7 @@
 #define Main_h
 
 #import "Core/FileLoader.h"
-#import "Controller/TableOverviewController.h"
 
-TableOverviewController * tbloverview;
 int HexToDec(char[], int);
 
 #endif /* Main_h */

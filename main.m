@@ -10,7 +10,6 @@
 #import <Cocoa/Cocoa.h>
 #import "Main.h"
 
-TableOverviewController * tbloverview;
 int HexToDec(char[], int);
 
 int main(int argc, const char * argv[]) {
