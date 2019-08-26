@@ -9,20 +9,26 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-#import "AtomTablesController.h"
+#import "ViewController.h"
+#import "AtomTables.h"
 #import "../Core/ABELibrary.h"
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface AtomTablesController : NSObject <NSTableViewDataSource>
+
+@interface AtomTables : NSTableView <NSTableViewDataSource>
+
+@property (weak) IBOutlet NSView *tableTabView;
 
 @property (nonatomic, strong) NSMutableArray * tableIndex;
 @property (nonatomic, strong) NSMutableArray * tableName;
-@property (nonatomic, strong) NSArray * offset;
-@property (nonatomic, strong) NSArray * size;
-@property (nonatomic, strong) NSArray * formatRev;
-@property (nonatomic, strong) NSArray * contentRev;
+@property (nonatomic, strong) NSMutableArray * offset;
+@property (nonatomic, strong) NSMutableArray * size;
+@property (nonatomic, strong) NSMutableArray * formatRev;
+@property (nonatomic, strong) NSMutableArray * contentRev;
+
+- (id)initWithFrame: (NSRect)frameRect;
 
 @end
 

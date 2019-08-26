@@ -32,17 +32,22 @@ short CheckFirmwareSignature(FILE * file) {
 
 short CheckFirmwareArchitecture(FILE * file) {
     printf("Info: Architecture:  ");
+    FW.architecture = malloc(sizeof(char*) * 8);
     if (strcmp(STATIC_ROM_ARCH_TERASCALE2,GetFileData(file, 0x2, 2, 0)) == 0 ) {
+        strcpy(FW.architecture, "TERASCALE 2");
         printf("TeraScale 2\n       Warning:  Architecture is not supported!\n");
         return 1;
     } else if (strcmp(STATIC_ROM_ARCH_CGN1,GetFileData(file, 0x2, 2, 0)) == 0 ) {
         printf("CGN 1.0 - 2.0\n");
+        strcpy(FW.architecture, "CGN 1.0/2.0");
         return 1;
     } else if (strcmp(STATIC_ROM_ARCH_CGN3,GetFileData(file, 0x2, 2, 0)) == 0 ) {
         printf("CGN 3.0\n");
+        strcpy(FW.architecture, "CGN 3.0");
         return 1;
     } else if (strcmp(STATIC_ROM_ARCH_CGN4,GetFileData(file, 0x2, 2, 0)) == 0 ) {
         printf("CGN 4.0\n       Warning:  Architecture is not supported!\n");
+        strcpy(FW.architecture, "CGN 4.0");
         return 1;
     } else {
         printf("\n");

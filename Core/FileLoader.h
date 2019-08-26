@@ -19,6 +19,7 @@ struct FIRMWARE_FILE {
     FILE * file;
     const char * pathName;
     struct stat fileInfo;
+    char * architecture;
 };
 
 //Definicção de métodos
