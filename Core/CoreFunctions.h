@@ -13,12 +13,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
-//Códigos ASCII
-#define ASCII_DEC_CODE_0        48
-#define ASCII_DEC_CODE_9        57
-#define ASCII_DEC_CODE_A        65
-
 //quantidades
 #define QUANTITY_COMMAND_TABLES 81
 #define QUANTITY_DATA_TABLES    34
@@ -26,6 +20,11 @@
 #define QUANTITY_64KB           65536
 #define QUANTITY_128KB          131072
 #define QUANTITY_256KB          263168
+
+//Códigos ASCII
+#define ASCII_DEC_CODE_0        48
+#define ASCII_DEC_CODE_9        57
+#define ASCII_DEC_CODE_A        65
 
 //Informações Estáticas
 #define STATIC_ROM_MAGIC_NUMBER    "AA55"
@@ -38,7 +37,7 @@
 #define STATIC_ROM_TYPE            "41544F4D"            //ATOM
 
 //Formatações
-#define FORMAT_HEX              "%02X"
+#define FORMAT_HEX                 "%02X"
 
 // Core Functions
 char   *                  GetFileData       (FILE * , int , int , short );

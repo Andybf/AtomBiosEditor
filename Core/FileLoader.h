@@ -12,7 +12,8 @@
 #include <stdio.h>
 #include <sys/stat.h>
 
-#include "ABELibrary.h"
+#include "CoreFunctions.h"
+
 
 // Estruturas da dados auxiliares
 struct FIRMWARE_FILE {

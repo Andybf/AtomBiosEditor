@@ -758,15 +758,6 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                 </button>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SY4-LV-CV8">
-                                                    <rect key="frame" x="148" y="382" width="285" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" alignment="left" drawsBackground="YES" id="i4s-iP-F6u">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVG-Zd-6s3">
                                                     <rect key="frame" x="25" y="382" width="110" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
@@ -948,7 +939,7 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QYI-oR-fBg">
-                                                    <rect key="frame" x="23" y="142" width="110" height="17"/>
+                                                    <rect key="frame" x="25" y="136" width="110" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="UEFI Support" id="4t0-s9-GzM">
                                                         <font key="font" metaFont="system"/>
@@ -978,11 +969,20 @@
                                                         <action selector="CheckCheksum:" target="XfG-lQ-9wD" id="rvo-Cg-RfN"/>
                                                     </connections>
                                                 </button>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SY4-LV-CV8">
+                                                    <rect key="frame" x="146" y="382" width="285" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" alignment="left" drawsBackground="YES" id="i4s-iP-F6u">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                             </subviews>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Tables" identifier="" id="phM-OU-tGe">
-                                        <view key="view" ambiguous="YES" id="IqS-K4-DvN">
+                                        <view key="view" id="IqS-K4-DvN">
                                             <rect key="frame" x="10" y="33" width="454" height="422"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1005,6 +1005,9 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="RadioHexChanged:" target="XfG-lQ-9wD" id="EqK-Ro-lDM"/>
+                                                    </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4l3-NM-iAV">
                                                     <rect key="frame" x="203" y="9" width="71" height="18"/>
@@ -1013,6 +1016,9 @@
                                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="RadioDecChanged:" target="XfG-lQ-9wD" id="Xog-UN-uw4"/>
+                                                    </connections>
                                                 </button>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcM-of-2MH">
                                                     <rect key="frame" x="15" y="400" width="76" height="17"/>
@@ -1047,12 +1053,15 @@
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
+                                                    <connections>
+                                                        <action selector="DumpButtonTriggered:" target="XfG-lQ-9wD" id="f6M-xy-GGQ"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="PowerPlay" identifier="" id="mH2-aJ-Asm">
-                                        <view key="view" id="Md7-VX-vy2">
+                                        <view key="view" ambiguous="YES" id="Md7-VX-vy2">
                                             <rect key="frame" x="10" y="33" width="454" height="422"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1992,6 +2001,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="btnDumpTable" destination="CdI-TC-fMe" id="c0a-dF-oWM"/>
                         <outlet property="btnOpenFile" destination="6y6-Ka-XfE" id="l28-Pz-5ku"/>
                         <outlet property="checkChecksumStatus" destination="2cm-vH-9rq" id="E5d-kP-4Xo"/>
                         <outlet property="checkUefiSupport" destination="nZL-SG-eMJ" id="6LB-el-vko"/>
@@ -2006,6 +2016,8 @@
                         <outlet property="labelRomMsg" destination="4dr-qE-f6H" id="2JJ-Ct-AXn"/>
                         <outlet property="labelSubId" destination="Vx8-1X-0Dp" id="NmC-cF-7T5"/>
                         <outlet property="labelVendId" destination="t1B-0T-YM2" id="1YL-SY-YG0"/>
+                        <outlet property="radioDecimal" destination="4l3-NM-iAV" id="ae3-4D-2JT"/>
+                        <outlet property="radioHexadecimal" destination="djm-3P-fDn" id="lzL-ti-mgb"/>
                         <outlet property="tableSelector" destination="JD2-dY-WoT" id="9PC-i4-N5S"/>
                         <outlet property="tableTabView" destination="IqS-K4-DvN" id="Dhe-66-I0f"/>
                     </connections>

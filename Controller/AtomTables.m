@@ -32,7 +32,7 @@ NSString * columnIdentifiers[1];
         }
         // create columns for our table
         NSTableColumn * columns[6];
-        CGFloat widths[] = {35,132.5,50.0,50.0,62.5,62.5};
+        CGFloat widths[] = {35,155.0,50.0,50.0,50.0,50.0};
         NSString * titles[] = {@"Index",@"Table Name",@"Offset",@"Size",@"Fmt Rev.",@"Cnt Rev."};
         for (int a=0; a<6; a++) {
             columns[a] = [[NSTableColumn alloc] initWithIdentifier: columnIdentifiers[a]];
@@ -44,7 +44,6 @@ NSString * columnIdentifiers[1];
         [self setDataSource: self];
         [self setAllowsColumnResizing: NO];
         [self setAllowsColumnReordering: NO];
-         self.cell.allowsEditingTextAttributes = NO;
         [self reloadData];
     }
     printf("Log: Table was initialized.\n");
@@ -59,6 +58,9 @@ NSString * columnIdentifiers[1];
 }
 
 - (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row:(NSInteger)row {
+    //Column configurations
+    [tableColumn setEditable:NO];
+    [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
     
     if        ([[tableColumn identifier] isEqualToString: columnIdentifiers[0]]) {
         return [self.tableIndex objectAtIndex:row];
@@ -77,7 +79,5 @@ NSString * columnIdentifiers[1];
         exit(4);
     }
 }
-
-
 
 @end

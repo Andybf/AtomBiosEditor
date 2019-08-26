@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "../Core/FileLoader.h"
+#import "../Core/CoreFunctions.h"
 
 //          Nome da Classe  Herda de:
 @interface ViewController : NSViewController {
@@ -37,7 +38,9 @@
 
 //Tables Tab
 @property (weak) IBOutlet NSPopUpButton *tableSelector;
-
+@property (weak) IBOutlet NSButton *radioHexadecimal;
+@property (weak) IBOutlet NSButton *radioDecimal;
+@property (weak) IBOutlet NSButton *btnDumpTable;
 
 - (void) DisplayAlert : (NSString *) title : (NSString *) info;
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW;

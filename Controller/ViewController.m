@@ -8,7 +8,6 @@
 
 #import "ViewController.h"
 #import "../Core/TableLoader.h"
-#import "../Core/FileLoader.h"
 #import "AtomTables.h"
 
 
@@ -31,11 +30,12 @@ const char * CompanyNames[11][2] = {
 @implementation ViewController {
     struct ATOM_BASE_TABLE atomTable;
     AtomTables * tableView;
+    struct FIRMWARE_FILE FW;
+    NSArray * fileTypes;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     tableView = [[AtomTables alloc] initWithFrame: NSMakeRect(0, 0, 420, 356)];
     NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(17, 34, 420, 356)];
     // embed the table view in the scroll view, and add the scroll view
@@ -45,7 +45,7 @@ const char * CompanyNames[11][2] = {
     [self.tableTabView addSubview:tableContainer];
     
     // Table Tab selector configuration
-    NSArray * tables = [NSArray arrayWithObjects:@"select..",@"Address Table",@"Data Tables",@"Command Tables", nil];
+    NSArray * tables = [NSArray arrayWithObjects:@"select..",@"Data Tables",@"Command Tables", nil];
     for (int a=0; a<tables.count; a++) {
         [[self tableSelector] addItemWithTitle: tables[a]];
     }
@@ -57,7 +57,6 @@ const char * CompanyNames[11][2] = {
     // Update the view, if already loaded.
 }
 
-
 - (IBAction)btnOpenFileTriggered: (id)sender {
     //Criando objeto NSOpenPanel
     NSOpenPanel* openPanel = [NSOpenPanel openPanel];
@@ -68,7 +67,6 @@ const char * CompanyNames[11][2] = {
     
     //Instanciando o painel
     if ([openPanel runModal] == NSModalResponseOK) {
-        struct FIRMWARE_FILE FW;
         FW.pathName = [openPanel.URL.path UTF8String];
         //carregando o arquivo para dentro da memoria
         if (! (FW.file = fopen(FW.pathName ,"r")) ) {
@@ -88,28 +86,51 @@ const char * CompanyNames[11][2] = {
                 exit(3);
             }
         }
-        [self initOverviewInfo : FW];
-        [[self tableSelector] setEnabled:YES];
+        [ self initOverviewInfo: FW];
+        [[self tableSelector]    setEnabled: YES];
+        [[self radioHexadecimal] setEnabled: YES];
+        [[self radioDecimal]     setEnabled: YES];
+        [[self radioHexadecimal] setState: NSControlStateValueOn];
+        [[self btnDumpTable] setEnabled:YES];
     }
-    
 }
 
 - (IBAction)tableSelectorChanged:(id)sender {
     if ( [self.tableSelector.selectedItem.title isEqual: @"select.."] ) {
         self.tableSelector.title = @"Select..";
-    } else if ( [self.tableSelector.selectedItem.title isEqual: @"Address Table"] ) {
-        self.tableSelector.title = @"Address Table";
-        [self initTableTabInfo:1];
     } else if ( [self.tableSelector.selectedItem.title isEqual: @"Data Tables"] ) {
         self.tableSelector.title = @"Data Tables";
-        [self initTableTabInfo:2];
+        [self initTableTabInfo:1];
     } else if ( [self.tableSelector.selectedItem.title isEqual: @"Command Tables"] ) {
         self.tableSelector.title = @"Command Tables";
-        [self initTableTabInfo:3];
+        [self initTableTabInfo:2];
     } else {
         NSLog(@"Error: Invalid selected item.");
         exit(5);
     }
+}
+- (IBAction)DumpButtonTriggered:(id)sender {
+    printf("Info: Clicked Row: %ld\n",(long)self->tableView.selectedRow);
+    NSSavePanel * saveFile = [NSSavePanel savePanel];
+    long selectedRow;
+    
+    if (self->tableView.selectedRow > -1) {
+        if ([self->_tableSelector.title isEqualToString: @"Command Tables"]) {
+            selectedRow = tableView.selectedRow;
+        } else {
+            selectedRow = tableView.selectedRow+QUANTITY_COMMAND_TABLES;
+        }
+        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s.bin",atomTable.atomTables[selectedRow].name]];
+        [saveFile beginSheetModalForWindow: self.view.window completionHandler:^(NSInteger returnCode) {
+            if (returnCode == 1) { // if the save button was triggered
+                printf("path %s\n",[saveFile.URL.path UTF8String]);
+                    ExtractTable(self->FW.file, self->atomTable.atomTables[selectedRow], [saveFile.URL.path UTF8String]);
+            }
+        }];
+    } else {
+        [self DisplayAlert: @"No table was selected" :@"Please seleted the table that you want to extract"];
+    }
+    
 }
 
 - (void) DisplayAlert : (NSString *) title : (NSString *) info  {
@@ -176,14 +197,23 @@ const char * CompanyNames[11][2] = {
         [[self checkChecksumStatus] setState: NSControlStateValueOff];
     }
 }
+- (IBAction)RadioHexChanged:(id)sender {
+    if (_radioHexadecimal.state == 1 ) {
+        [_radioDecimal setState:NSControlStateValueOff];
+        [self initTableTabInfo: self.tableSelector.indexOfSelectedItem];
+    }
+}
+- (IBAction)RadioDecChanged:(id)sender {
+    if (_radioDecimal.state == 1 ) {
+        [_radioHexadecimal setState:NSControlStateValueOff];
+        [self initTableTabInfo: self.tableSelector.indexOfSelectedItem];
+    }
+}
 
 -(void) initTableTabInfo: (short)type {
-    
+    printf("Info: Index of selecteditem: %ld\n",self.tableSelector.indexOfSelectedItem);
     switch (type) {
-        case 1: //Address Table
-            printf("Info: Address Table selected");
-            break;
-        case 2: // Data Tables
+        case 1: // Data Tables
             tableView.tableIndex  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
             tableView.tableName   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
             tableView.offset      = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
@@ -191,15 +221,21 @@ const char * CompanyNames[11][2] = {
             tableView.formatRev   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
             tableView.contentRev  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
             for (int a=QUANTITY_COMMAND_TABLES; a<QUANTITY_TOTAL_TABLES; a++) {
-                [[tableView tableIndex] addObject: [NSString stringWithUTF8String:    atomTable.atomTables[a].id        ]];
                 [[tableView tableName]  addObject: [NSString stringWithUTF8String:    atomTable.atomTables[a].name      ]];
-                [[tableView offset]     addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].offset    ]];
-                [[tableView size]       addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].size      ]];
+                if (_radioHexadecimal.state == 1) { // Hex on
+                    [[tableView tableIndex] addObject: [NSString stringWithUTF8String: atomTable.atomTables[a].id       ]];
+                    [[tableView offset] addObject: [NSString stringWithFormat: @"%02X", atomTable.atomTables[a].offset  ]];
+                    [[tableView size]   addObject: [NSString stringWithFormat: @"%02X", atomTable.atomTables[a].size    ]];
+                } else { // Hex off
+                    [[tableView tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable.atomTables[a].id, 2) ]];
+                    [[tableView offset] addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].offset    ]];
+                    [[tableView size]   addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].size      ]];
+                }
                 [[tableView formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable.atomTables[a].formatRev ]];
                 [[tableView contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable.atomTables[a].contentRev]];
             }
             break;
-        case 3: // Command Tables
+        case 2: // Command Tables
             tableView.tableIndex  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
             tableView.tableName   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
             tableView.offset      = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
@@ -207,10 +243,16 @@ const char * CompanyNames[11][2] = {
             tableView.formatRev   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
             tableView.contentRev  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
             for (int a=0; a<QUANTITY_COMMAND_TABLES; a++) {
-                [[tableView tableIndex] addObject: [NSString stringWithUTF8String:    atomTable.atomTables[a].id        ]];
                 [[tableView tableName]  addObject: [NSString stringWithUTF8String:    atomTable.atomTables[a].name      ]];
-                [[tableView offset]     addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].offset    ]];
-                [[tableView size]       addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].size      ]];
+                if (_radioHexadecimal.state == 1) { // Hex on
+                    [[tableView tableIndex] addObject: [NSString stringWithUTF8String: atomTable.atomTables[a].id       ]];
+                    [[tableView offset] addObject: [NSString stringWithFormat: @"%02X", atomTable.atomTables[a].offset  ]];
+                    [[tableView size]   addObject: [NSString stringWithFormat: @"%02X", atomTable.atomTables[a].size    ]];
+                } else { // Hex off
+                    [[tableView tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable.atomTables[a].id, 2) ]];
+                    [[tableView offset] addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].offset    ]];
+                    [[tableView size]   addObject: [NSString stringWithFormat: @"%i", atomTable.atomTables[a].size      ]];
+                }
                 [[tableView formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable.atomTables[a].formatRev ]];
                 [[tableView contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable.atomTables[a].contentRev]];
             }
@@ -220,7 +262,6 @@ const char * CompanyNames[11][2] = {
             exit(7);
             break;
     }
-    
     [tableView reloadData];
 }
 

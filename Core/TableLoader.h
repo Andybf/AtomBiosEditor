@@ -9,8 +9,8 @@
 #ifndef MainTableLoader_h
 #define MainTableLoader_h
 
+#include "CoreFunctions.h"
 #include "FileLoader.h"
-#include "ABELibrary.h"
 
 //Endereços
 #define OFFSET_ROM_BASE_TABLE     0x04
@@ -96,6 +96,7 @@ void                   loadCmmdAndDataTables (struct FIRMWARE_FILE , struct ATOM
 void                   loadOffsetsTable      (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
 short                  VerifyChecksum        (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE );
 short                  VerifySubsystemCompanyName(struct ATOM_BASE_TABLE , char * CompanyNames[11][2]);
+void                   ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath);
 
 
 

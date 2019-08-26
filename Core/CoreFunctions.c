@@ -6,7 +6,7 @@
 //  Copyright © 2019 Anderson Bucchianico. All rights reserved.
 //
 
-#include "ABELibrary.h"
+#include "CoreFunctions.h"
 
 // Transforma um vetor de caracteres[4] com hexadecimais em um numero decimal
 int HexToDec(char input[6],int quantHex) {
@@ -60,6 +60,5 @@ char * GetFileData(FILE * firmware, int posInicial, int quantBytes, short endian
     }
     return formated_output;
 }
-
 
 

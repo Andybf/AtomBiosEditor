@@ -143,4 +143,15 @@ short VerifySubsystemCompanyName(struct ATOM_BASE_TABLE atomTable, char * Compan
     return -1;
 }
 
+// Extrai a table selecionada pelo usuário e coloca em um arquivo binário.
+void ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath) {
+    //Posicionando o ponteiro do arquivo no inicio da table
+    fseek(firmware, abstractTable.offset, SEEK_SET);
+    //Criando arquivo binario contendo a tabela
+    FILE * output = fopen(extractedTableFilePath, "wb");
+    fwrite( GetFileData(firmware,abstractTable.offset, abstractTable.size, 1), sizeof(char), abstractTable.size, output );
+    fclose(output);
+    printf(" Success!");
+}
+
 
