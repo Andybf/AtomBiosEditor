@@ -738,7 +738,7 @@
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Overview" identifier="" id="1hM-GD-TWu">
-                                        <view key="view" id="hN5-ed-ejb">
+                                        <view key="view" ambiguous="YES" id="hN5-ed-ejb">
                                             <rect key="frame" x="10" y="33" width="454" height="422"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -780,15 +780,6 @@
                                                     <rect key="frame" x="146" y="72" width="285" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" alignment="left" drawsBackground="YES" id="uYM-Aa-ZHk">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4dr-qE-f6H">
-                                                    <rect key="frame" x="146" y="341" width="285" height="17"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" alignment="left" drawsBackground="YES" id="OW9-iz-Fjf">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -955,7 +946,7 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="CheckUefiChangedState:" target="XfG-lQ-9wD" id="PoW-fa-kyP"/>
+                                                        <action selector="CheckUefiChangedState:" target="aK5-on-tA8" id="Lof-V6-CWJ"/>
                                                     </connections>
                                                 </button>
                                                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cm-vH-9rq">
@@ -966,13 +957,22 @@
                                                         <font key="font" metaFont="system"/>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="CheckCheksum:" target="XfG-lQ-9wD" id="rvo-Cg-RfN"/>
+                                                        <action selector="CheckCheksum:" target="aK5-on-tA8" id="ytp-T9-ULA"/>
                                                     </connections>
                                                 </button>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SY4-LV-CV8">
                                                     <rect key="frame" x="146" y="382" width="285" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" alignment="left" drawsBackground="YES" id="i4s-iP-F6u">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6z4-YB-9Qy">
+                                                    <rect key="frame" x="146" y="341" width="285" height="17"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="Tyk-uW-kXO">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1061,7 +1061,7 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="PowerPlay" identifier="" id="mH2-aJ-Asm">
-                                        <view key="view" ambiguous="YES" id="Md7-VX-vy2">
+                                        <view key="view" id="Md7-VX-vy2">
                                             <rect key="frame" x="10" y="33" width="454" height="422"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -1070,7 +1070,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="GSq-kr-0SY">
                                                         <rect key="frame" x="1" y="0.0" width="400" height="89"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="Ddy-Tx-rVu" viewBased="YES" id="npO-v5-RZM">
                                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="64"/>
@@ -1233,7 +1233,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="UJ1-vS-nuH">
                                                         <rect key="frame" x="1" y="0.0" width="400" height="89"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" headerView="6vy-qE-mHR" viewBased="YES" id="R1T-gY-PiK">
                                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="64"/>
@@ -1423,7 +1423,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <clipView key="contentView" ambiguous="YES" id="XNe-ZJ-dbk">
                                                         <rect key="frame" x="1" y="0.0" width="400" height="89"/>
-                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
                                                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" headerView="aXQ-0E-Qu6" viewBased="YES" id="Jsy-CR-5Ha">
                                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="64"/>
@@ -2003,19 +2003,19 @@
                     <connections>
                         <outlet property="btnDumpTable" destination="CdI-TC-fMe" id="c0a-dF-oWM"/>
                         <outlet property="btnOpenFile" destination="6y6-Ka-XfE" id="l28-Pz-5ku"/>
-                        <outlet property="checkChecksumStatus" destination="2cm-vH-9rq" id="E5d-kP-4Xo"/>
-                        <outlet property="checkUefiSupport" destination="nZL-SG-eMJ" id="6LB-el-vko"/>
-                        <outlet property="labelArch" destination="SY4-LV-CV8" id="R1H-u6-JzL"/>
-                        <outlet property="labelBiosVersion" destination="YNO-3u-SfL" id="xFh-mG-9xJ"/>
-                        <outlet property="labelCompDate" destination="D2N-ZY-9YD" id="bOY-VM-GAp"/>
-                        <outlet property="labelDevId" destination="uOg-Iy-0wW" id="rVw-K5-N7G"/>
+                        <outlet property="checkChecksumStatus" destination="2cm-vH-9rq" id="hve-Zh-aK8"/>
+                        <outlet property="checkUefiSupport" destination="nZL-SG-eMJ" id="ErS-b4-wMB"/>
+                        <outlet property="labelArch" destination="SY4-LV-CV8" id="1DZ-dq-KMh"/>
+                        <outlet property="labelBiosVersion" destination="YNO-3u-SfL" id="Cxd-XR-wm6"/>
+                        <outlet property="labelCompDate" destination="D2N-ZY-9YD" id="0Ol-qt-UTE"/>
+                        <outlet property="labelDevId" destination="uOg-Iy-0wW" id="3NW-bS-NPS"/>
                         <outlet property="labelFilePath" destination="J20-Be-ar0" id="CJr-ub-F2Y"/>
-                        <outlet property="labelMainTableOffset" destination="vd6-f4-y37" id="g3L-1d-S9y"/>
-                        <outlet property="labelMainTableSize" destination="nd8-sa-Rrq" id="IIw-z4-HeT"/>
-                        <outlet property="labelPartNumber" destination="Z6F-hP-Oxc" id="29u-ii-HxR"/>
-                        <outlet property="labelRomMsg" destination="4dr-qE-f6H" id="2JJ-Ct-AXn"/>
-                        <outlet property="labelSubId" destination="Vx8-1X-0Dp" id="NmC-cF-7T5"/>
-                        <outlet property="labelVendId" destination="t1B-0T-YM2" id="1YL-SY-YG0"/>
+                        <outlet property="labelMainTableOffset" destination="vd6-f4-y37" id="YgF-j8-vPm"/>
+                        <outlet property="labelMainTableSize" destination="nd8-sa-Rrq" id="Te6-29-6D3"/>
+                        <outlet property="labelPartNumber" destination="Z6F-hP-Oxc" id="xjA-fF-hCk"/>
+                        <outlet property="labelRomMsg" destination="6z4-YB-9Qy" id="89G-VV-kAf"/>
+                        <outlet property="labelSubId" destination="Vx8-1X-0Dp" id="cQD-PL-WvL"/>
+                        <outlet property="labelVendId" destination="t1B-0T-YM2" id="bJe-Mp-COZ"/>
                         <outlet property="radioDecimal" destination="4l3-NM-iAV" id="ae3-4D-2JT"/>
                         <outlet property="radioHexadecimal" destination="djm-3P-fDn" id="lzL-ti-mgb"/>
                         <outlet property="tableSelector" destination="JD2-dY-WoT" id="9PC-i4-N5S"/>
@@ -2028,8 +2028,9 @@
                         <outlet property="tableTabView" destination="IqS-K4-DvN" id="ODq-Z9-FF1"/>
                     </connections>
                 </customObject>
+                <customObject id="aK5-on-tA8" customClass="OverviewInfo"/>
             </objects>
-            <point key="canvasLocation" x="76" y="816"/>
+            <point key="canvasLocation" x="78" y="706"/>
         </scene>
     </scenes>
 </document>

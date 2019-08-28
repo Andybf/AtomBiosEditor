@@ -10,12 +10,10 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ViewController.h"
-#import "AtomTables.h"
 #import "../Core/CoreFunctions.h"
-
+#import "../Core/TableLoader.h"
 
 NS_ASSUME_NONNULL_BEGIN
-
 
 @interface AtomTables : NSTableView <NSTableViewDataSource>
 
@@ -29,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSMutableArray * contentRev;
 
 - (id)initWithFrame: (NSRect)frameRect;
+- (void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSButton*)radioHexadecimal;
 
 @end
 

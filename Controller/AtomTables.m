@@ -8,6 +8,8 @@
 
 #import "AtomTables.h"
 
+NSArray * labelTexts;
+
 @implementation AtomTables {
     
 }
@@ -48,6 +50,60 @@ NSString * columnIdentifiers[1];
     }
     printf("Log: Table was initialized.\n");
     return self;
+}
+
+-(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSButton*)radioHexadecimal{
+    switch (type) {
+        case 1: // Data Tables
+            self.tableIndex  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            self.tableName   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            self.offset      = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            self.size        = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            self.formatRev   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            self.contentRev  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES];
+            for (int a=QUANTITY_COMMAND_TABLES; a<QUANTITY_TOTAL_TABLES; a++) {
+                [[self tableName]  addObject: [NSString stringWithUTF8String:    atomTable->atomTables[a].name      ]];
+                if (radioHexadecimal.state == 1) { // Hex on
+                    [[self tableIndex] addObject: [NSString stringWithUTF8String: atomTable->atomTables[a].id       ]];
+                    [[self offset] addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].offset  ]];
+                    [[self size]   addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].size    ]];
+                } else { // Hex off
+                    [[self tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable->atomTables[a].id, 2) ]];
+                    [[self offset] addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].offset    ]];
+                    [[self size]   addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].size      ]];
+                }
+                [[self formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].formatRev ]];
+                [[self contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].contentRev]];
+            }
+            break;
+        case 2: // Command Tables
+            self.tableIndex  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            self.tableName   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            self.offset      = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            self.size        = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            self.formatRev   = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            self.contentRev  = [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES];
+            for (int a=0; a<QUANTITY_COMMAND_TABLES; a++) {
+                [[self tableName]  addObject: [NSString stringWithUTF8String:    atomTable->atomTables[a].name      ]];
+                if (radioHexadecimal.state == 1) { // Hex on
+                    [[self tableIndex] addObject: [NSString stringWithUTF8String: atomTable->atomTables[a].id       ]];
+                    [[self offset] addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].offset  ]];
+                    [[self size]   addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].size    ]];
+                } else { // Hex off
+                    [[self tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable->atomTables[a].id, 2) ]];
+                    [[self offset] addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].offset    ]];
+                    [[self size]   addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].size      ]];
+                }
+                [[self formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].formatRev ]];
+                [[self contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].contentRev]];
+            }
+            break;
+        default:
+            printf("Error: Invalid type of table selected.");
+            exit(7);
+            break;
+    }
+    [self reloadData];
 }
 
 //Override Methods
