@@ -27,26 +27,19 @@ const char * CompanyNames[11][2] = {
 };
 
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable  : (ViewController *)vc{
-    //carregando o conteúdo do firmware na memória
     viewc = vc;
-    *atomTable = loadMainTable(FW);
+    *atomTable = loadMainTable(FW); //carregando o conteúdo do firmware na memória
     [[viewc labelArch]        setStringValue: [NSString stringWithFormat: @"%s",FW.architecture]];
-    //[[viewController labelRomMsg] setStringValue: @"teste"];
-    [[viewc labelFilePath] setStringValue: @"teste"];
     [[viewc labelRomMsg]      setStringValue: [NSString stringWithUTF8String: atomTable->romMessage]];
     [[viewc labelPartNumber]  setStringValue: [NSString stringWithUTF8String: atomTable->partNumber]];
     [[viewc labelCompDate]    setStringValue: [NSString stringWithUTF8String: atomTable->compTime]];
     [[viewc labelBiosVersion] setStringValue: [NSString stringWithUTF8String: atomTable->biosVersion]];
     [[viewc labelDevId]       setStringValue: [NSString stringWithUTF8String: (char *)atomTable->deviceId]];
     [[viewc labelSubId]       setStringValue: [NSString stringWithUTF8String: (char *)atomTable->subsystemId]];
-    
     [[viewc labelMainTableSize] setStringValue: [NSString stringWithFormat:  @"%d",atomTable->size]];
     [[viewc labelMainTableOffset] setStringValue: [NSString stringWithUTF8String: "4"]];
-    
     short vendor = VerifySubsystemCompanyName(*atomTable,CompanyNames);
-    char  vendorstr[32];
-    sprintf(vendorstr, "%s - %s",CompanyNames[vendor][1],(char *)atomTable->subsystemVendorId);
-    [[viewc labelVendId]      setStringValue: [NSString stringWithUTF8String: vendorstr]];
+    [[viewc labelVendId]      setStringValue: [NSString stringWithFormat: @"%s - %s",(char *)atomTable->subsystemVendorId,CompanyNames[vendor][1] ]];
     
     if (atomTable->uefiSupport != 0) {
         [[viewc checkUefiSupport] setState: NSControlStateValueOn];
@@ -55,11 +48,12 @@ const char * CompanyNames[11][2] = {
         [[viewc checkUefiSupport] setState: NSControlStateValueOff];
         [[viewc checkUefiSupport] setTitle: @"Unsupported!"];
     }
-    char chk[16];
-    sprintf(chk, "Valid! - 0x%02X", atomTable->checksum);
     if ( VerifyChecksum(FW, *atomTable) != 0) {
         [[viewc checkChecksumStatus] setState: NSControlStateValueOn];
-        [[viewc checkChecksumStatus] setTitle: [NSString stringWithUTF8String: chk ] ];
+        [[viewc checkChecksumStatus] setTitle: [NSString stringWithFormat: @"Valid! - 0x%02X", atomTable->checksum] ];
+    } else {
+        [[viewc checkChecksumStatus] setState: NSControlStateValueOff];
+        [[viewc checkChecksumStatus] setTitle: [NSString stringWithUTF8String: "Invalid!"] ];
     }
 }
 
@@ -81,7 +75,5 @@ const char * CompanyNames[11][2] = {
     }
     
 }
-
-
 
 @end

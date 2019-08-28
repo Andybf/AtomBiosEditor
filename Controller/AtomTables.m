@@ -8,10 +8,10 @@
 
 #import "AtomTables.h"
 
-NSArray * labelTexts;
+#import "ViewController.h"
 
 @implementation AtomTables {
-    
+    ViewController * viewc;
 }
 
 NSString * columnIdentifiers[1];
@@ -25,8 +25,9 @@ NSString * columnIdentifiers[1];
 @synthesize tableName;
 
 //Constructor Method
-- (id)initWithFrame:(NSRect)frameRect {
+- (id)initWithFrame:(NSRect)frameRect : (ViewController *)vc{
     self = [super initWithFrame:frameRect];
+    viewc = vc;
     if (self) {
         NSString * tempColumnIdentifiers[] = {@"tableIndex",@"tableName",@"offset",@"size",@"formatRev",@"contentRev"};
         for (int a=0; a<6; a++) {
@@ -104,6 +105,23 @@ NSString * columnIdentifiers[1];
             break;
     }
     [self reloadData];
+}
+
+- (IBAction)tableSelectorChanged:(id)sender {
+    // Não é possível passar endereços (&) de @property diretamente, para resolver isso, criamos uma variavel temporária:
+    struct ATOM_BASE_TABLE tempAtomTable = viewc.atomTable;
+    if ( [ [[[viewc tableSelector] selectedItem] title] isEqual: @"select.."] ) {
+        [[viewc tableSelector] setTitle: @"select.."];
+    } else if ( [ [[[viewc tableSelector] selectedItem] title] isEqual: @"Data Tables"] ) {
+        [[viewc tableSelector] setTitle: @"Data Tables"];
+        [self initTableTabInfo: 1 : &tempAtomTable : [viewc radioHexadecimal]];
+    } else if ( [ [[[viewc tableSelector] selectedItem] title] isEqual: @"Command Tables"] ) {
+        [[viewc tableSelector] setTitle: @"Command Tables"];
+        [self initTableTabInfo: 2 : &tempAtomTable : [viewc radioHexadecimal]];
+    } else {
+        NSLog(@"Error: Invalid selected item: %@", viewc.tableSelector.selectedItem.title);
+        exit(5);
+    }
 }
 
 //Override Methods

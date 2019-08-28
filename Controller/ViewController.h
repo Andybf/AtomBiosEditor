@@ -9,12 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "../Core/FileLoader.h"
 #import "../Core/CoreFunctions.h"
-#import "OverviewInfo.h"
+#import "AtomTables.h"
+
+#import "OverviewController.h"
 
 //          Nome da Classe  Herda de:
 @interface ViewController : NSViewController {
 }
-
+@property struct ATOM_BASE_TABLE atomTable;
+@property AtomTables * tableView;
 
 @property (weak) IBOutlet NSView *tableTabView;
 
@@ -26,7 +29,7 @@
 // Elementos da Overview Info
 @property (weak) IBOutlet NSTextField *labelArch;
 
-@property (strong) IBOutlet NSTextField *labelRomMsg;
+@property (weak) IBOutlet NSTextField *labelRomMsg;
 @property (weak) IBOutlet NSTextField *labelPartNumber;
 @property (weak) IBOutlet NSTextField *labelCompDate;
 @property (weak) IBOutlet NSTextField *labelBiosVersion;

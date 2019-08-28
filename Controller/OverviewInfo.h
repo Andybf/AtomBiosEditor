@@ -16,8 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface OverviewInfo : NSObject
 
-
-
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable : (NSViewController *)vc;
 
 @end
