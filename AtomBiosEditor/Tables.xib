@@ -90,9 +90,9 @@
                     </buttonCell>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJ6-uB-Lxp">
-                    <rect key="frame" x="173" y="182" width="114" height="55"/>
+                    <rect key="frame" x="18" y="30" width="424" height="357"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="TableView" id="wsZ-Ul-xMS">
+                    <textFieldCell key="cell" lineBreakMode="clipping" enabled="NO" borderStyle="bezel" alignment="center" title="TableView" bezelStyle="round" id="wsZ-Ul-xMS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

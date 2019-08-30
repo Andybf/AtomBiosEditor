@@ -20,8 +20,8 @@
 @property (weak) IBOutlet NSButton *radioHexadecimal;
 @property (weak) IBOutlet NSButton *radioDecimal;
 
--(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSButton*)radioHexadecimal;
--(void) TurnOnSection : (struct ATOM_BASE_TABLE *)atomTable;
+-(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled;
+-(void) EnableThisSection : (struct ATOM_BASE_TABLE *)atomTable;
 
 @end
 

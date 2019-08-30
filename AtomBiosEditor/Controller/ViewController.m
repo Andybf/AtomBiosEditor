@@ -56,7 +56,7 @@
 //        OverviewInfo * overviewInfo = [[OverviewInfo alloc] init];
 //        [overviewInfo initOverviewInfo: self->FW : &(self->_atomTable) : self];
 //        [self->_labelRomMsg setStringValue: [NSString stringWithUTF8String: "teste"]];
-        [self->tc TurnOnSection : &(self->_atomTable)];
+        [self->tc EnableThisSection : &(self->_atomTable)];
     }];
 }
 
