@@ -14,26 +14,27 @@
 
 @interface TablesController : NSViewController
 
-@property (weak) IBOutlet NSPopUpButton *selectorTable;
-@property (weak) IBOutlet NSButton *buttonDumpTable;
-@property (weak) IBOutlet NSButton *buttonReplaceTable;
-@property (weak) IBOutlet NSButton *radioHexadecimal;
-@property (weak) IBOutlet NSButton *radioDecimal;
+    @property (weak) IBOutlet NSPopUpButton *selectorTable;
+    @property (weak) IBOutlet NSButton *buttonDumpTable;
+    @property (weak) IBOutlet NSButton *buttonReplaceTable;
+    @property (weak) IBOutlet NSButton *radioHexadecimal;
+    @property (weak) IBOutlet NSButton *radioDecimal;
 
--(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled;
--(void) EnableThisSection : (struct ATOM_BASE_TABLE *)atomTable;
+    -(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled;
+    -(void) EnableThisSection : (struct ATOM_BASE_TABLE *)atomTable : (struct FIRMWARE_FILE *)firmwareFile;
 
 @end
 
+
 @interface AtomTable : NSTableView <NSTableViewDataSource>
 
-@property (nonatomic, strong) NSMutableArray * tableIndex;
-@property (nonatomic, strong) NSMutableArray * tableName;
-@property (nonatomic, strong) NSMutableArray * offset;
-@property (nonatomic, strong) NSMutableArray * size;
-@property (nonatomic, strong) NSMutableArray * formatRev;
-@property (nonatomic, strong) NSMutableArray * contentRev;
+    @property (nonatomic, strong) NSMutableArray * tableIndex;
+    @property (nonatomic, strong) NSMutableArray * tableName;
+    @property (nonatomic, strong) NSMutableArray * offset;
+    @property (nonatomic, strong) NSMutableArray * size;
+    @property (nonatomic, strong) NSMutableArray * formatRev;
+    @property (nonatomic, strong) NSMutableArray * contentRev;
 
--(void) initTableStructure;
+    -(void) initTableStructure;
 
 @end

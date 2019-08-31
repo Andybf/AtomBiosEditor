@@ -10,9 +10,9 @@
 
 @implementation TablesController {
     AtomTable * tableView;
+    struct ATOM_BASE_TABLE * atomTable;
+    struct FIRMWARE_FILE * FW;
 }
-
-struct ATOM_BASE_TABLE atomTable;
 
 -(void)viewDidLoad {
     [super viewDidLoad];
@@ -34,17 +34,18 @@ struct ATOM_BASE_TABLE atomTable;
     [[self view] addSubview:tableContainer];
 }
 
--(void)EnableThisSection : (struct ATOM_BASE_TABLE *)atmtable {
-    atomTable = *atmtable;
+-(void)EnableThisSection : (struct ATOM_BASE_TABLE *)atmtable : (struct FIRMWARE_FILE *)firmwareFile {
+    atomTable = atmtable;
+    FW = firmwareFile;
     [ tableView        setEnabled : YES];
     [_selectorTable    setEnabled : YES];
-    [_radioDecimal     setEnabled : YES];
     [_buttonDumpTable  setEnabled : YES];
-    [_radioHexadecimal setEnabled : YES];
-    [_radioHexadecimal setState   : NSControlStateValueOn];
 }
 
 -(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled{
+    [_radioDecimal     setEnabled : YES];
+    [_radioHexadecimal setEnabled : YES];
+    [_radioHexadecimal setState   : NSControlStateValueOn];
     switch (type) {
         case 1: // Data Tables
             NSLog(@"Data tables Selected.");
@@ -101,18 +102,39 @@ struct ATOM_BASE_TABLE atomTable;
 }
 
 - (IBAction)tableSelectorChanged:(id)sender {
-    // Não é possível passar endereços (&) de @property diretamente, para resolver isso, criamos uma variavel temporária:
-    struct ATOM_BASE_TABLE tempAtomTable = atomTable;
     if ( [ [[ _selectorTable selectedItem] title] isEqual: @"select.."] ) {
         [ _selectorTable setTitle: @"select.."];
     } else if ( [ [[ _selectorTable selectedItem] title] isEqual: @"Data Tables"] ) {
         [ _selectorTable setTitle: @"Data Tables"];
-        [self initTableTabInfo: 1 : &tempAtomTable : _radioHexadecimal.state];
+        [self initTableTabInfo: 1 : atomTable : _radioHexadecimal.state];
     } else if ( [ [[ _selectorTable selectedItem] title] isEqual: @"Command Tables"] ) {
         [ _selectorTable setTitle: @"Command Tables"];
-        [self initTableTabInfo: 2 : &tempAtomTable : _radioHexadecimal.state];
+        [self initTableTabInfo: 2 : atomTable : _radioHexadecimal.state];
     } else {
         exit(5);
+    }
+}
+
+- (IBAction)DumpButtonTriggered:(id)sender {
+    printf("Info: Clicked Row: %ld\n",(long)self->tableView.selectedRow);
+    NSSavePanel * saveFile = [NSSavePanel savePanel];
+    long selectedRow;
+    
+    if (self->tableView.selectedRow > -1) {
+        if ([self.selectorTable.title isEqualToString: @"Command Tables"]) {
+            selectedRow = tableView.selectedRow;
+        } else {
+            selectedRow = tableView.selectedRow+QUANTITY_COMMAND_TABLES;
+        }
+        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s.bin",atomTable->atomTables[selectedRow].name]];
+        [saveFile beginSheetModalForWindow: self.view.window completionHandler:^(NSInteger returnCode) {
+            if (returnCode == 1) { // if the save button was triggered
+                printf("path %s\n",[saveFile.URL.path UTF8String]);
+                ExtractTable(self->FW->file, self->atomTable->atomTables[selectedRow], [saveFile.URL.path UTF8String]);
+            }
+        }];
+    } else {
+        //[self DisplayAlert: @"No table was selected" :@"Please, select the table that you want to extract."];
     }
 }
 
@@ -120,14 +142,14 @@ struct ATOM_BASE_TABLE atomTable;
     if (_radioHexadecimal.state == 1 ) {
         [_radioDecimal setState:NSControlStateValueOff];
         NSLog(@"%ld", (long)[_radioDecimal state]);
-        [self initTableTabInfo: self.selectorTable.indexOfSelectedItem : &(atomTable) : _radioHexadecimal.state];
+        [self initTableTabInfo: self.selectorTable.indexOfSelectedItem : atomTable : _radioHexadecimal.state];
     }
 }
 - (IBAction)RadioDecChanged:(id)sender {
     if (_radioDecimal.state == 1 ) {
         [_radioHexadecimal setState:NSControlStateValueOff];
         NSLog(@"%ld", (long)[_radioDecimal state]);
-        [self initTableTabInfo: self.selectorTable.indexOfSelectedItem: &(atomTable) : _radioHexadecimal.state];
+        [self initTableTabInfo: self.selectorTable.indexOfSelectedItem: atomTable : _radioHexadecimal.state];
     }
 }
 

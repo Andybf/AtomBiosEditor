@@ -13,8 +13,10 @@
 @property (weak) IBOutlet NSButton *buttonOpenFile;
 @property (weak) IBOutlet NSTextField *textFieldFilePath;
 
-@property (weak) IBOutlet NSView *ContainerOverview;
-@property (weak) IBOutlet NSView *ContainerTables;
+@property (weak) IBOutlet NSView *containerOverview;
+@property (weak) IBOutlet NSView *containerTables;
+@property (weak) IBOutlet NSView *containerPowerPlay;
+@property (weak) IBOutlet NSView *containerOverDrive;
 
 @property struct ATOM_BASE_TABLE atomTable;
 

@@ -267,10 +267,5 @@
             </subviews>
             <point key="canvasLocation" x="-286" y="-326.5"/>
         </customView>
-        <viewController id="qVp-Q4-LLs" customClass="OverviewController">
-            <connections>
-                <outlet property="textFieldArch" destination="uE3-rf-EJm" id="pAz-kR-Qn8"/>
-            </connections>
-        </viewController>
     </objects>
 </document>

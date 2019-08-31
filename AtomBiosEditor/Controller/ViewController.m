@@ -8,23 +8,35 @@
 
 #import "ViewController.h"
 #import "../Model/TableLoader.h"
+
 #import "OverviewController.h"
 #import "TablesController.h"
+#import "PowerPlayController.h"
+#import "OverDriveController.h"
 
 @implementation ViewController {
     struct FIRMWARE_FILE FW;
+    
     OverviewController * oc;
     TablesController * tc;
+    PowerPlayController * ppc;
+    OverDriveController * ovdc;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     oc = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
-    [[self ContainerOverview] addSubview: self->oc.view];
+    [[self containerOverview]  addSubview: self->oc.view];
     
     tc = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
-    [[self ContainerTables]   addSubview: self->tc.view];
+    [[self containerTables]    addSubview: self->tc.view];
+    
+    ppc = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
+    [[self containerPowerPlay] addSubview: self->ppc.view];
+    
+    ovdc = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
+    [[self containerOverDrive] addSubview: self->ovdc.view];
 }
 
 
@@ -51,12 +63,8 @@
         }
         [self->_textFieldFilePath setStringValue: [NSString stringWithUTF8String: self->FW.pathName]];
         [self->oc initOverviewInfo: self->FW : &(self->_atomTable) ];
-        [[self ContainerOverview] addSubview: self->oc.view];
-//        OverviewController * oc = [[OverviewController alloc] init];
-//        OverviewInfo * overviewInfo = [[OverviewInfo alloc] init];
-//        [overviewInfo initOverviewInfo: self->FW : &(self->_atomTable) : self];
-//        [self->_labelRomMsg setStringValue: [NSString stringWithUTF8String: "teste"]];
-        [self->tc EnableThisSection : &(self->_atomTable)];
+        [self->tc EnableThisSection : &(self->_atomTable) : &(self->FW)];
+        [self->ppc initTableInfo: &(self->_atomTable) : self->FW.file];
     }];
 }
 

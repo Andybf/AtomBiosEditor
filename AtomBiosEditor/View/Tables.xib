@@ -88,6 +88,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="DumpButtonTriggered:" target="-2" id="BnO-fU-M8l"/>
+                    </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJ6-uB-Lxp">
                     <rect key="frame" x="18" y="30" width="424" height="357"/>

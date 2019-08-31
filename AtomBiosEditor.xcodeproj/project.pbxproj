@@ -19,6 +19,12 @@
 		7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA8E2316F8DE006FCC02 /* Overview.xib */; };
 		7111EA9223170A9B006FCC02 /* Tables.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA9123170A9B006FCC02 /* Tables.xib */; };
 		7111EA9423170AED006FCC02 /* TablesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA9323170AED006FCC02 /* TablesController.m */; };
+		7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7113226D23197C5A001758B1 /* PowerPlay.xib */; };
+		7113227023197C6E001758B1 /* OverDrive.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7113226F23197C6E001758B1 /* OverDrive.xib */; };
+		7113227223197E4A001758B1 /* PowerPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227123197E4A001758B1 /* PowerPlayController.m */; };
+		7113227623197EEF001758B1 /* OverDriveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227523197EEF001758B1 /* OverDriveController.m */; };
+		715C04E6231B2957002DFCA5 /* ApplicationMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */; };
+		71C3DF0B2319B72A0006FD27 /* PowerPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 71C3DF092319B72A0006FD27 /* PowerPlay.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +50,16 @@
 		7111EA9123170A9B006FCC02 /* Tables.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tables.xib; sourceTree = "<group>"; };
 		7111EA9323170AED006FCC02 /* TablesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TablesController.m; sourceTree = "<group>"; };
 		7111EA9523170AFB006FCC02 /* TablesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TablesController.h; sourceTree = "<group>"; };
+		7113226D23197C5A001758B1 /* PowerPlay.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PowerPlay.xib; sourceTree = "<group>"; };
+		7113226F23197C6E001758B1 /* OverDrive.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDrive.xib; sourceTree = "<group>"; };
+		7113227123197E4A001758B1 /* PowerPlayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PowerPlayController.m; sourceTree = "<group>"; };
+		7113227323197E5A001758B1 /* PowerPlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPlayController.h; sourceTree = "<group>"; };
+		7113227423197EEF001758B1 /* OverDriveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverDriveController.h; sourceTree = "<group>"; };
+		7113227523197EEF001758B1 /* OverDriveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverDriveController.m; sourceTree = "<group>"; };
+		715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplicationMenuController.m; sourceTree = "<group>"; };
+		715C04E7231B296E002DFCA5 /* ApplicationMenuController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationMenuController.h; sourceTree = "<group>"; };
+		71C3DF092319B72A0006FD27 /* PowerPlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PowerPlay.c; sourceTree = "<group>"; };
+		71C3DF0A2319B72A0006FD27 /* PowerPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerPlay.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,8 +99,6 @@
 				7111EA6A2316D66F006FCC02 /* AppDelegate.m */,
 				7111EA6F2316D671006FCC02 /* Assets.xcassets */,
 				7111EA712316D671006FCC02 /* Main.storyboard */,
-				7111EA8E2316F8DE006FCC02 /* Overview.xib */,
-				7111EA9123170A9B006FCC02 /* Tables.xib */,
 				7111EA742316D671006FCC02 /* Info.plist */,
 				7111EA752316D671006FCC02 /* main.m */,
 				7111EA772316D671006FCC02 /* AtomBiosEditor.entitlements */,
@@ -95,12 +109,18 @@
 		7111EA7D2316D889006FCC02 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */,
+				715C04E7231B296E002DFCA5 /* ApplicationMenuController.h */,
 				7111EA6C2316D66F006FCC02 /* ViewController.h */,
 				7111EA6D2316D66F006FCC02 /* ViewController.m */,
 				7111EA7F2316D8F4006FCC02 /* OverviewController.h */,
 				7111EA802316D8F5006FCC02 /* OverviewController.m */,
 				7111EA9523170AFB006FCC02 /* TablesController.h */,
 				7111EA9323170AED006FCC02 /* TablesController.m */,
+				7113227323197E5A001758B1 /* PowerPlayController.h */,
+				7113227123197E4A001758B1 /* PowerPlayController.m */,
+				7113227423197EEF001758B1 /* OverDriveController.h */,
+				7113227523197EEF001758B1 /* OverDriveController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -122,6 +142,7 @@
 		7111EA822316D9F6006FCC02 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				71C3DF082319B72A0006FD27 /* PowerPlay */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -129,8 +150,21 @@
 		7111EA9023170A77006FCC02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7111EA8E2316F8DE006FCC02 /* Overview.xib */,
+				7111EA9123170A9B006FCC02 /* Tables.xib */,
+				7113226D23197C5A001758B1 /* PowerPlay.xib */,
+				7113226F23197C6E001758B1 /* OverDrive.xib */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		71C3DF082319B72A0006FD27 /* PowerPlay */ = {
+			isa = PBXGroup;
+			children = (
+				71C3DF092319B72A0006FD27 /* PowerPlay.c */,
+				71C3DF0A2319B72A0006FD27 /* PowerPlay.h */,
+			);
+			path = PowerPlay;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,9 +229,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */,
 				7111EA702316D671006FCC02 /* Assets.xcassets in Resources */,
 				7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */,
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
+				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
 				7111EA732316D671006FCC02 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,10 +245,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71C3DF0B2319B72A0006FD27 /* PowerPlay.c in Sources */,
 				7111EA6E2316D66F006FCC02 /* ViewController.m in Sources */,
+				7113227223197E4A001758B1 /* PowerPlayController.m in Sources */,
 				7111EA762316D671006FCC02 /* main.m in Sources */,
 				7111EA8A2316D9F6006FCC02 /* FileLoader.c in Sources */,
 				7111EA8B2316D9F6006FCC02 /* CoreFunctions.c in Sources */,
+				715C04E6231B2957002DFCA5 /* ApplicationMenuController.m in Sources */,
+				7113227623197EEF001758B1 /* OverDriveController.m in Sources */,
 				7111EA9423170AED006FCC02 /* TablesController.m in Sources */,
 				7111EA892316D9F6006FCC02 /* TableLoader.c in Sources */,
 				7111EA812316D8F5006FCC02 /* OverviewController.m in Sources */,
