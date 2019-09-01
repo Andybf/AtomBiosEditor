@@ -26,7 +26,7 @@
                     <font key="font" metaFont="system"/>
                     <tabViewItems>
                         <tabViewItem label="Overview" id="Gcz-4h-wgq">
-                            <view key="view" id="PoU-je-vbc">
+                            <view key="view" ambiguous="YES" id="PoU-je-vbc">
                                 <rect key="frame" x="10" y="33" width="454" height="452"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
@@ -62,7 +62,7 @@
                             </view>
                         </tabViewItem>
                         <tabViewItem label="OverDrive" identifier="" id="rCl-rr-t8v">
-                            <view key="view" ambiguous="YES" id="YdN-Pt-zBV">
+                            <view key="view" id="YdN-Pt-zBV">
                                 <rect key="frame" x="10" y="33" width="454" height="452"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>

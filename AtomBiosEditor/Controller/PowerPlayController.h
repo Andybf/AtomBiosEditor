@@ -29,6 +29,9 @@
     StatesTable * stTable[3];
 }
 
+@property (weak) IBOutlet NSButton *radioHexadecimal;
+@property (weak) IBOutlet NSButton *radioDecimal;
+
 -(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (FILE *)firmware;
 
 @end

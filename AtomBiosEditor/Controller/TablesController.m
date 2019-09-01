@@ -24,9 +24,9 @@
     [_selectorTable setEnabled : NO];
     
     //Table Initialization
-    tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 424, 380)];
+    tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
     [tableView initTableStructure];
-    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(18, 33, 424, 380)];
+    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(7, 33, 440, 380)];
     // embed the table view in the scroll view, and add the scroll view
     [tableContainer setDocumentView:tableView];
     [tableContainer setHasVerticalScroller:YES];
@@ -165,7 +165,7 @@
         columnIdentifiers[a] = tempColumnIdentifiers[a];
     }
     NSTableColumn * columns[6];
-    CGFloat widths[] = {35,155.0,50.0,50.0,50.0,50.0};
+    CGFloat widths[] = {35,165.0,50.0,50.0,50.0,50.0};
     NSString * titles[] = {@"Index",@"Table Name",@"Offset",@"Size",@"Fmt Rev.",@"Cnt Rev."};
     for (int a=0; a<6; a++) {
          columns[a] = [[NSTableColumn alloc] initWithIdentifier: columnIdentifiers[a]];
