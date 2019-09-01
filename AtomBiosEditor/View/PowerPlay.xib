@@ -13,11 +13,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="EfM-6E-II4">
-            <rect key="frame" x="0.0" y="0.0" width="460" height="420"/>
+            <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPl-wK-ewc">
-                    <rect key="frame" x="18" y="398" width="109" height="17"/>
+                    <rect key="frame" x="18" y="425" width="109" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="PowerPlay States" id="diB-EA-pYS">
                         <font key="font" metaFont="system"/>
@@ -26,7 +26,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PnZ-B3-Y7r">
-                    <rect key="frame" x="18" y="259" width="74" height="17"/>
+                    <rect key="frame" x="18" y="286" width="74" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="GPU States" id="I4d-UI-l9o">
                         <font key="font" usesAppearanceFont="YES"/>
@@ -35,10 +35,35 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQq-hy-5Lt">
-                    <rect key="frame" x="18" y="120" width="96" height="17"/>
+                    <rect key="frame" x="18" y="147" width="96" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Memory States" id="5DT-85-Ipn">
                         <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-Mm-ZX4">
+                    <rect key="frame" x="108" y="7" width="100" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="QWi-sq-As6">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-kV-iuu">
+                    <rect key="frame" x="217" y="7" width="71" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="v5f-wA-MuO">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTf-5D-chN">
+                    <rect key="frame" x="18" y="7" width="76" height="17"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="View Mode" id="PEw-RV-DMj">
+                        <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

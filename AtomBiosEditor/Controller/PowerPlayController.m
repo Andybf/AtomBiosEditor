@@ -18,9 +18,9 @@
     [super viewDidLoad];
     
     short dimensions[3][4] = {
-        {18,284,425,106},
-        {18,145,425,106},
-        {18,6,425,106}
+        {18,311,425,106},
+        {18,172,425,106},
+        {18,33,425,106}
     };
     for (int c=0; c<3; c++) {
          tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(dimensions[c][0],dimensions[c][1],dimensions[c][2],dimensions[c][3])];
@@ -65,17 +65,19 @@
 
 -(void)initTableStructure : (short)type{
     
-    CGFloat widths[] = {40,160.0,100.0,100.0};
+    CGFloat widths[] = {60.0,120.0,120.0,100.0};
     NSString * titles[] = {@"Index",@"Value",@"Offset",@"Size"};
     NSString * tempColumnIdentifiers[] = {@"index",@"value",@"offset",@"size"};
     for (int a=0; a<4; a++) {
         columnIdentifiers[a] = tempColumnIdentifiers[a];
     }
     if (type == 1) {
-        titles[1] = @"GPU Clock";
-        titles[2] = @"Mem Clock";
+        titles[1] = @"GPU Clock (MHz)";
+        titles[2] = @"Mem Clock (MHz)";
+        titles[3] = @"Voltage (mV)";
         columnIdentifiers[1] = @"gpu";
         columnIdentifiers[2] = @"mem";
+        columnIdentifiers[2] = @"voltage";
     }
     NSTableColumn * columns[4];
     

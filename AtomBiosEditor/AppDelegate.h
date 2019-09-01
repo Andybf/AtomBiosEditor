@@ -7,9 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "Model/TableLoader.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
+@property (weak) IBOutlet NSMenuItem *menuItemOpen;
+@property (weak) IBOutlet NSMenuItem *menuItemNewWindow;
 
 @end
 

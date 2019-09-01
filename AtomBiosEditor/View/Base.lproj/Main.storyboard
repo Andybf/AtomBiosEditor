@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Application Menu Controller-->
+        <!--Application-->
         <scene sceneID="JPo-4y-FX3">
             <objects>
-                <application id="hnw-xV-0zn" customClass="ApplicationMenuController" sceneMemberID="viewController">
+                <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
                             <menuItem title="AtomBiosEditor" id="1Xt-HY-uBw">
@@ -61,12 +60,12 @@
                                     <items>
                                         <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="4Si-XN-c54"/>
+                                                <action selector="menuItemNewWindow:" target="Voe-Tx-rLC" id="pgL-gp-kzc"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
-                                                <action selector="menuItemOpenTriggered:" target="hnw-xV-0zn" id="6Z2-VK-EJ9"/>
+                                                <action selector="menuItemOpenTriggered:" target="Voe-Tx-rLC" id="SaQ-ac-LIj"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open Recent" id="tXI-mr-wws">
@@ -672,141 +671,18 @@
                     </menu>
                     <connections>
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
-                        <outlet property="menuItemOpen" destination="IAo-SY-fd9" id="P6j-qz-81e"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
+                    <connections>
+                        <outlet property="menuItemNewWindow" destination="Was-JA-tGl" id="rTh-rj-Yhk"/>
+                        <outlet property="menuItemOpen" destination="IAo-SY-fd9" id="cvb-QJ-9sp"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="R2V-B0-nI4">
-            <objects>
-                <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="AtomBiosEditor" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <connections>
-                            <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="vPj-Dm-dNm" kind="relationship" relationship="window.shadowedContentViewController" id="Sc0-dQ-gdr"/>
-                    </connections>
-                </windowController>
-                <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="221"/>
-        </scene>
-        <!--MasterView-->
-        <scene sceneID="ytD-31-mG1">
-            <objects>
-                <viewController title="MasterView" id="vPj-Dm-dNm" customClass="ViewController" sceneMemberID="viewController">
-                    <view key="view" id="Pf4-Mw-xQT">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="500"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eT3-dL-xMc">
-                                <rect key="frame" x="173" y="468" width="297" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="bezel" alignment="left" title="Please load a file." bezelStyle="round" id="HHu-h4-JJ1">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gmq-in-2gZ">
-                                <rect key="frame" x="4" y="461" width="80" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Open" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bHu-PF-KI9">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="buttonOpenFileTriggered:" target="vPj-Dm-dNm" id="cVB-Zs-gWe"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y59-E1-IqI">
-                                <rect key="frame" x="82" y="461" width="80" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" inset="2" id="KyR-Hh-eEB">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <tabView fixedFrame="YES" initialItem="1kb-WY-Vv6" translatesAutoresizingMaskIntoConstraints="NO" id="ees-K0-k5I">
-                                <rect key="frame" x="3" y="-2" width="474" height="466"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <font key="font" metaFont="system"/>
-                                <tabViewItems>
-                                    <tabViewItem label="Overview" identifier="" id="1kb-WY-Vv6">
-                                        <view key="view" ambiguous="YES" id="26r-aP-2p9">
-                                            <rect key="frame" x="10" y="33" width="454" height="420"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6jX-GJ-6q4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="420"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </containerView>
-                                            </subviews>
-                                        </view>
-                                    </tabViewItem>
-                                    <tabViewItem label="Tables" identifier="" id="GYs-eY-too">
-                                        <view key="view" id="wl4-WD-QwO">
-                                            <rect key="frame" x="10" y="33" width="454" height="420"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ejy-Bj-zI1">
-                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="420"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </containerView>
-                                            </subviews>
-                                        </view>
-                                    </tabViewItem>
-                                    <tabViewItem label="PowerPlay" identifier="" id="Ad3-fk-XZP">
-                                        <view key="view" id="Fb4-Su-wvv">
-                                            <rect key="frame" x="10" y="33" width="454" height="420"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h71-ah-zQJ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="460" height="420"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </containerView>
-                                            </subviews>
-                                        </view>
-                                    </tabViewItem>
-                                    <tabViewItem label="OverDrive" identifier="" id="x4h-SJ-H6y">
-                                        <view key="view" id="dzw-Me-avd">
-                                            <rect key="frame" x="10" y="33" width="454" height="420"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pNW-on-aAJ">
-                                                    <rect key="frame" x="-3" y="0.0" width="460" height="420"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </containerView>
-                                            </subviews>
-                                        </view>
-                                    </tabViewItem>
-                                </tabViewItems>
-                            </tabView>
-                        </subviews>
-                    </view>
-                    <connections>
-                        <outlet property="buttonOpenFile" destination="gmq-in-2gZ" id="ybH-xQ-vXk"/>
-                        <outlet property="containerOverDrive" destination="dzw-Me-avd" id="ad6-k7-iBb"/>
-                        <outlet property="containerOverview" destination="6jX-GJ-6q4" id="ClJ-8k-IUG"/>
-                        <outlet property="containerPowerPlay" destination="h71-ah-zQJ" id="7CB-dg-V81"/>
-                        <outlet property="containerTables" destination="ejy-Bj-zI1" id="sDS-2Y-eIB"/>
-                        <outlet property="textFieldFilePath" destination="eT3-dL-xMc" id="9dv-Qk-ZxZ"/>
-                    </connections>
-                </viewController>
-                <customObject id="Z0d-Mi-V9H" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="75" y="730"/>
         </scene>
     </scenes>
 </document>

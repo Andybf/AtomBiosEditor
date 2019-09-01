@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7111EA6B2316D66F006FCC02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA6A2316D66F006FCC02 /* AppDelegate.m */; };
-		7111EA6E2316D66F006FCC02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA6D2316D66F006FCC02 /* ViewController.m */; };
+		7111EA6E2316D66F006FCC02 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA6D2316D66F006FCC02 /* MasterViewController.m */; };
 		7111EA702316D671006FCC02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA6F2316D671006FCC02 /* Assets.xcassets */; };
 		7111EA732316D671006FCC02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA712316D671006FCC02 /* Main.storyboard */; };
 		7111EA762316D671006FCC02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA752316D671006FCC02 /* main.m */; };
@@ -23,16 +23,17 @@
 		7113227023197C6E001758B1 /* OverDrive.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7113226F23197C6E001758B1 /* OverDrive.xib */; };
 		7113227223197E4A001758B1 /* PowerPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227123197E4A001758B1 /* PowerPlayController.m */; };
 		7113227623197EEF001758B1 /* OverDriveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227523197EEF001758B1 /* OverDriveController.m */; };
-		715C04E6231B2957002DFCA5 /* ApplicationMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */; };
+		71154873231B6ED80073F3AE /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71154872231B6ED80073F3AE /* MasterView.xib */; };
 		71C3DF0B2319B72A0006FD27 /* PowerPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 71C3DF092319B72A0006FD27 /* PowerPlay.c */; };
+		71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CD231C333300EC0BB3 /* Credits.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7111EA662316D66F006FCC02 /* AtomBiosEditor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AtomBiosEditor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7111EA692316D66F006FCC02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7111EA6A2316D66F006FCC02 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7111EA6C2316D66F006FCC02 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		7111EA6D2316D66F006FCC02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7111EA6C2316D66F006FCC02 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		7111EA6D2316D66F006FCC02 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		7111EA6F2316D671006FCC02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7111EA722316D671006FCC02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7111EA742316D671006FCC02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,10 +57,10 @@
 		7113227323197E5A001758B1 /* PowerPlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPlayController.h; sourceTree = "<group>"; };
 		7113227423197EEF001758B1 /* OverDriveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverDriveController.h; sourceTree = "<group>"; };
 		7113227523197EEF001758B1 /* OverDriveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverDriveController.m; sourceTree = "<group>"; };
-		715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplicationMenuController.m; sourceTree = "<group>"; };
-		715C04E7231B296E002DFCA5 /* ApplicationMenuController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationMenuController.h; sourceTree = "<group>"; };
+		71154872231B6ED80073F3AE /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
 		71C3DF092319B72A0006FD27 /* PowerPlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PowerPlay.c; sourceTree = "<group>"; };
 		71C3DF0A2319B72A0006FD27 /* PowerPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerPlay.h; sourceTree = "<group>"; };
+		71D855CD231C333300EC0BB3 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,13 +93,13 @@
 		7111EA682316D66F006FCC02 /* AtomBiosEditor */ = {
 			isa = PBXGroup;
 			children = (
+				71D855CC231C32F400EC0BB3 /* Supporting Files */,
 				7111EA7E2316D89B006FCC02 /* Model */,
 				7111EA9023170A77006FCC02 /* View */,
 				7111EA7D2316D889006FCC02 /* Controller */,
 				7111EA692316D66F006FCC02 /* AppDelegate.h */,
 				7111EA6A2316D66F006FCC02 /* AppDelegate.m */,
 				7111EA6F2316D671006FCC02 /* Assets.xcassets */,
-				7111EA712316D671006FCC02 /* Main.storyboard */,
 				7111EA742316D671006FCC02 /* Info.plist */,
 				7111EA752316D671006FCC02 /* main.m */,
 				7111EA772316D671006FCC02 /* AtomBiosEditor.entitlements */,
@@ -109,10 +110,8 @@
 		7111EA7D2316D889006FCC02 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				715C04E5231B2957002DFCA5 /* ApplicationMenuController.m */,
-				715C04E7231B296E002DFCA5 /* ApplicationMenuController.h */,
-				7111EA6C2316D66F006FCC02 /* ViewController.h */,
-				7111EA6D2316D66F006FCC02 /* ViewController.m */,
+				7111EA6C2316D66F006FCC02 /* MasterViewController.h */,
+				7111EA6D2316D66F006FCC02 /* MasterViewController.m */,
 				7111EA7F2316D8F4006FCC02 /* OverviewController.h */,
 				7111EA802316D8F5006FCC02 /* OverviewController.m */,
 				7111EA9523170AFB006FCC02 /* TablesController.h */,
@@ -150,6 +149,8 @@
 		7111EA9023170A77006FCC02 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7111EA712316D671006FCC02 /* Main.storyboard */,
+				71154872231B6ED80073F3AE /* MasterView.xib */,
 				7111EA8E2316F8DE006FCC02 /* Overview.xib */,
 				7111EA9123170A9B006FCC02 /* Tables.xib */,
 				7113226D23197C5A001758B1 /* PowerPlay.xib */,
@@ -165,6 +166,14 @@
 				71C3DF0A2319B72A0006FD27 /* PowerPlay.h */,
 			);
 			path = PowerPlay;
+			sourceTree = "<group>";
+		};
+		71D855CC231C32F400EC0BB3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				71D855CD231C333300EC0BB3 /* Credits.rtf */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,7 +241,9 @@
 				7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */,
 				7111EA702316D671006FCC02 /* Assets.xcassets in Resources */,
 				7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */,
+				71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */,
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
+				71154873231B6ED80073F3AE /* MasterView.xib in Resources */,
 				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
 				7111EA732316D671006FCC02 /* Main.storyboard in Resources */,
 			);
@@ -246,12 +257,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				71C3DF0B2319B72A0006FD27 /* PowerPlay.c in Sources */,
-				7111EA6E2316D66F006FCC02 /* ViewController.m in Sources */,
+				7111EA6E2316D66F006FCC02 /* MasterViewController.m in Sources */,
 				7113227223197E4A001758B1 /* PowerPlayController.m in Sources */,
 				7111EA762316D671006FCC02 /* main.m in Sources */,
 				7111EA8A2316D9F6006FCC02 /* FileLoader.c in Sources */,
 				7111EA8B2316D9F6006FCC02 /* CoreFunctions.c in Sources */,
-				715C04E6231B2957002DFCA5 /* ApplicationMenuController.m in Sources */,
 				7113227623197EEF001758B1 /* OverDriveController.m in Sources */,
 				7111EA9423170AED006FCC02 /* TablesController.m in Sources */,
 				7111EA892316D9F6006FCC02 /* TableLoader.c in Sources */,
@@ -398,6 +408,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.abucchianico.AtomBiosEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -416,6 +427,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.abucchianico.AtomBiosEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

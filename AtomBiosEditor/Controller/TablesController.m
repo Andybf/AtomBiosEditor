@@ -24,9 +24,9 @@
     [_selectorTable setEnabled : NO];
     
     //Table Initialization
-    tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 424, 357)];
+    tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 424, 380)];
     [tableView initTableStructure];
-    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(18, 30, 424, 357)];
+    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(18, 33, 424, 380)];
     // embed the table view in the scroll view, and add the scroll view
     [tableContainer setDocumentView:tableView];
     [tableContainer setHasVerticalScroller:YES];
@@ -40,12 +40,12 @@
     [ tableView        setEnabled : YES];
     [_selectorTable    setEnabled : YES];
     [_buttonDumpTable  setEnabled : YES];
+    [_radioHexadecimal setState   : NSControlStateValueOn];
 }
 
 -(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled{
     [_radioDecimal     setEnabled : YES];
     [_radioHexadecimal setEnabled : YES];
-    [_radioHexadecimal setState   : NSControlStateValueOn];
     switch (type) {
         case 1: // Data Tables
             NSLog(@"Data tables Selected.");

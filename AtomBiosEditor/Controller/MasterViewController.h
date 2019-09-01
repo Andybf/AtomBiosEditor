@@ -7,11 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "../Model/TableLoader.h"
 
-@interface ViewController : NSViewController
-
-@property (weak) IBOutlet NSButton *buttonOpenFile;
-@property (weak) IBOutlet NSTextField *textFieldFilePath;
+@interface MasterViewController : NSViewController
 
 @property (weak) IBOutlet NSView *containerOverview;
 @property (weak) IBOutlet NSView *containerTables;
@@ -19,6 +17,8 @@
 @property (weak) IBOutlet NSView *containerOverDrive;
 
 @property struct ATOM_BASE_TABLE atomTable;
+
+- (void)loadInfo : (struct FIRMWARE_FILE) FW;;
 
 @end
 
