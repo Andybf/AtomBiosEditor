@@ -18,6 +18,7 @@
 @property (weak) IBOutlet NSTextField *textFieldTdp;
 @property (weak) IBOutlet NSTextField *textFieldMinTdp;
 
+@property (weak) IBOutlet NSTextField *textFieldTmpHyst;
 @property (weak) IBOutlet NSTextField *textFieldTemp1;
 @property (weak) IBOutlet NSTextField *textFieldTemp2;
 @property (weak) IBOutlet NSTextField *textFieldTemp3;

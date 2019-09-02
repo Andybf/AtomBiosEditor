@@ -40,7 +40,8 @@
 #define FORMAT_HEX                 "%02X"
 
 // Core Functions
-char   *                  GetFileData       (FILE * , int , int , short );
-int                       HexToDec          (char [], int );
+char * GetFileData (FILE * , int , int , short );
+int    HexToDec    (char [], int );
+int    count       (int num);
 
 #endif /* ABELibrary_h */

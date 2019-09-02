@@ -38,7 +38,7 @@ typedef unsigned char byte;
 // Estruturas de dados do firmware
 struct ATOM_ABSTRACT_TABLE {
     
-    char id[3];
+    ushort id;
     char * name;
     
     ushort offset;
@@ -78,6 +78,8 @@ struct ATOM_BASE_TABLE {
     ushort romMsgOffset;
     char romMessage[77];
     
+    char architecture[12];
+    
     char biosVersion[23];
     
     char compTime[15];
@@ -97,6 +99,7 @@ void                   loadOffsetsTable      (struct FIRMWARE_FILE , struct ATOM
 short                  VerifyChecksum        (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE );
 short                  VerifySubsystemCompanyName(struct ATOM_BASE_TABLE , char * CompanyNames[11][2]);
 void                   ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath);
+void                   ReplaceTable (struct FIRMWARE_FILE * FW, struct ATOM_BASE_TABLE * atomTable, ushort index, const char * tablePath);
 
 
 

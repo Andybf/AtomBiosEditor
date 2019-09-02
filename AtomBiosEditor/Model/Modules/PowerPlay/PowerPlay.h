@@ -26,9 +26,9 @@ struct POWERPLAY_DATA {
     unsigned short clockInfoOffset;
     unsigned short numberOfStates;
     unsigned short lengthPerState;
-    char ** gpuClock;
-    char ** memClock;
-    char ** voltage;
+    ushort * gpuClock;
+    ushort * memClock;
+    ushort * voltage;
     
     unsigned short overDriveOffset;
     char maxGpuClock[7];
@@ -36,11 +36,11 @@ struct POWERPLAY_DATA {
     
     unsigned short gpuFreqOffset;
     unsigned short numberOfGpuStates;
-    char ** gpuFreqState;
+    ushort * gpuFreqState;
     
     unsigned short memFreqOffset;
     unsigned short numberOfMemStates;
-    char ** memFreqState;
+    ushort * memFreqState;
     
     unsigned short fanInfoOffset;
     unsigned short hysteresis;

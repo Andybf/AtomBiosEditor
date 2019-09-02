@@ -34,7 +34,7 @@ const char * CompanyNames[11][2] = {
 
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable {
     *atomTable = loadMainTable(FW); //carregando o conteúdo do firmware na memória
-    [_textFieldArch        setStringValue: [NSString stringWithFormat: @"%s",FW.architecture]];
+    [_textFieldArch        setStringValue: [NSString stringWithFormat: @"%s",atomTable->architecture]];
     [_textFieldRomMsg      setStringValue: [NSString stringWithUTF8String: atomTable->romMessage]];
     [_textFieldPartNumber  setStringValue: [NSString stringWithUTF8String: atomTable->partNumber]];
     [_textFieldCompDate    setStringValue: [NSString stringWithUTF8String: atomTable->compTime]];

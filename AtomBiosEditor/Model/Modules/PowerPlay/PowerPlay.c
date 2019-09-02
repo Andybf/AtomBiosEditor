@@ -33,9 +33,9 @@ struct POWERPLAY_DATA ShowPowerPlayData (FILE * firmware, struct ATOM_ABSTRACT_T
 //    printf(" PowerPlay states: %d\n Id | GPU Clock | Mem Clock | Voltage\n",powerPlay.numberOfStates);
     for (int c=0; c<powerPlay.numberOfStates; c++) {
         if (c == 0) { step = 2; } else { step += powerPlay.lengthPerState;}
-        powerPlay.gpuClock[c]    =   GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step,       0x3, 0);
-        powerPlay.memClock[c]    =   GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step + 0x3, 0x3, 0);
-        powerPlay.voltage[c]     =   GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step + 0x6, 0x2, 0);
+        powerPlay.gpuClock[c]    =   HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step,       0x3, 0),6)/100;
+        powerPlay.memClock[c]    =   HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step + 0x3, 0x3, 0),6)/100;
+        powerPlay.voltage[c]     =   HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + step + 0x6, 0x2, 0),4);
 //        printf("  %d |",c);
 //        printf(" %d MHz   |",HexToDec((char*)powerPlay.gpuClock[c],6)/100);
 //        printf(" %d MHz   |",HexToDec((char*)powerPlay.memClock[c],6)/100);
@@ -50,7 +50,7 @@ struct POWERPLAY_DATA ShowPowerPlayData (FILE * firmware, struct ATOM_ABSTRACT_T
 //    printf("\n GPU states: %d\n Id | GPU Clock | Offset\n",powerPlay.numberOfGpuStates);
     for (int c=0; c<powerPlay.numberOfGpuStates; c++) {
         if (c == 0) { step = 1; } else { step += 5;}
-        powerPlay.gpuFreqState[c] = GetFileData(firmware, powerPlay.gpuFreqOffset + abstractTable.offset + step, 0x3, 0);
+        powerPlay.gpuFreqState[c] = HexToDec(GetFileData(firmware, powerPlay.gpuFreqOffset + abstractTable.offset + step, 0x3, 0),6)/100;
 //        printf("  %d |",c);
 //        printf(" %d MHz   | 0x%02X \n",HexToDec((char*)powerPlay.gpuFreqState[c], 6)/100, powerPlay.gpuFreqOffset+abstractTable.offset+0x1+step);
     }
@@ -62,8 +62,7 @@ struct POWERPLAY_DATA ShowPowerPlayData (FILE * firmware, struct ATOM_ABSTRACT_T
 //    printf("\n Mem states: %d\n Id | Mem Clock | Offset\n",powerPlay.numberOfMemStates);
     for (int c=0; c<powerPlay.numberOfMemStates; c++) {
         if (c == 0) { step = 0; } else { step += 5;}
-        powerPlay.memFreqState[c] = calloc(1,4);
-        powerPlay.memFreqState[c] = GetFileData(firmware, +powerPlay.memFreqOffset+abstractTable.offset+0x1+step, 0x3, 0);
+        powerPlay.memFreqState[c] = HexToDec(GetFileData(firmware, +powerPlay.memFreqOffset+abstractTable.offset+0x1+step, 0x3, 0),6)/100;
 //        printf("  %d | ",c);
 //        printf("%d MHz   | 0x%02X\n",HexToDec((char*)powerPlay.memFreqState[c], 6)/100, powerPlay.memFreqOffset+abstractTable.offset+0x1+step);
     }

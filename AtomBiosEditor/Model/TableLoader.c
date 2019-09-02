@@ -70,6 +70,19 @@ struct ATOM_BASE_TABLE loadMainTable(struct FIRMWARE_FILE FW) {
     strcpy((char*)atomTable.subsystemVendorId, GetFileData(FW.file, atomTable.romInfoOffset+0x18,    2,              0));
     strcpy((char*)atomTable.deviceId,          GetFileData(FW.file, atomTable.romInfoOffset+0x28,    4,              0));
     
+    //Checking Architecture
+    if (FW.archType == 1) {
+        strcpy(atomTable.architecture, "TERASCALE 2");
+    } else if (FW.archType == 2) {
+        strcpy(atomTable.architecture, "CGN 1.0/2.0");
+    } else if (FW.archType == 3) {
+        strcpy(atomTable.architecture, "CGN 3.0");
+    } else if (FW.archType == 4) {
+        strcpy(atomTable.architecture, "CGN 4.0");
+    } else {
+        exit(8);
+    }
+    
     // Checking UEFI Support
     if( strcmp(GetFileData(FW.file, QUANTITY_64KB, 0x2, 0), STATIC_ROM_MAGIC_NUMBER) == 0 ) {
         atomTable.uefiSupport = 1;
@@ -102,13 +115,18 @@ void loadCmmdAndDataTables (struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE * at
             fseek(FW.file, atomTable->tblOffsets[1].offset+4, SEEK_SET);
         }
         posOffTbl = ftell(FW.file);
-        sprintf(atomTable->atomTables[b].id,        FORMAT_HEX, c);
+        atomTable->atomTables[b].id = c;
         atomTable->atomTables[b].name       = (char *) malloc(sizeof(char*) * sizeof(tableNames[b]));
-        strcpy( atomTable->atomTables[b].name,      tableNames[b]);
-        atomTable->atomTables[b].offset     = HexToDec(GetFileData(FW.file, (int) ftell(FW.file),             2,    0),4);
+        strcpy( atomTable->atomTables[b].name, tableNames[b]);
+        atomTable->atomTables[b].offset     = HexToDec(GetFileData(FW.file, (int) ftell(FW.file),  2,  0),4);
+        
+        atomTable->atomTables[b].size = 0;
+        strcpy((char*)atomTable->atomTables[b].formatRev,"  ");
+        strcpy((char*)atomTable->atomTables[b].contentRev,"  ");
+        atomTable->atomTables[b].content = NULL;
         
         if (atomTable->atomTables[b].offset > 30000 ) {
-            atomTable->atomTables[b].size       = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset,  2,    0),4);
+            atomTable->atomTables[b].size                     = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset,  2,    0),4);
             strcpy((char*)atomTable->atomTables[b].formatRev,            GetFileData(FW.file, atomTable->atomTables[b].offset+2,1,    0));
             strcpy((char*)atomTable->atomTables[b].contentRev,           GetFileData(FW.file, atomTable->atomTables[b].offset+3,1,    0));
             atomTable->atomTables[b].content = (char*)malloc(sizeof(char *) * atomTable->atomTables[b].size);
@@ -145,13 +163,56 @@ short VerifySubsystemCompanyName(struct ATOM_BASE_TABLE atomTable, char * Compan
 
 // Extrai a table selecionada pelo usuário e coloca em um arquivo binário.
 void ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath) {
-    //Posicionando o ponteiro do arquivo no inicio da table
-    fseek(firmware, abstractTable.offset, SEEK_SET);
     //Criando arquivo binario contendo a tabela
     FILE * output = fopen(extractedTableFilePath, "wb");
-    fwrite( GetFileData(firmware,abstractTable.offset, abstractTable.size, 1), sizeof(char), abstractTable.size, output );
+    fwrite( abstractTable.content, sizeof(char), abstractTable.size, output );
     fclose(output);
-    printf(" Success!");
 }
 
-
+//substitui a tabela indicado por outra em um arquivo binario .bin
+void ReplaceTable (struct FIRMWARE_FILE * FW, struct ATOM_BASE_TABLE * atomTable, ushort index, const char * tablePath) {
+    FILE * tableBin;
+    if ( !(tableBin = fopen(tablePath, "r")) ) {
+        printf(" Error: Table not found! '%s'\n",tablePath);
+        exit(1);
+    } //Carregando o arquivo binário referenciado pelo usuario e colocando em um buffer
+    struct stat tableFileInfo;
+    stat(tablePath,&tableFileInfo);
+    char * tableChar = malloc(sizeof(char*) * tableFileInfo.st_size);
+    tableChar = GetFileData(tableBin, 0x0, (int)tableFileInfo.st_size, 1);
+    
+    if (tableFileInfo.st_size == atomTable->atomTables[index].size ){
+        strcpy(atomTable->atomTables[index].content, tableChar);
+    }
+    else if (tableFileInfo.st_size < atomTable->atomTables[index].size) {
+        strcpy(atomTable->atomTables[index].content, tableChar);
+        ushort writingPoint = tableFileInfo.st_size + 1;
+        for (int a=0; a<atomTable->atomTables[index].size - (int)tableFileInfo.st_size; a++) {
+            atomTable->atomTables[index].content[writingPoint] = '\0';
+            writingPoint++;
+        }
+    }
+    else if (tableFileInfo.st_size > atomTable->atomTables[index].size) {
+        printf("Error: Under Construction\n");
+//        abstractTable->size    = tableFileInfo.st_size;
+//        abstractTable->content = realloc(abstractTable->content, abstractTable->size);
+//        abstractTable->content = GetFileData(tableBin, 0, (int)tableFileInfo.st_size, 1);
+//        short diff = (unsigned short)tableFileInfo.st_size - abstractTable->size;
+//
+//        for (int a=1; a<QUANTITY_TOTAL_TABLES; a++) { // Calculando a diferença no offset das tabelas seguintes
+//            if (atomTable->atomTables[a].offset - atomTable->atomTables[a-1].offset+atomTable->atomTables[a-1].size < 0) {
+//                atomTable->atomTables[a].offset += diff;
+//            }
+//        }
+//        for (int a=1; a<QUANTITY_TOTAL_TABLES; a++) {
+//            printf("%c", atomTable->atomTables[a].offset  );
+//            //fprintf ( newBios, "%c", atomTable->atomTables[a].offset );
+//            //fwrite(atomTable->atomTables[a].offset, sizeof(char), 0x2, newBios);
+//            //atomTable->tblOffsets[1]->offset = atomTable->atomTables[a].offset;
+//            // Falta mudar as tabelas com enedreços das tables
+//        }
+//
+//        // e finalmente gravar tudo na nova bios
+    }
+    //FixChecksum(newBiosPath, FW->fileInfo.st_size , atomTable );
+}

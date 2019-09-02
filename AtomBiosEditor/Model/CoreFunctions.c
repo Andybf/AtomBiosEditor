@@ -61,4 +61,14 @@ char * GetFileData(FILE * firmware, int posInicial, int quantBytes, short endian
     return formated_output;
 }
 
+//count the number of digits in a int variable
+int count(int num){
+    int contagem = 0;
+    while(num != 0){
+        contagem++;
+        num /= 10;
+    }
+    return contagem;
+}
+
 

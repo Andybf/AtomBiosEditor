@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7111EA6B2316D66F006FCC02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA6A2316D66F006FCC02 /* AppDelegate.m */; };
 		7111EA6E2316D66F006FCC02 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA6D2316D66F006FCC02 /* MasterViewController.m */; };
-		7111EA702316D671006FCC02 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA6F2316D671006FCC02 /* Assets.xcassets */; };
 		7111EA732316D671006FCC02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7111EA712316D671006FCC02 /* Main.storyboard */; };
 		7111EA762316D671006FCC02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA752316D671006FCC02 /* main.m */; };
 		7111EA812316D8F5006FCC02 /* OverviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7111EA802316D8F5006FCC02 /* OverviewController.m */; };
@@ -26,6 +25,7 @@
 		71154873231B6ED80073F3AE /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71154872231B6ED80073F3AE /* MasterView.xib */; };
 		71C3DF0B2319B72A0006FD27 /* PowerPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 71C3DF092319B72A0006FD27 /* PowerPlay.c */; };
 		71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CD231C333300EC0BB3 /* Credits.rtf */; };
+		71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CF231C654100EC0BB3 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +34,6 @@
 		7111EA6A2316D66F006FCC02 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		7111EA6C2316D66F006FCC02 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		7111EA6D2316D66F006FCC02 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		7111EA6F2316D671006FCC02 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7111EA722316D671006FCC02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7111EA742316D671006FCC02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7111EA752316D671006FCC02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,6 +60,7 @@
 		71C3DF092319B72A0006FD27 /* PowerPlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PowerPlay.c; sourceTree = "<group>"; };
 		71C3DF0A2319B72A0006FD27 /* PowerPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerPlay.h; sourceTree = "<group>"; };
 		71D855CD231C333300EC0BB3 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		71D855CF231C654100EC0BB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +99,8 @@
 				7111EA7D2316D889006FCC02 /* Controller */,
 				7111EA692316D66F006FCC02 /* AppDelegate.h */,
 				7111EA6A2316D66F006FCC02 /* AppDelegate.m */,
-				7111EA6F2316D671006FCC02 /* Assets.xcassets */,
 				7111EA742316D671006FCC02 /* Info.plist */,
+				71D855CF231C654100EC0BB3 /* Assets.xcassets */,
 				7111EA752316D671006FCC02 /* main.m */,
 				7111EA772316D671006FCC02 /* AtomBiosEditor.entitlements */,
 			);
@@ -127,13 +127,13 @@
 		7111EA7E2316D89B006FCC02 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				7111EA882316D9F6006FCC02 /* CoreFunctions.c */,
 				7111EA842316D9F6006FCC02 /* CoreFunctions.h */,
-				7111EA852316D9F6006FCC02 /* FileLoader.c */,
+				7111EA882316D9F6006FCC02 /* CoreFunctions.c */,
 				7111EA862316D9F6006FCC02 /* FileLoader.h */,
-				7111EA822316D9F6006FCC02 /* Modules */,
-				7111EA832316D9F6006FCC02 /* TableLoader.c */,
+				7111EA852316D9F6006FCC02 /* FileLoader.c */,
 				7111EA872316D9F6006FCC02 /* TableLoader.h */,
+				7111EA832316D9F6006FCC02 /* TableLoader.c */,
+				7111EA822316D9F6006FCC02 /* Modules */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -239,12 +239,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */,
-				7111EA702316D671006FCC02 /* Assets.xcassets in Resources */,
 				7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */,
 				71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */,
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
 				71154873231B6ED80073F3AE /* MasterView.xib in Resources */,
 				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
+				71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */,
 				7111EA732316D671006FCC02 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

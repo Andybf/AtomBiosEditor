@@ -12,20 +12,21 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-    [_textFieldMaxGpu setStringValue: @"null"];
-    [_textFieldMaxMem setStringValue: @"null"];
+    [_textFieldMaxGpu  setStringValue: @"null"];
+    [_textFieldMaxMem  setStringValue: @"null"];
     
-    [_textFieldMaxTdp setStringValue: @"null"];
-    [_textFieldTdp    setStringValue: @"null"];
-    [_textFieldMinTdp setStringValue: @"null"];
+    [_textFieldMaxTdp  setStringValue: @"null"];
+    [_textFieldTdp     setStringValue: @"null"];
+    [_textFieldMinTdp  setStringValue: @"null"];
     
-    [_textFieldTemp1  setStringValue: @"null"];
-    [_textFieldTemp2  setStringValue: @"null"];
-    [_textFieldTemp3  setStringValue: @"null"];
+    [_textFieldTmpHyst setStringValue: @"null"];
+    [_textFieldTemp1   setStringValue: @"null"];
+    [_textFieldTemp2   setStringValue: @"null"];
+    [_textFieldTemp3   setStringValue: @"null"];
     
-    [_textFieldFan1   setStringValue: @"null"];
-    [_textFieldFan2   setStringValue: @"null"];
-    [_textFieldFan3   setStringValue: @"null"];
+    [_textFieldFan1    setStringValue: @"null"];
+    [_textFieldFan2    setStringValue: @"null"];
+    [_textFieldFan3    setStringValue: @"null"];
 }
 
 @end

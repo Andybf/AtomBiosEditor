@@ -18,21 +18,14 @@
 // Estruturas da dados auxiliares
 struct FIRMWARE_FILE {
     FILE * file;
-    const char * pathName;
+    char * pathName;
     struct stat fileInfo;
-    char * architecture;
+    ushort archType;
 };
 
-//Definicção de métodos
-//Métodos Ações
+//Definicção de funcoes
 short CheckFirmwareSize(struct stat);
 short CheckFirmwareSignature(FILE *);
 short CheckFirmwareArchitecture(FILE *);
-
-
-//Métodos Acessores
-struct FIRMWARE_FILE getFirmwareStruct(void);
-FILE * getFile(void);
-const char* getFileName(void);
 
 #endif /* Loader_h */

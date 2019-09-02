@@ -38,7 +38,6 @@
 }
 
 - (void)loadInfo : (struct FIRMWARE_FILE) FW {
-    //[self->_textFieldFilePath setStringValue: [NSString stringWithUTF8String: self->FW.pathName]];
     [self->oc initOverviewInfo: FW : &(self->_atomTable) ];
     [self->tc EnableThisSection : &(self->_atomTable) : &(FW)];
     [self->ppc initTableInfo: &(self->_atomTable) : FW.file];

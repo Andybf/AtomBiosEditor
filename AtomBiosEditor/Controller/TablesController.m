@@ -12,10 +12,14 @@
     AtomTable * tableView;
     struct ATOM_BASE_TABLE * atomTable;
     struct FIRMWARE_FILE * FW;
+    NSArray * stringFormat;
+    ushort rows, aInitial, aFinal;
 }
 
 -(void)viewDidLoad {
     [super viewDidLoad];
+    
+    stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
     // Selector Object Configuration
     NSArray * tablesSelectorList = [NSArray arrayWithObjects:@"select..",@"Data Tables",@"Command Tables", nil];
     for (int a=0; a<tablesSelectorList.count; a++) {
@@ -37,66 +41,43 @@
 -(void)EnableThisSection : (struct ATOM_BASE_TABLE *)atmtable : (struct FIRMWARE_FILE *)firmwareFile {
     atomTable = atmtable;
     FW = firmwareFile;
-    [ tableView        setEnabled : YES];
-    [_selectorTable    setEnabled : YES];
-    [_buttonDumpTable  setEnabled : YES];
-    [_radioHexadecimal setState   : NSControlStateValueOn];
+    [ tableView          setEnabled : YES];
+    [_selectorTable      setEnabled : YES];
+    [_buttonDumpTable    setEnabled : YES];
+    [_buttonReplaceTable setEnabled : YES];
+    [_radioHexadecimal   setState   : NSControlStateValueOn];
 }
 
--(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)HexOrDecIsEnabled{
+-(void) initTableTabInfo: (short)type : (struct ATOM_BASE_TABLE *)atomTable : (NSControlStateValue)viewMode{
     [_radioDecimal     setEnabled : YES];
     [_radioHexadecimal setEnabled : YES];
-    switch (type) {
-        case 1: // Data Tables
-            NSLog(@"Data tables Selected.");
-            [tableView setTableIndex: [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            [tableView setTableName : [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            [tableView setOffset    : [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            [tableView setSize      : [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            [tableView setFormatRev : [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            [tableView setContentRev: [[NSMutableArray alloc] initWithCapacity:QUANTITY_DATA_TABLES]];
-            for (int a=QUANTITY_COMMAND_TABLES; a<QUANTITY_TOTAL_TABLES; a++) {
-                [[tableView tableName]  addObject: [NSString stringWithUTF8String:    atomTable->atomTables[a].name      ]];
-                if (HexOrDecIsEnabled) { // Hex on
-                    [[tableView tableIndex] addObject: [NSString stringWithUTF8String: atomTable->atomTables[a].id       ]];
-                    [[tableView offset] addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].offset  ]];
-                    [[tableView size]   addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].size    ]];
-                } else { // Hex off
-                    [[tableView tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable->atomTables[a].id, 2) ]];
-                    [[tableView offset] addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].offset    ]];
-                    [[tableView size]   addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].size      ]];
-                }
-                [[tableView formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].formatRev ]];
-                [[tableView contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].contentRev]];
-            }
-            break;
-        case 2: // Command Tables
-            NSLog(@"Command tables Selected.");
-            [tableView setTableIndex: [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            [tableView setTableName : [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            [tableView setOffset    : [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            [tableView setSize      : [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            [tableView setFormatRev : [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            [tableView setContentRev: [[NSMutableArray alloc] initWithCapacity:QUANTITY_COMMAND_TABLES]];
-            for (int a=0; a<QUANTITY_COMMAND_TABLES; a++) {
-                [[tableView tableName]  addObject: [NSString stringWithUTF8String:    atomTable->atomTables[a].name      ]];
-                if (HexOrDecIsEnabled) { // Hex on
-                    [[tableView tableIndex] addObject: [NSString stringWithUTF8String: atomTable->atomTables[a].id       ]];
-                    [[tableView offset] addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].offset  ]];
-                    [[tableView size]   addObject: [NSString stringWithFormat: @"%02X", atomTable->atomTables[a].size    ]];
-                } else { // Hex off
-                    [[tableView tableIndex] addObject: [NSString stringWithFormat: @"%d",HexToDec(atomTable->atomTables[a].id, 2) ]];
-                    [[tableView offset] addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].offset    ]];
-                    [[tableView size]   addObject: [NSString stringWithFormat: @"%i", atomTable->atomTables[a].size      ]];
-                }
-                [[tableView formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].formatRev ]];
-                [[tableView contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].contentRev]];
-            }
-            break;
-        default:
-            printf("Error: Invalid type of table selected.");
-            exit(7);
-            break;
+    if (type == 1) {
+        rows     = QUANTITY_DATA_TABLES;
+        aInitial = QUANTITY_COMMAND_TABLES;
+        aFinal   = QUANTITY_TOTAL_TABLES;
+    } else {
+        rows     = QUANTITY_COMMAND_TABLES;
+        aInitial = 0;
+        aFinal   = QUANTITY_COMMAND_TABLES;
+    }
+    [tableView setTableIndex: [[NSMutableArray alloc] initWithCapacity: rows]];
+    [tableView setTableName : [[NSMutableArray alloc] initWithCapacity: rows]];
+    [tableView setOffset    : [[NSMutableArray alloc] initWithCapacity: rows]];
+    [tableView setSize      : [[NSMutableArray alloc] initWithCapacity: rows]];
+    [tableView setFormatRev : [[NSMutableArray alloc] initWithCapacity: rows]];
+    [tableView setContentRev: [[NSMutableArray alloc] initWithCapacity: rows]];
+    for (int a=aInitial; a<aFinal; a++) {
+        [[tableView tableName]  addObject: [NSString stringWithUTF8String: atomTable->atomTables[a].name]];
+        [[tableView tableIndex] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomTable->atomTables[a].id ]];
+        [[tableView formatRev]  addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].formatRev ]];
+        [[tableView contentRev] addObject: [NSString stringWithFormat: @"%s", atomTable->atomTables[a].contentRev]];
+        if (atomTable->atomTables[a].offset == 0) {
+            [[tableView offset] addObject: [NSString stringWithFormat: @""]];
+            [[tableView size]   addObject: [NSString stringWithFormat: @""]];
+        } else {
+            [[tableView offset] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomTable->atomTables[a].offset]];
+            [[tableView size]   addObject: [NSString stringWithFormat: stringFormat[viewMode], atomTable->atomTables[a].size  ]];
+        }
     }
     [tableView reloadData];
 }
@@ -116,7 +97,6 @@
 }
 
 - (IBAction)DumpButtonTriggered:(id)sender {
-    printf("Info: Clicked Row: %ld\n",(long)self->tableView.selectedRow);
     NSSavePanel * saveFile = [NSSavePanel savePanel];
     long selectedRow;
     
@@ -129,7 +109,6 @@
         [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s.bin",atomTable->atomTables[selectedRow].name]];
         [saveFile beginSheetModalForWindow: self.view.window completionHandler:^(NSInteger returnCode) {
             if (returnCode == 1) { // if the save button was triggered
-                printf("path %s\n",[saveFile.URL.path UTF8String]);
                 ExtractTable(self->FW->file, self->atomTable->atomTables[selectedRow], [saveFile.URL.path UTF8String]);
             }
         }];
@@ -137,18 +116,42 @@
         //[self DisplayAlert: @"No table was selected" :@"Please, select the table that you want to extract."];
     }
 }
+- (IBAction)ButtonReplaceTriggered:(id)sender {
+    NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
+    //Configuração
+    openPanel.allowsMultipleSelection = false;
+    openPanel.canChooseDirectories    = false;
+    openPanel.canChooseFiles          = true;
+    
+    long selectedRow;
+    if (self->tableView.selectedRow > -1) {
+        if ([self.selectorTable.title isEqualToString: @"Command Tables"]) {
+            selectedRow = tableView.selectedRow;
+        } else {
+            selectedRow = tableView.selectedRow+QUANTITY_COMMAND_TABLES;
+        }
+        [openPanel beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse result) {
+            printf("OpenPanel/n");
+            ReplaceTable(self->FW, self->atomTable, selectedRow, [openPanel.URL.path UTF8String]);
+            
+            self->atomTable->atomTables[selectedRow].offset = 0;
+            self->atomTable->atomTables[selectedRow].size = 0;
+            strcpy((char*)self->atomTable->atomTables[selectedRow].formatRev,"  ");
+            strcpy((char*)self->atomTable->atomTables[selectedRow].contentRev,"  ");
+        }];
+    }
+    
+}
 
 - (IBAction)RadioHexChanged:(id)sender {
     if (_radioHexadecimal.state == 1 ) {
         [_radioDecimal setState:NSControlStateValueOff];
-        NSLog(@"%ld", (long)[_radioDecimal state]);
         [self initTableTabInfo: self.selectorTable.indexOfSelectedItem : atomTable : _radioHexadecimal.state];
     }
 }
 - (IBAction)RadioDecChanged:(id)sender {
     if (_radioDecimal.state == 1 ) {
         [_radioHexadecimal setState:NSControlStateValueOff];
-        NSLog(@"%ld", (long)[_radioDecimal state]);
         [self initTableTabInfo: self.selectorTable.indexOfSelectedItem: atomTable : _radioHexadecimal.state];
     }
 }
@@ -165,7 +168,7 @@
         columnIdentifiers[a] = tempColumnIdentifiers[a];
     }
     NSTableColumn * columns[6];
-    CGFloat widths[] = {35,165.0,50.0,50.0,50.0,50.0};
+    CGFloat widths[] = {35,175.0,50.0,50.0,50.0,50.0};
     NSString * titles[] = {@"Index",@"Table Name",@"Offset",@"Size",@"Fmt Rev.",@"Cnt Rev."};
     for (int a=0; a<6; a++) {
          columns[a] = [[NSTableColumn alloc] initWithIdentifier: columnIdentifiers[a]];
@@ -182,8 +185,6 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    printf("Info: function numberOfRowsInTableView triggered.\n");
-    printf("Info: tableIndex Count: %lu\n",self.tableIndex.count);
     return _tableIndex.count;
 }
 
@@ -204,7 +205,6 @@
     } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[5]]) {
         return [self.contentRev objectAtIndex:row];
     } else {
-        NSLog( @"%@", [tableColumn identifier] );
         exit(4);
     }
 }

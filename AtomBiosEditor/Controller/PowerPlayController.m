@@ -39,21 +39,47 @@
 -(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (FILE *)firmware {
     [_radioDecimal     setEnabled : YES];
     [_radioHexadecimal setEnabled : YES];
-    [stTable[0] setEnabled: YES];
+    
     powerPlay = ShowPowerPlayData(firmware, atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
     
     [stTable[0] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
     [stTable[0] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
     [stTable[0] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
     [stTable[0] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
-    
     for (int a=0; a<powerPlay.numberOfStates; a++) {
-        [[stTable[0] index] addObject: [NSString stringWithFormat: @"%d",a+1]];
-        [[stTable[0] value] addObject: [NSString stringWithFormat: @"%s",powerPlay.gpuClock[a]]];
-        [[stTable[0] offset] addObject: [NSString stringWithFormat: @"%s",powerPlay.memClock[a]]];
-        [[stTable[0] size] addObject: [NSString stringWithFormat: @"%s",powerPlay.voltage[a]]];
+        [[stTable[0] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
+        [[stTable[0] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuClock[a]]];
+        [[stTable[0] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.memClock[a]]];
+        [[stTable[0] size]   addObject: [NSString stringWithFormat: @"%d",powerPlay.voltage[a]]];
     }
     [stTable[0] reloadData];
+    [stTable[0] setEnabled: YES];
+    
+    [stTable[1] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
+    [stTable[1] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
+    [stTable[1] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
+    [stTable[1] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
+    for (int a=0; a<powerPlay.numberOfGpuStates; a++) {
+        [[stTable[1] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
+        [[stTable[1] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuFreqState[a] ]];
+        [[stTable[1] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+        [[stTable[1] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+    }
+    [stTable[1] reloadData];
+    [stTable[1] setEnabled: YES];
+    
+    [stTable[2] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
+    [stTable[2] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
+    [stTable[2] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
+    [stTable[2] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
+    for (int a=0; a<powerPlay.numberOfMemStates; a++) {
+        [[stTable[2] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
+        [[stTable[2] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.memFreqState[a] ]];
+        [[stTable[2] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.memFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+        [[stTable[2] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+    }
+    [stTable[2] reloadData];
+    [stTable[2] setEnabled: YES];
 }
 
 - (IBAction)RadioHexChanged:(id)sender {
@@ -110,8 +136,6 @@
 }
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-    printf("Info: PowerPlay function numberOfRowsInTableView triggered.\n");
-    printf("Info: PowerPlay index Count: %lu\n",self.index.count);
     return _index.count;
 }
 
@@ -128,7 +152,6 @@
     } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[3]]) {
         return [self.size   objectAtIndex:row];
     } else {
-        NSLog( @"%@", [tableColumn identifier] );
         exit(4);
     }
 }

@@ -58,12 +58,15 @@
                 } if (! CheckFirmwareSignature(self->FW.file) ) {
                     [self DisplayAlert : @"Invalid Firmware Signature!" : @"The firmware signature indicates that the file is a AMD Atom BIOS."];
                     exit(2);
-                } if (! CheckFirmwareArchitecture(self->FW.file)) {
+                }
+                self->FW.archType = CheckFirmwareArchitecture(self->FW.file);
+                if ( self->FW.archType == 0) {
                     [self DisplayAlert : @"Architecture not supported!" : @"This firmware architecture is not support by this program."];
                     exit(3);
                 }
             }
-            [self->windowView setTitle: [NSString stringWithUTF8String: self->FW.pathName]];
+            NSArray * fileName = [[NSString stringWithUTF8String: self->FW.pathName] componentsSeparatedByString: @"/"];
+            [self->windowView setTitle: [NSString stringWithFormat: @"AtomBiosEditor - %@", fileName[fileName.count-1]]];
             [self->masterVC loadInfo : self->FW];
         }];
 }
