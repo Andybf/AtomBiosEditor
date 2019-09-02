@@ -40,7 +40,11 @@
 - (void)loadInfo : (struct FIRMWARE_FILE) FW {
     [self->oc initOverviewInfo: FW : &(self->_atomTable) ];
     [self->tc EnableThisSection : &(self->_atomTable) : &(FW)];
-    [self->ppc initTableInfo: &(self->_atomTable) : FW.file];
+    
+    struct POWERPLAY_DATA powerPlay = ShowPowerPlayData(FW.file, self->_atomTable.atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
+    
+    [self->ppc initTableInfo: &(self->_atomTable) : &(powerPlay) : 1];
+    [self->ovdc initOverDriveInfo : &(powerPlay)];
 }
 
 @end

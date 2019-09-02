@@ -76,7 +76,7 @@ struct ATOM_BASE_TABLE {
     byte deviceId[9];
     
     ushort romMsgOffset;
-    char romMessage[77];
+    char romMessage[59];
     
     char architecture[12];
     

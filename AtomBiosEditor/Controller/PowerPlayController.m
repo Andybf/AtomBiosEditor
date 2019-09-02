@@ -9,9 +9,10 @@
 #import "PowerPlayController.h"
 
 @implementation PowerPlayController {
-    
+    NSArray * stringFormat;
     NSScrollView * tableContainer[3];
-    struct POWERPLAY_DATA powerPlay;
+    struct ATOM_BASE_TABLE * aTable;
+    struct POWERPLAY_DATA pPlay;
 }
 
 -(void)viewDidLoad {
@@ -22,9 +23,11 @@
         {7,172,440,106},
         {7,33 ,440,106}
     };
+    stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
+    [_radioHexadecimal setState: NSControlStateValueOn];
     for (int c=0; c<3; c++) {
-         tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(dimensions[c][0],dimensions[c][1],dimensions[c][2],dimensions[c][3])];
-         stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,dimensions[c][2],dimensions[c][3])];
+        tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(dimensions[c][0],dimensions[c][1],dimensions[c][2],dimensions[c][3])];
+        stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,dimensions[c][2],dimensions[c][3])];
         if (! (c==0) ) {
             [stTable[c] initTableStructure: 0];
         } else {
@@ -36,64 +39,56 @@
     }
 }
 
--(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (FILE *)firmware {
+-(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived{
     [_radioDecimal     setEnabled : YES];
     [_radioHexadecimal setEnabled : YES];
+    pPlay = *powerPlay;
+    aTable = atomTable;
+    ushort rows[3] = { powerPlay->numberOfStates, powerPlay->numberOfGpuStates, powerPlay->numberOfMemStates};
     
-    powerPlay = ShowPowerPlayData(firmware, atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
-    
-    [stTable[0] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
-    [stTable[0] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
-    [stTable[0] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
-    [stTable[0] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfStates]];
-    for (int a=0; a<powerPlay.numberOfStates; a++) {
-        [[stTable[0] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
-        [[stTable[0] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuClock[a]]];
-        [[stTable[0] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.memClock[a]]];
-        [[stTable[0] size]   addObject: [NSString stringWithFormat: @"%d",powerPlay.voltage[a]]];
+    for (int a=0; a<3; a++) {
+        [stTable[a] setIndex     : [[NSMutableArray alloc] initWithCapacity: rows[HexActived] ]];
+        [stTable[a] setClock     : [[NSMutableArray alloc] initWithCapacity: rows[HexActived] ]];
+        [stTable[a] setOffset    : [[NSMutableArray alloc] initWithCapacity: rows[HexActived] ]];
+        [stTable[a] setSize      : [[NSMutableArray alloc] initWithCapacity: rows[HexActived] ]];
     }
-    [stTable[0] reloadData];
-    [stTable[0] setEnabled: YES];
+    for (int a=0; a<powerPlay->numberOfStates; a++) {
+        [[stTable[0] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
+        [[stTable[0] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuClock[a]]];
+        [[stTable[0] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memClock[a]]];
+        [[stTable[0] size]   addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->voltage[a]]];
+    }
     
-    [stTable[1] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
-    [stTable[1] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
-    [stTable[1] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
-    [stTable[1] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfGpuStates]];
-    for (int a=0; a<powerPlay.numberOfGpuStates; a++) {
-        [[stTable[1] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
-        [[stTable[1] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuFreqState[a] ]];
-        [[stTable[1] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.gpuFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+    for (int a=0; a<powerPlay->numberOfGpuStates; a++) {
+        [[stTable[1] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
+        [[stTable[1] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqState[a] ]];
+        [[stTable[1] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
         [[stTable[1] size]   addObject: [NSString stringWithFormat: @"0x3"]];
     }
-    [stTable[1] reloadData];
-    [stTable[1] setEnabled: YES];
     
-    [stTable[2] setIndex     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
-    [stTable[2] setValue     : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
-    [stTable[2] setOffset    : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
-    [stTable[2] setSize      : [[NSMutableArray alloc] initWithCapacity: powerPlay.numberOfMemStates]];
-    for (int a=0; a<powerPlay.numberOfMemStates; a++) {
-        [[stTable[2] index]  addObject: [NSString stringWithFormat: @"%d",a+1]];
-        [[stTable[2] value]  addObject: [NSString stringWithFormat: @"%d",powerPlay.memFreqState[a] ]];
-        [[stTable[2] offset] addObject: [NSString stringWithFormat: @"%d",powerPlay.memFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+    for (int a=0; a<powerPlay->numberOfMemStates; a++) {
+        [[stTable[2] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
+        [[stTable[2] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqState[a] ]];
+        [[stTable[2] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
         [[stTable[2] size]   addObject: [NSString stringWithFormat: @"0x3"]];
     }
-    [stTable[2] reloadData];
-    [stTable[2] setEnabled: YES];
+    for (int a=0; a<3; a++){
+        [stTable[a] reloadData];
+        [stTable[a] setEnabled: YES];
+    }
+    
 }
 
 - (IBAction)RadioHexChanged:(id)sender {
     if (_radioHexadecimal.state == 1 ) {
         [_radioDecimal setState:NSControlStateValueOff];
-        NSLog(@"%ld", (long)[_radioDecimal state]);
-        //[self initTableInfo : atomTable : ];
+        [self initTableInfo : aTable : &(pPlay) : 1];
     }
 }
 - (IBAction)RadioDecChanged:(id)sender {
     if (_radioDecimal.state == 1 ) {
         [_radioHexadecimal setState:NSControlStateValueOff];
-        NSLog(@"%ld", (long)[_radioDecimal state]);
-        //[self initTableInfo : atomTable : ];
+        [self initTableInfo : aTable : &(pPlay) : 0];
     }
 }
 
@@ -131,6 +126,7 @@
     [self setDataSource: self];
     [self setAllowsColumnResizing: NO];
     [self setAllowsColumnReordering: NO];
+    [self setAllowsMultipleSelection: NO];
     [self setEnabled: NO];
     [self reloadData];
 }
@@ -141,12 +137,13 @@
 
 - (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row:(NSInteger)row {
     //Column configurations
-    [tableColumn setEditable:NO];
+    [tableColumn setEditable: YES];
     [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
     if        ([[tableColumn identifier] isEqualToString: columnIdentifiers[0]]) {
+        [tableColumn setEditable: NO];
         return [self.index  objectAtIndex:row];
     }else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[1]]) {
-        return [self.value  objectAtIndex:row];
+        return [self.Clock  objectAtIndex:row];
     } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[2]]) {
         return [self.offset objectAtIndex:row];
     } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[3]]) {

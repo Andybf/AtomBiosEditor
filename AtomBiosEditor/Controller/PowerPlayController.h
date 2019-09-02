@@ -16,11 +16,11 @@
 @interface StatesTable : NSTableView <NSTableViewDataSource>
 
     @property (nonatomic, strong) NSMutableArray * index;
-    @property (nonatomic, strong) NSMutableArray * value;
+    @property (nonatomic, strong) NSMutableArray * Clock;
     @property (nonatomic, strong) NSMutableArray * offset;
     @property (nonatomic, strong) NSMutableArray * size;
 
--(void) initTableStructure : (short)type;
+    -(void) initTableStructure : (short)type;
 
 @end
 
@@ -29,10 +29,10 @@
     StatesTable * stTable[3];
 }
 
-@property (weak) IBOutlet NSButton *radioHexadecimal;
-@property (weak) IBOutlet NSButton *radioDecimal;
+    @property (weak) IBOutlet NSButton *radioHexadecimal;
+    @property (weak) IBOutlet NSButton *radioDecimal;
 
--(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (FILE *)firmware;
+-(void) initTableInfo : (struct ATOM_BASE_TABLE *)atomTable : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived;
 
 @end
 

@@ -23,34 +23,34 @@
 
 // Data Structures
 struct POWERPLAY_DATA {
-    unsigned short clockInfoOffset;
-    unsigned short numberOfStates;
-    unsigned short lengthPerState;
+    ushort clockInfoOffset;
+    ushort numberOfStates;
+    ushort lengthPerState;
     ushort * gpuClock;
     ushort * memClock;
     ushort * voltage;
     
-    unsigned short overDriveOffset;
-    char maxGpuClock[7];
-    char maxMemClock[7];
+    ushort overDriveOffset;
+    ushort maxGpuClock;
+    ushort maxMemClock;
     
-    unsigned short gpuFreqOffset;
-    unsigned short numberOfGpuStates;
+    ushort gpuFreqOffset;
+    ushort numberOfGpuStates;
     ushort * gpuFreqState;
     
-    unsigned short memFreqOffset;
-    unsigned short numberOfMemStates;
+    ushort memFreqOffset;
+    ushort numberOfMemStates;
     ushort * memFreqState;
     
-    unsigned short fanInfoOffset;
-    unsigned short hysteresis;
-    unsigned short tempTarget[3];
-    unsigned short fanSpeed[3];
-    unsigned short maxTemp;
-    unsigned short maxFanSpeed;
+    ushort fanInfoOffset;
+    ushort hysteresis;
+    ushort tempTarget[3];
+    ushort fanSpeed[3];
+    ushort maxTemp;
+    ushort maxFanSpeed;
     
-    int minTdp;
-    int maxTdp;
+    ushort minTdp;
+    ushort maxTdp;
 };
 
 struct POWERPLAY_DATA ShowPowerPlayData (FILE * , struct ATOM_ABSTRACT_TABLE);

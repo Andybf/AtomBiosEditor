@@ -62,7 +62,7 @@ struct ATOM_BASE_TABLE loadMainTable(struct FIRMWARE_FILE FW) {
     atomTable.checksum       = HexToDec(GetFileData(FW.file, OFFSET_ROM_CHECKSUM,             1,              0),2);
     atomTable.romInfoOffset  = HexToDec(GetFileData(FW.file, OFFSET_ROM_INFO,                 2,              0),4);
     atomTable.romMsgOffset   = HexToDec(GetFileData(FW.file, atomTable.romInfoOffset+0x10,    2,              0),4);
-    strcpy(atomTable.romMessage,               GetFileData(FW.file, atomTable.romMsgOffset +0x2,     76,             1));
+    strcpy(atomTable.romMessage,               GetFileData(FW.file, atomTable.romMsgOffset +0x2,     58,             1));
     strcpy(atomTable.partNumber,               GetFileData(FW.file, HexToDec(GetFileData(FW.file,OFFSET_STR_START,1,0),2), 39, 1));
     strcpy(atomTable.biosVersion,              GetFileData(FW.file, atomTable.romMsgOffset +0x95,    22,             1));
     strcpy(atomTable.compTime,                 GetFileData(FW.file, OFFSET_COMPILATION_TIME,         14,             1));
