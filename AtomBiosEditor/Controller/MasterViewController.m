@@ -15,36 +15,37 @@
 
 @implementation MasterViewController {
     
-    OverviewController * oc;
-    TablesController * tc;
-    PowerPlayController * ppc;
-    OverDriveController * ovdc;
+    OverviewController * varOverviewController;
+    TablesController * varTablesController;
+    PowerPlayController * varPowerPlayController;
+    OverDriveController * varOverDriveController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    oc = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
-    [[self containerOverview]  addSubview: self->oc.view];
+    varOverviewController = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
+    [[self containerOverview]  addSubview: self->varOverviewController.view];
     
-    tc = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
-    [[self containerTables]    addSubview: self->tc.view];
+    varTablesController = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
+    [[self containerTables]    addSubview: self->varTablesController.view];
     
-    ppc = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
-    [[self containerPowerPlay] addSubview: self->ppc.view];
+    varPowerPlayController = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
+    [[self containerPowerPlay] addSubview: self->varPowerPlayController.view];
     
-    ovdc = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
-    [[self containerOverDrive] addSubview: self->ovdc.view];
+    varOverDriveController = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
+    [[self containerOverDrive] addSubview: self->varOverDriveController.view];
 }
 
-- (void)loadInfo : (struct FIRMWARE_FILE) FW {
-    [self->oc initOverviewInfo: FW : &(self->_atomTable) ];
-    [self->tc EnableThisSection : &(self->_atomTable) : &(FW)];
+- (void)loadInfo : (struct FIRMWARE_FILE *) FW {
     
-    struct POWERPLAY_DATA powerPlay = ShowPowerPlayData(FW.file, self->_atomTable.atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
+    [self->varOverviewController initOverviewInfo: *FW : &(self->_atomTable) ];
+    [self->varTablesController EnableThisSection : &(self->_atomTable) : FW->fileName];
     
-    [self->ppc initTableInfo: &(self->_atomTable) : &(powerPlay) : 1];
-    [self->ovdc initOverDriveInfo : &(powerPlay)];
+    struct POWERPLAY_DATA powerPlay = ShowPowerPlayData(FW->file, self->_atomTable.atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
+    
+    [self->varPowerPlayController  InitPowerPlayInfo : &(self->_atomTable) : &(powerPlay) : 1];
+    [self->varOverDriveController initOverDriveInfo : &(powerPlay)];
 }
 
 @end

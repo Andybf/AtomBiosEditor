@@ -27,21 +27,25 @@
     [_textFieldMinTdp  setEnabled: YES];
     [_textFieldTdp     setEnabled: YES];
     
-    [_textFieldTmpHyst setStringValue: [NSString stringWithFormat: @"%d", powerPlay->hysteresis]];
     [_textFieldTemp1   setStringValue: [NSString stringWithFormat: @"%d", powerPlay->tempTarget[0]]];
     [_textFieldTemp2   setStringValue: [NSString stringWithFormat: @"%d", powerPlay->tempTarget[1]]];
     [_textFieldTemp3   setStringValue: [NSString stringWithFormat: @"%d", powerPlay->tempTarget[2]]];
-    [_textFieldTmpHyst setEnabled: YES];
+    [_textFieldTmpHyst setStringValue: [NSString stringWithFormat: @"%d", powerPlay->hysteresis]];
+    [_textFieldMaxTemp setStringValue: [NSString stringWithFormat: @"%d", powerPlay->maxTemp]];
     [_textFieldTemp1   setEnabled: YES];
     [_textFieldTemp2   setEnabled: YES];
     [_textFieldTemp3   setEnabled: YES];
+    [_textFieldTmpHyst setEnabled: YES];
+    [_textFieldMaxTemp setEnabled: YES];
     
     [_textFieldFan1    setStringValue: [NSString stringWithFormat: @"%d", powerPlay->fanSpeed[0]]];
     [_textFieldFan2    setStringValue: [NSString stringWithFormat: @"%d", powerPlay->fanSpeed[1]]];
     [_textFieldFan3    setStringValue: [NSString stringWithFormat: @"%d", powerPlay->fanSpeed[2]]];
+    [_textFieldMaxFan  setStringValue: [NSString stringWithFormat: @"%d", powerPlay->maxFanSpeed]];
     [_textFieldFan1    setEnabled: YES];
     [_textFieldFan2    setEnabled: YES];
     [_textFieldFan3    setEnabled: YES];
+    [_textFieldMaxFan  setEnabled: YES];
 }
 
 @end

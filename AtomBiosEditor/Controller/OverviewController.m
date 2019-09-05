@@ -14,10 +14,6 @@
     [super viewDidLoad];
 }
 
--(instancetype)init {
-    return self;
-}
-
 const char * CompanyNames[11][2] = {
     {"1002","AMD/ATI"},
     {"106B","Apple"},
@@ -34,37 +30,35 @@ const char * CompanyNames[11][2] = {
 
 - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable {
     *atomTable = loadMainTable(FW); //carregando o conteúdo do firmware na memória
-    [_textFieldArch        setStringValue: [NSString stringWithFormat: @"%s",atomTable->architecture]];
+    [_textFieldArch        setStringValue: [NSString stringWithFormat:     @"%s",atomTable->architecture]];
     [_textFieldRomMsg      setStringValue: [NSString stringWithUTF8String: atomTable->romMessage]];
     [_textFieldPartNumber  setStringValue: [NSString stringWithUTF8String: atomTable->partNumber]];
     [_textFieldCompDate    setStringValue: [NSString stringWithUTF8String: atomTable->compTime]];
     [_textFieldBiosVersion setStringValue: [NSString stringWithUTF8String: atomTable->biosVersion]];
-    [_textFieldDeviceId       setStringValue: [NSString stringWithUTF8String: (char *)atomTable->deviceId]];
+    [_textFieldDeviceId    setStringValue: [NSString stringWithUTF8String: (char *)atomTable->deviceId]];
     [_textFieldSubId       setStringValue: [NSString stringWithUTF8String: (char *)atomTable->subsystemId]];
-    [_textFieldMTSize setStringValue: [NSString stringWithFormat:  @"%d",atomTable->size]];
-    [_textFieldMTOffset setStringValue: [NSString stringWithUTF8String: "4"]];
-    short vendor = VerifySubsystemCompanyName(*atomTable,CompanyNames);
-    [_textFieldVendorId      setStringValue: [NSString stringWithFormat: @"%s - %s",(char *)atomTable->subsystemVendorId,CompanyNames[vendor][1] ]];
+    [_textFieldMTSize      setStringValue: [NSString stringWithFormat:     @"%d",atomTable->size]];
+    [_textFieldMTOffset    setStringValue: [NSString stringWithUTF8String: "0x4"]];
+    short vendor = VerifySubSysCompany(*atomTable,CompanyNames);
+    [_textFieldVendorId    setStringValue: [NSString stringWithFormat: @"%s - %s",(char *)atomTable->subsystemVendorId,CompanyNames[vendor][1] ]];
 
+    [ _checkUefiSupport setState: NSControlStateValueOff];
+    [ _checkUefiSupport setTitle: @"Unsupported!"];
     if (atomTable->uefiSupport != 0) {
         [ _checkUefiSupport setState: NSControlStateValueOn];
         [ _checkUefiSupport setTitle: @"Supported!"];
-    } else {
-        [ _checkUefiSupport setState: NSControlStateValueOff];
-        [ _checkUefiSupport setTitle: @"Unsupported!"];
     }
+    
+    [ _checkChecksum setState: NSControlStateValueOff];
+    [ _checkChecksum setTitle: [NSString stringWithUTF8String: "Invalid!"] ];
     if ( VerifyChecksum(FW, *atomTable) != 0) {
         [ _checkChecksum setState: NSControlStateValueOn];
         [ _checkChecksum setTitle: [NSString stringWithFormat: @"Valid! - 0x%02X", atomTable->checksum] ];
-    } else {
-        [ _checkChecksum setState: NSControlStateValueOff];
-        [ _checkChecksum setTitle: [NSString stringWithUTF8String: "Invalid!"] ];
     }
 }
 
 - (IBAction)CheckCheksum:(id)sender {
-    NSControlStateValue checkChecksumState = [_checkChecksum state];
-    if (checkChecksumState != NSControlStateValueOn) {
+    if (! [_checkChecksum state]) {
         [ _checkChecksum setState: NSControlStateValueOn];
     } else {
         [ _checkChecksum setState: NSControlStateValueOff];
@@ -72,20 +66,16 @@ const char * CompanyNames[11][2] = {
 }
 
 - (IBAction)CheckUefiChangedState:(id)sender {
-    NSControlStateValue checkUefiState = [ _checkUefiSupport state];
-    if (checkUefiState != NSControlStateValueOn) {
+    if (! [ _checkUefiSupport state]) {
         [ _checkUefiSupport setState: NSControlStateValueOn];
     } else {
         [ _checkUefiSupport setState: NSControlStateValueOff];
     }
-    
 }
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
-
     // Update the view, if already loaded.
 }
-
 
 @end

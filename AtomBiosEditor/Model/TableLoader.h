@@ -44,8 +44,8 @@ struct ATOM_ABSTRACT_TABLE {
     ushort offset;
     ushort size;
     
-    byte formatRev[3];
-    byte contentRev[3];
+    ushort formatRev;
+    ushort contentRev;
     
     char * content;
 };
@@ -61,28 +61,27 @@ struct ATOM_OFFSETS_TABLE {
 
 struct ATOM_BASE_TABLE {
     
-    ushort size;
-    
-    ushort checksum;
-    short checksumStatus;
-    
+    char romMessage[59];
+    ushort romMsgOffset;
     ushort romInfoOffset;
+    
+    char architecture[12];
     
     char partNumber[40];
     ushort partNumberSize;
+    
+    char biosVersion[23];
+    
+    char compTime[15];
     
     byte subsystemId[5];
     byte subsystemVendorId[5];
     byte deviceId[9];
     
-    ushort romMsgOffset;
-    char romMessage[59];
+    ushort checksum;
+    short checksumStatus;
     
-    char architecture[12];
-    
-    char biosVersion[23];
-    
-    char compTime[15];
+    ushort size;
     
     short uefiSupport;
     
@@ -97,9 +96,9 @@ struct ATOM_BASE_TABLE loadMainTable         (struct FIRMWARE_FILE );
 void                   loadCmmdAndDataTables (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
 void                   loadOffsetsTable      (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE * );
 short                  VerifyChecksum        (struct FIRMWARE_FILE , struct ATOM_BASE_TABLE );
-short                  VerifySubsystemCompanyName(struct ATOM_BASE_TABLE , char * CompanyNames[11][2]);
-void                   ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath);
-void                   ReplaceTable (struct FIRMWARE_FILE * FW, struct ATOM_BASE_TABLE * atomTable, ushort index, const char * tablePath);
+short                  VerifySubSysCompany   (struct ATOM_BASE_TABLE ,const char * CompanyNames[11][2]);
+void                   ExtractTable          (struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath);
+void                   ReplaceTable          (struct FIRMWARE_FILE * FW, struct ATOM_BASE_TABLE * atomTable, ushort index, const char * tablePath);
 
 
 

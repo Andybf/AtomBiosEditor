@@ -109,9 +109,9 @@ void loadCmmdAndDataTables (struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE * at
     long posOffTbl = 0;
     int c=0;
     fseek(FW.file, atomTable->tblOffsets[0].offset+4, SEEK_SET);
-    for (int b=0; b<QUANTITY_TOTAL_TABLES; b++) {
+    for (int b=0; b< QUANTITY_TOTAL_TABLES; b++) {
         if (c >= QUANTITY_COMMAND_TABLES) {
-            c = b-QUANTITY_COMMAND_TABLES;
+            c = b - QUANTITY_COMMAND_TABLES;
             fseek(FW.file, atomTable->tblOffsets[1].offset+4, SEEK_SET);
         }
         posOffTbl = ftell(FW.file);
@@ -121,19 +121,19 @@ void loadCmmdAndDataTables (struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE * at
         atomTable->atomTables[b].offset     = HexToDec(GetFileData(FW.file, (int) ftell(FW.file),  2,  0),4);
         
         atomTable->atomTables[b].size = 0;
-        strcpy((char*)atomTable->atomTables[b].formatRev,"  ");
-        strcpy((char*)atomTable->atomTables[b].contentRev,"  ");
+        atomTable->atomTables[b].formatRev = 0;
+        atomTable->atomTables[b].contentRev = 0;
         atomTable->atomTables[b].content = NULL;
         
-        if (atomTable->atomTables[b].offset > 30000 ) {
-            atomTable->atomTables[b].size                     = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset,  2,    0),4);
-            strcpy((char*)atomTable->atomTables[b].formatRev,            GetFileData(FW.file, atomTable->atomTables[b].offset+2,1,    0));
-            strcpy((char*)atomTable->atomTables[b].contentRev,           GetFileData(FW.file, atomTable->atomTables[b].offset+3,1,    0));
-            atomTable->atomTables[b].content = (char*)malloc(sizeof(char *) * atomTable->atomTables[b].size);
-            atomTable->atomTables[b].content = GetFileData(FW.file, atomTable->atomTables[b].offset, atomTable->atomTables[b].size, 1);
+        if (atomTable->atomTables[b].offset > 32768 ) {
+            atomTable->atomTables[b].size       = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset,  2,    0),4);
+            atomTable->atomTables[b].formatRev  = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset+2,1,    0),2);
+            atomTable->atomTables[b].contentRev = HexToDec(GetFileData(FW.file, atomTable->atomTables[b].offset+3,1,    0),2);
+            atomTable->atomTables[b].content    = (char*)malloc(sizeof(char *) * atomTable->atomTables[b].size);
+            atomTable->atomTables[b].content    = GetFileData(FW.file, atomTable->atomTables[b].offset, atomTable->atomTables[b].size, 1);
         }
         c++;
-        fseek(  FW.file, posOffTbl+2, SEEK_SET);
+        fseek( FW.file, posOffTbl+2, SEEK_SET );
     }
 }
 
@@ -145,14 +145,10 @@ short VerifyChecksum(struct FIRMWARE_FILE FW, struct ATOM_BASE_TABLE atomTable) 
         chksum += fgetc(FW.file);
     }
     chksum = atomTable.checksum - chksum & 0xFF;
-    if (chksum == atomTable.checksum){
-        return 1;
-    } else {
-        return 0;
-    }
+    return (chksum == atomTable.checksum);
 }
 
-short VerifySubsystemCompanyName(struct ATOM_BASE_TABLE atomTable, char * CompanyNames[11][2]) {
+short VerifySubSysCompany(struct ATOM_BASE_TABLE atomTable, const char * CompanyNames[11][2]) {
     for (int a=0; a<11; a++) {
         if ( strcmp((char*)atomTable.subsystemVendorId, CompanyNames[a][0]) == 0 ) {
             return a;
@@ -162,7 +158,7 @@ short VerifySubsystemCompanyName(struct ATOM_BASE_TABLE atomTable, char * Compan
 }
 
 // Extrai a table selecionada pelo usuário e coloca em um arquivo binário.
-void ExtractTable(FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath) {
+void ExtractTable(struct ATOM_ABSTRACT_TABLE abstractTable, const char * extractedTableFilePath) {
     //Criando arquivo binario contendo a tabela
     FILE * output = fopen(extractedTableFilePath, "wb");
     fwrite( abstractTable.content, sizeof(char), abstractTable.size, output );

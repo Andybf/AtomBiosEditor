@@ -7,7 +7,7 @@
 
 #ifndef PowerPlay_h
 #define PowerPlay_h
-#include "../../TableLoader.h"
+#include "TableLoader.h"
 
 // Addresses
 #define OFFSET_SUBTABLE_CLOCK     0x0B

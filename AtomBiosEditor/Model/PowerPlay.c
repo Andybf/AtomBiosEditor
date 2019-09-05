@@ -52,6 +52,7 @@ struct POWERPLAY_DATA ShowPowerPlayData (FILE * firmware, struct ATOM_ABSTRACT_T
     powerPlay.fanInfoOffset = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_FAN,       0x2, 0),4);
     powerPlay.hysteresis    =         *GetFileData(firmware, abstractTable.offset + powerPlay.fanInfoOffset+1, 0x1, 1);
     powerPlay.maxTemp       = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.fanInfoOffset+14, 0x2, 0),4)/100;
+    powerPlay.maxFanSpeed   = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.fanInfoOffset+17, 0x1, 0),2);
     for (short c=0; c<3; c++) {
         if (c == 0) { step = 0; } else { step += 2;}
         powerPlay.tempTarget[c] = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.fanInfoOffset+2+step, 0x2, 0),4)/100;

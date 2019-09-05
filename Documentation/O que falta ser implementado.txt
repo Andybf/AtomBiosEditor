@@ -1,0 +1,7 @@
+O que falta ser implementado:
+
+- Salvar alterações
+- Fix Checksum
+- Extract ROM from Memory
+- Replace Table
+- Revisão em PowerPlay tab

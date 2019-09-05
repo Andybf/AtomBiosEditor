@@ -19,6 +19,7 @@
 struct FIRMWARE_FILE {
     FILE * file;
     char * pathName;
+    char * fileName;
     struct stat fileInfo;
     ushort archType;
 };

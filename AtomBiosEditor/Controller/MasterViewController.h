@@ -18,7 +18,7 @@
 
 @property struct ATOM_BASE_TABLE atomTable;
 
-- (void)loadInfo : (struct FIRMWARE_FILE) FW;;
+- (void)loadInfo : (struct FIRMWARE_FILE *) FW;;
 
 @end
 

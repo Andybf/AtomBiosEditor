@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-#import "../Model/Modules/PowerPlay/PowerPlay.h"
+#import "../Model/PowerPlay.h"
 
 @interface OverDriveController : NSViewController
 
@@ -24,10 +24,12 @@
     @property (weak) IBOutlet NSTextField *textFieldTemp1;
     @property (weak) IBOutlet NSTextField *textFieldTemp2;
     @property (weak) IBOutlet NSTextField *textFieldTemp3;
+    @property (weak) IBOutlet NSTextField *textFieldMaxTemp;
 
     @property (weak) IBOutlet NSTextField *textFieldFan1;
     @property (weak) IBOutlet NSTextField *textFieldFan2;
     @property (weak) IBOutlet NSTextField *textFieldFan3;
+    @property (weak) IBOutlet NSTextField *textFieldMaxFan;
 
     @property (weak) IBOutlet NSButton *radioHexadecimal;
     @property (weak) IBOutlet NSButton *radioDecimal;
