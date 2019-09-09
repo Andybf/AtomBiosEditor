@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "../Model/TableLoader.h"
+#import "../Model/AtomBios.h"
 
 @interface OverviewController : NSViewController
 
@@ -24,7 +24,7 @@
     @property (weak) IBOutlet NSTextField *textFieldMTSize;
     @property (weak) IBOutlet NSTextField *textFieldMTOffset;
 
-    - (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable;
+    - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios;
 
 @end
 

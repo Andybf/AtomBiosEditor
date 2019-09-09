@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-#import "../Model/TableLoader.h"
-#import "../Model/FileLoader.h"
+#import "../Model/AtomBios.h"
 #import "../Model/PowerPlay.h"
 
 @interface StatesTable : NSTableView <NSTableViewDataSource>
@@ -32,7 +31,7 @@
     @property (weak) IBOutlet NSButton *radioHexadecimal;
     @property (weak) IBOutlet NSButton *radioDecimal;
 
-    -(void) InitPowerPlayInfo : (struct ATOM_BASE_TABLE *)atomTable : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived;
+    -(void) InitPowerPlayInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)dataAndCmmdTables : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived;
 
 @end
 

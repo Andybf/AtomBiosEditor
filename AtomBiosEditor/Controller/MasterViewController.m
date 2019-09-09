@@ -15,8 +15,8 @@
 
 @implementation MasterViewController {
     
-    OverviewController * varOverviewController;
-    TablesController * varTablesController;
+    OverviewController  * varOverviewController;
+    TablesController    * varTablesController;
     PowerPlayController * varPowerPlayController;
     OverDriveController * varOverDriveController;
 }
@@ -24,10 +24,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    varOverviewController = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
+    varOverviewController  = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
     [[self containerOverview]  addSubview: self->varOverviewController.view];
     
-    varTablesController = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
+    varTablesController    = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
     [[self containerTables]    addSubview: self->varTablesController.view];
     
     varPowerPlayController = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
@@ -37,14 +37,14 @@
     [[self containerOverDrive] addSubview: self->varOverDriveController.view];
 }
 
-- (void)loadInfo : (struct FIRMWARE_FILE *) FW {
+- (void)loadInfo : (struct ATOM_BIOS *) atomBios {
     
-    [self->varOverviewController initOverviewInfo: *FW : &(self->_atomTable) ];
-    [self->varTablesController EnableThisSection : &(self->_atomTable) : FW->fileName];
+    [self->varOverviewController initOverviewInfo: atomBios];
+    [self->varTablesController InitTableTabInfo : atomBios->dataAndCmmdTables : atomBios->firmware.fileName];
     
-    struct POWERPLAY_DATA powerPlay = ShowPowerPlayData(FW->file, self->_atomTable.atomTables[QUANTITY_COMMAND_TABLES+0x0F]);
+    struct POWERPLAY_DATA powerPlay = LoadPowerPlayData(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
     
-    [self->varPowerPlayController  InitPowerPlayInfo : &(self->_atomTable) : &(powerPlay) : 1];
+    [self->varPowerPlayController  InitPowerPlayInfo : atomBios->dataAndCmmdTables : &(powerPlay) : 0];
     [self->varOverDriveController initOverDriveInfo : &(powerPlay)];
 }
 

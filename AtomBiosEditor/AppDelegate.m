@@ -14,12 +14,13 @@
 @end
 
 @implementation AppDelegate {
-    struct FIRMWARE_FILE FW;
+    struct ATOM_BIOS atomBios;
     MasterViewController * masterVC;
     NSWindow * windowView;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    
     NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
     windowView = [[NSWindow alloc] initWithContentRect:NSMakeRect(100, 200, 480, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
     masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
@@ -33,13 +34,9 @@
     // Insert code here to tear down your application
 }
 
+
+
 - (IBAction)menuItemNewWindow:(id)sender {
-    NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
-    windowView = [[NSWindow alloc] initWithContentRect:NSMakeRect(100, 200, 480, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
-    masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
-    [windowView setTitle: @"AtomBiosEditor"];
-    [[windowView contentView] addSubview: masterVC.view];
-    [windowView setIsVisible: YES];
 }
 
 - (IBAction)menuItemOpenTriggered:(id)sender {
@@ -49,26 +46,39 @@
     openPanel.canChooseDirectories    = false;
     openPanel.canChooseFiles          = true;
     [openPanel beginSheetModalForWindow: windowView completionHandler:^(NSModalResponse result) {
-        self->FW.pathName = (char*)[openPanel.URL.path UTF8String];
-        if ( (self->FW.file = fopen(self->FW.pathName ,"r")) ) { //carregando o arquivo para dentro da memoria
-            self->FW.archType = CheckFirmwareArchitecture(self->FW.file);
-            stat(self->FW.pathName ,&self->FW.fileInfo); //Carregando informações sobre o arquivo
-            if (! CheckFirmwareSize(self->FW.fileInfo) ) {
+        self->atomBios.firmware.filePath = (char*)[openPanel.URL.path UTF8String];
+        
+        if ( (self->atomBios.firmware.file = fopen(self->atomBios.firmware.filePath ,"r")) ) { //carregando o arquivo para dentro da memoria
+            self->atomBios.firmware.archType = VerifyFirmwareArchitecture(self->atomBios.firmware.file);
+            stat(self->atomBios.firmware.filePath ,&self->atomBios.firmware.fileInfo); //Carregando informações sobre o arquivo
+            
+            if (! VerifyFirmwareSize(self->atomBios.firmware.fileInfo) ) {
                 [self DisplayAlert: @"Invalid File Size!" : @"The size of the file selected is invalid, the file size must be between 64KB and 256KB."];
-                fclose(self->FW.file);
-            } else if (! CheckFirmwareSignature(self->FW.file) ) {
+                fclose(self->atomBios.firmware.file);
+            } else if (! VerifyFirmwareSignature(self->atomBios.firmware.file) ) {
                 [self DisplayAlert : @"Invalid Firmware Signature!" : @"The firmware signature is invalid."];
-                fclose(self->FW.file);
-            } else if ( self->FW.archType == 0) {
+                fclose(self->atomBios.firmware.file);
+            } else if ( self->atomBios.firmware.archType == 0) {
                 [self DisplayAlert : @"Architecture not supported!" : @"This firmware architecture is not support by this program."];
-                fclose(self->FW.file);
+                fclose(self->atomBios.firmware.file);
             } else {
-                NSArray * fileName = [[NSString stringWithUTF8String: self->FW.pathName] componentsSeparatedByString: @"/"];
-                self->FW.fileName = (char*)[fileName[fileName.count-1] UTF8String];
+                NSArray * fileName = [[NSString stringWithUTF8String: self->atomBios.firmware.filePath] componentsSeparatedByString: @"/"];
+                self->atomBios.firmware.fileName = (char*)[fileName[fileName.count-1] UTF8String];
                 [self->windowView setTitle: [NSString stringWithFormat: @"AtomBiosEditor - %@", fileName[fileName.count-1]]];
                 
-                [self->masterVC loadInfo : &(self->FW)];
+                [self->masterVC loadInfo : &(self->atomBios)];
             }
+        }
+    }];
+}
+
+- (IBAction)menuItemSaveTriggered:(id)sender {
+    NSSavePanel * saveFile = [NSSavePanel savePanel];
+    [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s-Modified.rom",atomBios.firmware.fileName] ];
+    [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
+        if (returnCode == 1) { // if the save button was triggered
+            NSLog(@"Save was triggerred!");
+            
         }
     }];
 }

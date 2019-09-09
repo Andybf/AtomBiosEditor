@@ -28,32 +28,34 @@ const char * CompanyNames[11][2] = {
     {"1682","XFX"},
 };
 
-- (void) initOverviewInfo: (struct FIRMWARE_FILE)FW : (struct ATOM_BASE_TABLE*)atomTable {
-    *atomTable = loadMainTable(FW); //carregando o conteúdo do firmware na memória
-    [_textFieldArch        setStringValue: [NSString stringWithFormat:     @"%s",atomTable->architecture]];
-    [_textFieldRomMsg      setStringValue: [NSString stringWithUTF8String: atomTable->romMessage]];
-    [_textFieldPartNumber  setStringValue: [NSString stringWithUTF8String: atomTable->partNumber]];
-    [_textFieldCompDate    setStringValue: [NSString stringWithUTF8String: atomTable->compTime]];
-    [_textFieldBiosVersion setStringValue: [NSString stringWithUTF8String: atomTable->biosVersion]];
-    [_textFieldDeviceId    setStringValue: [NSString stringWithUTF8String: (char *)atomTable->deviceId]];
-    [_textFieldSubId       setStringValue: [NSString stringWithUTF8String: (char *)atomTable->subsystemId]];
-    [_textFieldMTSize      setStringValue: [NSString stringWithFormat:     @"%d",atomTable->size]];
+- (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios {
+    atomBios->mainTable = loadMainTable(atomBios);
+    loadOffsetsTable(     atomBios);
+    loadCmmdAndDataTables(atomBios);
+    [_textFieldArch        setStringValue: [NSString stringWithFormat:     @"%s",atomBios->mainTable.architecture]];
+    [_textFieldRomMsg      setStringValue: [NSString stringWithUTF8String: atomBios->mainTable.romMessage]];
+    [_textFieldPartNumber  setStringValue: [NSString stringWithUTF8String: atomBios->mainTable.partNumber]];
+    [_textFieldCompDate    setStringValue: [NSString stringWithUTF8String: atomBios->mainTable.compTime]];
+    [_textFieldBiosVersion setStringValue: [NSString stringWithUTF8String: atomBios->mainTable.biosVersion]];
+    [_textFieldDeviceId    setStringValue: [NSString stringWithUTF8String: (char *)atomBios->mainTable.deviceId]];
+    [_textFieldSubId       setStringValue: [NSString stringWithUTF8String: (char *)atomBios->mainTable.subsystemId]];
+    [_textFieldMTSize      setStringValue: [NSString stringWithFormat:     @"%d",atomBios->mainTable.size]];
     [_textFieldMTOffset    setStringValue: [NSString stringWithUTF8String: "0x4"]];
-    short vendor = VerifySubSysCompany(*atomTable,CompanyNames);
-    [_textFieldVendorId    setStringValue: [NSString stringWithFormat: @"%s - %s",(char *)atomTable->subsystemVendorId,CompanyNames[vendor][1] ]];
+    short vendor = VerifySubSysCompany(atomBios->mainTable,CompanyNames);
+    [_textFieldVendorId    setStringValue: [NSString stringWithFormat: @"%s - %s",(char *)atomBios->mainTable.subsystemVendorId,CompanyNames[vendor][1] ]];
 
     [ _checkUefiSupport setState: NSControlStateValueOff];
     [ _checkUefiSupport setTitle: @"Unsupported!"];
-    if (atomTable->uefiSupport != 0) {
+    if (atomBios->mainTable.uefiSupport != 0) {
         [ _checkUefiSupport setState: NSControlStateValueOn];
         [ _checkUefiSupport setTitle: @"Supported!"];
     }
     
     [ _checkChecksum setState: NSControlStateValueOff];
     [ _checkChecksum setTitle: [NSString stringWithUTF8String: "Invalid!"] ];
-    if ( VerifyChecksum(FW, *atomTable) != 0) {
+    if ( VerifyChecksum(atomBios) != 0) {
         [ _checkChecksum setState: NSControlStateValueOn];
-        [ _checkChecksum setTitle: [NSString stringWithFormat: @"Valid! - 0x%02X", atomTable->checksum] ];
+        [ _checkChecksum setTitle: [NSString stringWithFormat: @"Valid! - 0x%02X", atomBios->mainTable.checksum] ];
     }
 }
 

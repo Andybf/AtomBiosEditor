@@ -7,7 +7,8 @@
 
 #ifndef PowerPlay_h
 #define PowerPlay_h
-#include "TableLoader.h"
+
+#include "AtomBios.h"
 
 // Addresses
 #define OFFSET_SUBTABLE_CLOCK     0x0B
@@ -53,6 +54,6 @@ struct POWERPLAY_DATA {
     ushort maxTdp;
 };
 
-struct POWERPLAY_DATA ShowPowerPlayData (FILE * , struct ATOM_ABSTRACT_TABLE);
+struct POWERPLAY_DATA LoadPowerPlayData  (FILE * , struct ATOM_DATA_AND_CMMD_TABLES);
 
 #endif /* PowerPlay_h */

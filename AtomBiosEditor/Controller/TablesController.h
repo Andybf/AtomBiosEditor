@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-#import "../Model/TableLoader.h"
+#import "../Model/AtomBios.h"
 #import "../Model/CoreFunctions.h"
 
 @interface TablesController : NSViewController
@@ -20,13 +20,13 @@
     @property (weak) IBOutlet NSButton *radioHexadecimal;
     @property (weak) IBOutlet NSButton *radioDecimal;
 
-    -(void) initTableTabInfo: (short)type : (NSControlStateValue)HexOrDecIsEnabled;
-    -(void) EnableThisSection : (struct ATOM_BASE_TABLE *)atmTable : (char *)fileName;
+    -(void) ReloadTableView: (short)type : (NSControlStateValue)HexOrDecIsEnabled;
+    -(void) InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName;
 
 @end
 
 
-@interface AtomTable : NSTableView <NSTableViewDataSource>
+@interface AtomTable : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 
     @property (nonatomic, strong) NSMutableArray * tableIndex;
     @property (nonatomic, strong) NSMutableArray * tableName;
@@ -35,6 +35,6 @@
     @property (nonatomic, strong) NSMutableArray * formatRev;
     @property (nonatomic, strong) NSMutableArray * contentRev;
 
-    -(void) initTableStructure;
+-(void) initTableStructure : (NSButton*)bDump : (NSButton*)bReplace;
 
 @end

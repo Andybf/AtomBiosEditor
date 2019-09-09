@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "../Model/TableLoader.h"
+#import "../Model/AtomBios.h"
 
 @interface MasterViewController : NSViewController
 
@@ -16,9 +16,7 @@
 @property (weak) IBOutlet NSView *containerPowerPlay;
 @property (weak) IBOutlet NSView *containerOverDrive;
 
-@property struct ATOM_BASE_TABLE atomTable;
-
-- (void)loadInfo : (struct FIRMWARE_FILE *) FW;;
+- (void)loadInfo : (struct ATOM_BIOS *) atomBios;
 
 @end
 

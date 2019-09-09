@@ -11,13 +11,12 @@
 @implementation PowerPlayController {
         NSArray * stringFormat;
         NSScrollView * tableContainer[3];
-        struct ATOM_BASE_TABLE * aTable;
+        struct ATOM_DATA_AND_CMMD_TABLES * dcTable;
         struct POWERPLAY_DATA pPlay;
     }
 
     -(void)viewDidLoad {
         [super viewDidLoad];
-        
         short dimensions[3][4] = {
             {7,311,440,106},
             {7,172,440,106},
@@ -39,11 +38,11 @@
         }
     }
 
-    -(void) InitPowerPlayInfo : (struct ATOM_BASE_TABLE *)atomTable : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived{
+    -(void) InitPowerPlayInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)dataAndCmmdTables : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived{
         [_radioDecimal     setEnabled : YES];
         [_radioHexadecimal setEnabled : YES];
         pPlay = *powerPlay;
-        aTable = atomTable;
+        dcTable = dataAndCmmdTables;
         ushort rows[3] = { powerPlay->numberOfStates, powerPlay->numberOfGpuStates, powerPlay->numberOfMemStates};
         
         for (int a=0; a<3; a++) {
@@ -62,14 +61,14 @@
         for (int a=0; a<powerPlay->numberOfGpuStates; a++) {
             [[stTable[1] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
             [[stTable[1] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqState[a] ]];
-            [[stTable[1] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+            [[stTable[1] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
             [[stTable[1] size]   addObject: [NSString stringWithFormat: @"0x3"]];
         }
         
         for (int a=0; a<powerPlay->numberOfMemStates; a++) {
             [[stTable[2] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
             [[stTable[2] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqState[a] ]];
-            [[stTable[2] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqOffset + atomTable->atomTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
+            [[stTable[2] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
             [[stTable[2] size]   addObject: [NSString stringWithFormat: @"0x3"]];
         }
         for (int a=0; a<3; a++){
@@ -81,13 +80,13 @@
     - (IBAction)RadioHexChanged:(id)sender {
         if (_radioHexadecimal.state) {
             [_radioDecimal setState:NSControlStateValueOff];
-            [self InitPowerPlayInfo : aTable : &(pPlay) : 1];
+            [self InitPowerPlayInfo : dcTable : &(pPlay) : 1];
         }
     }
     - (IBAction)RadioDecChanged:(id)sender {
         if (_radioDecimal.state) {
             [_radioHexadecimal setState:NSControlStateValueOff];
-            [self InitPowerPlayInfo : aTable : &(pPlay) : 0];
+            [self InitPowerPlayInfo : dcTable : &(pPlay) : 0];
         }
     }
 
@@ -141,7 +140,7 @@
         if        ([[tableColumn identifier] isEqualToString: columnIdentifiers[0]]) {
             [tableColumn setEditable: NO];
             return [self.index  objectAtIndex:row];
-        }else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[1]]) {
+        } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[1]]) {
             return [self.Clock  objectAtIndex:row];
         } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[2]]) {
             return [self.offset objectAtIndex:row];

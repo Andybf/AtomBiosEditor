@@ -7,7 +7,7 @@
 
 #include "PowerPlay.h"
 
-struct POWERPLAY_DATA ShowPowerPlayData (FILE * firmware, struct ATOM_ABSTRACT_TABLE abstractTable) {
+struct POWERPLAY_DATA LoadPowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable) {
     struct POWERPLAY_DATA powerPlay = *(struct POWERPLAY_DATA *) malloc(sizeof(struct POWERPLAY_DATA *));
     
     // OverDrive

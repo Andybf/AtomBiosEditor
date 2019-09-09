@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
     </dependencies>
     <scenes>
@@ -89,7 +90,7 @@
                                         </menuItem>
                                         <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
                                             <connections>
-                                                <action selector="saveDocument:" target="Ady-hI-5gd" id="teZ-XB-qJY"/>
+                                                <action selector="menuItemSaveTriggered:" target="Voe-Tx-rLC" id="MJF-gw-gCg"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
@@ -677,6 +678,7 @@
                     <connections>
                         <outlet property="menuItemNewWindow" destination="Was-JA-tGl" id="rTh-rj-Yhk"/>
                         <outlet property="menuItemOpen" destination="IAo-SY-fd9" id="cvb-QJ-9sp"/>
+                        <outlet property="menuItemSave" destination="pxx-59-PXV" id="pif-Wt-NvY"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
