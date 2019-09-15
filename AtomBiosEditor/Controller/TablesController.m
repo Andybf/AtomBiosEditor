@@ -28,9 +28,9 @@
         }
         [_selectorTable setEnabled : NO];
         //Table Initialization
-        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
+        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 385)];
         [tableView initTableStructure : _buttonDumpTable : _buttonReplaceTable];
-        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(7, 33, 440, 380)];
+        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(7, 33, 440, 385)];
         // embed the table view in the scroll view, and add the scroll view
         [tableContainer setDocumentView:tableView];
         [tableContainer setHasVerticalScroller:YES];
@@ -201,6 +201,7 @@
         [self setDataSource: self];
         [self setAllowsColumnResizing: NO];
         [self setAllowsColumnReordering: NO];
+        [self setUsesAlternatingRowBackgroundColors: YES];
         [self setEnabled: NO];
         [self reloadData];
     }
@@ -213,6 +214,7 @@
         //Column configurations
         [tableColumn setEditable: NO];
         [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
+        //[[tableColumn dataCell] setHeight:20];
         if        ([[tableColumn identifier] isEqualToString: columnIdentifiers[0]]) {
             return [self.tableIndex objectAtIndex:row];
         } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[1]]) {

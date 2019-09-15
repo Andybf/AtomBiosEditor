@@ -1,5 +1,5 @@
 //
-//  ABELibrary.h
+//  CoreFunctions.h
 //  AtomBiosEditor
 //
 //  Created by Anderson Bucchianico on 22/08/19.
@@ -31,7 +31,9 @@
 #define FORMAT_HEX                 "%02X"
 
 // Core Functions
-char * GetFileData (FILE * , int , int , short );
+char * GetFileData (FILE * file, int offset, ushort size, short endianness);
+short  SetFileData (FILE * fileOutput, char * data, ushort offset, ushort size);
+ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos);
 int    HexToDec    (char [], int );
 int    count       (int num);
 

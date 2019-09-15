@@ -11,7 +11,8 @@
 
 @interface OverviewController : NSViewController
 
-    @property (weak) IBOutlet NSTextField *textFieldArch;
+    @property (weak) IBOutlet NSTextField *textFieldGeneration;
+    @property (weak) IBOutlet NSTextField *textFieldArchitecture;
     @property (weak) IBOutlet NSTextField *textFieldRomMsg;
     @property (weak) IBOutlet NSTextField *textFieldPartNumber;
     @property (weak) IBOutlet NSTextField *textFieldCompDate;
@@ -25,6 +26,15 @@
     @property (weak) IBOutlet NSTextField *textFieldMTOffset;
 
     - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios;
+
+@end
+
+@interface OverviewTable : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
+
+    @property (nonatomic, strong) NSMutableArray * rowDesc;
+    @property (nonatomic, strong) NSMutableArray * rowValue;
+
+-(void)initTableStructure;
 
 @end
 

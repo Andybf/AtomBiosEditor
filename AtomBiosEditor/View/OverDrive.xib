@@ -32,7 +32,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" title="Max OverDrive Clock" translatesAutoresizingMaskIntoConstraints="NO" id="OPG-UA-068">
-                    <rect key="frame" x="10" y="282" width="211" height="148"/>
+                    <rect key="frame" x="7" y="282" width="211" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="EQ1-6s-4VA">
                         <rect key="frame" x="3" y="3" width="205" height="130"/>
@@ -96,7 +96,7 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Fan Control" translatesAutoresizingMaskIntoConstraints="NO" id="1my-eS-lFb">
-                    <rect key="frame" x="10" y="16" width="441" height="255"/>
+                    <rect key="frame" x="7" y="16" width="441" height="255"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="3tw-eW-uzn">
                         <rect key="frame" x="3" y="3" width="435" height="237"/>
@@ -353,7 +353,7 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Thermal Design Power" translatesAutoresizingMaskIntoConstraints="NO" id="0lP-o5-yzY">
-                    <rect key="frame" x="240" y="282" width="211" height="148"/>
+                    <rect key="frame" x="237" y="282" width="211" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Tsh-BY-2EU">
                         <rect key="frame" x="3" y="3" width="205" height="130"/>

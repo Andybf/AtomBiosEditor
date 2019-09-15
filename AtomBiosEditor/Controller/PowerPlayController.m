@@ -18,9 +18,9 @@
     -(void)viewDidLoad {
         [super viewDidLoad];
         short dimensions[3][4] = {
-            {7,311,440,106},
-            {7,172,440,106},
-            {7,33 ,440,106}
+            {3,3,440,120},
+            {3,3,440,120},
+            {3,3 ,440,120}
         };
         stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
         [_radioDecimal setState: NSControlStateValueOn];
@@ -34,7 +34,9 @@
             }
             [tableContainer[c] setDocumentView: stTable[c]];
             [tableContainer[c] setHasVerticalScroller:YES];
-            [[self view] addSubview:tableContainer[c]];
+            [_BoxPowerPlay addSubview:tableContainer[0]];
+            [_BoxGpuStates addSubview:tableContainer[1]];
+            [_BoxMemStates addSubview:tableContainer[2]];
         }
     }
 
@@ -125,6 +127,7 @@
         [self setAllowsColumnResizing: NO];
         [self setAllowsColumnReordering: NO];
         [self setAllowsMultipleSelection: NO];
+        [self setUsesAlternatingRowBackgroundColors: YES];
         [self setEnabled: NO];
         [self reloadData];
     }

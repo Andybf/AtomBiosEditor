@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PowerPlayController">
             <connections>
+                <outlet property="BoxGpuStates" destination="JFY-L2-Evj" id="lBc-PN-qKx"/>
+                <outlet property="BoxMemStates" destination="kSR-jC-8Ce" id="aRm-FJ-eYp"/>
+                <outlet property="BoxPowerPlay" destination="Bcm-c9-8tv" id="0kL-iN-z7K"/>
                 <outlet property="radioDecimal" destination="Tqm-kV-iuu" id="Ei0-9X-vso"/>
                 <outlet property="radioHexadecimal" destination="nxa-Mm-ZX4" id="1ek-mx-BVM"/>
                 <outlet property="view" destination="EfM-6E-II4" id="Ka7-Ob-Vgy"/>
@@ -18,33 +22,6 @@
             <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SPl-wK-ewc">
-                    <rect key="frame" x="8" y="425" width="109" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="truncatingTail" title="PowerPlay States" id="diB-EA-pYS">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PnZ-B3-Y7r">
-                    <rect key="frame" x="8" y="286" width="74" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="GPU States" id="I4d-UI-l9o">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eQq-hy-5Lt">
-                    <rect key="frame" x="8" y="147" width="96" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Memory States" id="5DT-85-Ipn">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTf-5D-chN">
                     <rect key="frame" x="8" y="8" width="90" height="17"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -76,6 +53,30 @@
                         <action selector="RadioDecChanged:" target="-2" id="dw9-Oy-h66"/>
                     </connections>
                 </button>
+                <box fixedFrame="YES" title="PowerPlay States" translatesAutoresizingMaskIntoConstraints="NO" id="4zh-4h-mon">
+                    <rect key="frame" x="2" y="313" width="450" height="140"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="Bcm-c9-8tv">
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="Memory Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="kSR-jC-8Ce">
+                    <rect key="frame" x="2" y="28" width="450" height="140"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="a3M-le-TTj">
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </box>
+                <box fixedFrame="YES" title="GPU Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="JFY-L2-Evj">
+                    <rect key="frame" x="2" y="169" width="450" height="140"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="YJV-NF-UO8">
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </box>
             </subviews>
             <point key="canvasLocation" x="-615" y="-188"/>
         </customView>

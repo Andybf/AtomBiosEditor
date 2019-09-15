@@ -42,7 +42,7 @@ struct FIRMWARE_FILE {
     char * filePath;
     char * fileName;
     struct stat fileInfo;
-    ushort archType;
+    ushort genType;
 };
 
 // firmware data structure
@@ -72,13 +72,30 @@ struct ATOM_MAIN_TABLE {
     char   romMessage[59];
     ushort romMsgOffset;
     ushort romInfoOffset;
-    char   architecture[12];
+    
+    char   generation[12];
+    
+    char * architecture;
+    ushort archOffset;
+    ushort archSize;
+    
+    char * connectionType;
+    ushort conTypeOffset;
+    ushort conTypeSize;
+    
+    char * memoryGen;
+    ushort memGenOffset;
+    ushort memGenSize;
+    
     char   partNumber[40];
+    ushort partNumberOffset;
     ushort partNumberSize;
+    
     char   biosVersion[23];
     char   compTime[15];
     byte   subsystemId[5];
     byte   subsystemVendorId[5];
+    char   vendorName[11];
     byte   deviceId[9];
     ushort checksum;
     short  checksumStatus;
@@ -111,7 +128,7 @@ void                   loadCmmdAndDataTables (struct ATOM_BIOS * atomBios);
 void                   ReplaceTable          (struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort index, const char * tablePath);
 
 //Save
-void                   SaveAtomBios          (struct ATOM_BIOS * atomBios);
+void                   SaveModifiedAtomBios  (struct ATOM_BIOS * atomBios, const char * charNewFilePath);
 
 //Verify
 //Definicção de funcoes
@@ -119,8 +136,6 @@ short                  VerifyFirmwareSize    (struct stat);
 short                  VerifyFirmwareSignature    (FILE *);
 short                  VerifyFirmwareArchitecture (FILE *);
 short                  VerifyChecksum        (struct ATOM_BIOS * atomBios);
-short                  VerifySubSysCompany   (struct ATOM_MAIN_TABLE ,const char * CompanyNames[11][2]);
-
-
+short                  VerifySubSysCompany   (struct ATOM_MAIN_TABLE *);
 
 #endif /* AtomBios */
