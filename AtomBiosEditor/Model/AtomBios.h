@@ -89,7 +89,7 @@ struct ATOM_MAIN_TABLE {
     
     char   partNumber[40];
     ushort partNumberOffset;
-    ushort partNumberSize;
+    ushort partNumSize;
     
     char   biosVersion[23];
     char   compTime[15];
@@ -131,7 +131,6 @@ void                   ReplaceTable          (struct ATOM_DATA_AND_CMMD_TABLES *
 void                   SaveModifiedAtomBios  (struct ATOM_BIOS * atomBios, const char * charNewFilePath);
 
 //Verify
-//Definicção de funcoes
 short                  VerifyFirmwareSize    (struct stat);
 short                  VerifyFirmwareSignature    (FILE *);
 short                  VerifyFirmwareArchitecture (FILE *);

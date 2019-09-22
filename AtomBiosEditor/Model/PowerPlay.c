@@ -1,5 +1,5 @@
 /*
- * Nome:        AtomBiosReader > Modules > PowerPlay > PowerPlay.c
+ * Nome:        PowerPlay.c
  * Criado por:  Anderson Bucchianico
  * Criação:     09 de julho de 2019
  * Descrição:   Contém funçoes para pegar informações de dentro das data tables.
@@ -10,17 +10,17 @@
 struct POWERPLAY_DATA LoadPowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable) {
     struct POWERPLAY_DATA powerPlay = *(struct POWERPLAY_DATA *) malloc(sizeof(struct POWERPLAY_DATA *));
     
-    // OverDrive
-    powerPlay.overDriveOffset = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_LIMITS,        0x2, 0),4);
-    powerPlay.maxGpuClock     = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset + 2, 0x3, 0),6)/100;
-    powerPlay.maxMemClock     = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset + 6, 0x3, 0),6)/100;
+    // OverDrive                                        file                    offset                             size | endian| chars
+    powerPlay.overDriveOffset = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_LIMITS,         0x2,  0),   4);
+    powerPlay.maxGpuClock     = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset + 2,  0x3,  0),   6)/100;
+    powerPlay.maxMemClock     = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset + 6,  0x3,  0),   6)/100;
     // TDP
-    powerPlay.maxTdp          = *GetFileData(firmware, abstractTable.offset+OFFSET_INFO_MAX_TDP, 0x2, 1);
-    powerPlay.minTdp          = *GetFileData(firmware, abstractTable.offset+OFFSET_INFO_MIN_TDP, 0x2, 1);
+    powerPlay.maxTdp          = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_INFO_MAX_TDP,            0x1,  0),   2);
+    powerPlay.minTdp          = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_INFO_MIN_TDP,            0x1,  0),   2);
     
-    powerPlay.clockInfoOffset = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_CLOCK,           0x2, 0),4);
-    powerPlay.numberOfStates  = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset,       0x1, 0),2);
-    powerPlay.lengthPerState  = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + 0x1, 0x1, 0),2);
+    powerPlay.clockInfoOffset = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_CLOCK,          0x2,  0),   4);
+    powerPlay.numberOfStates  = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset,      0x1,  0),   2);
+    powerPlay.lengthPerState  = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.clockInfoOffset + 1,  0x1,  0),   2);
     powerPlay.gpuClock        = malloc(powerPlay.numberOfStates * sizeof(unsigned char*));
     powerPlay.memClock        = malloc(powerPlay.numberOfStates * sizeof(unsigned char*));
     powerPlay.voltage         = malloc(powerPlay.numberOfStates * sizeof(unsigned char*));

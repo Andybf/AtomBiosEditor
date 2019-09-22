@@ -1,82 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MasterViewController">
             <connections>
-                <outlet property="containerOverDrive" destination="eCd-y8-kLC" id="rsN-1n-Mit"/>
-                <outlet property="containerOverview" destination="kdw-YJ-tPP" id="zAR-Vi-Exc"/>
-                <outlet property="containerPowerPlay" destination="GNj-6B-wpe" id="LLa-iG-b9D"/>
-                <outlet property="containerTables" destination="Wxm-76-9OQ" id="3n8-4v-uod"/>
+                <outlet property="contentView" destination="cPW-Lj-CWo" id="QaZ-6H-40D"/>
                 <outlet property="view" destination="TdM-Me-cOg" id="guA-ij-Q9P"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="TdM-Me-cOg">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="500"/>
+            <rect key="frame" x="0.0" y="0.0" width="620" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <tabView fixedFrame="YES" initialItem="Gcz-4h-wgq" translatesAutoresizingMaskIntoConstraints="NO" id="v3C-rb-5Pk">
-                    <rect key="frame" x="3" y="-1" width="474" height="498"/>
+                <customView identifier="ContentView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cPW-Lj-CWo">
+                    <rect key="frame" x="160" y="0.0" width="460" height="500"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <font key="font" metaFont="system"/>
-                    <tabViewItems>
-                        <tabViewItem label="Overview" id="Gcz-4h-wgq">
-                            <view key="view" ambiguous="YES" id="PoU-je-vbc">
-                                <rect key="frame" x="10" y="33" width="454" height="452"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kdw-YJ-tPP">
-                                        <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </containerView>
-                                </subviews>
-                            </view>
-                        </tabViewItem>
-                        <tabViewItem label="Tables" identifier="" id="3Na-Qp-bQl">
-                            <view key="view" id="Wxm-76-9OQ">
-                                <rect key="frame" x="10" y="33" width="454" height="452"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ycZ-LD-kUm">
-                                        <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </containerView>
-                                </subviews>
-                            </view>
-                        </tabViewItem>
-                        <tabViewItem label="PowerPlay" identifier="" id="xSF-7Z-dlj">
-                            <view key="view" id="GNj-6B-wpe">
-                                <rect key="frame" x="10" y="33" width="454" height="452"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cSn-gp-LVE">
-                                        <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </containerView>
-                                </subviews>
-                            </view>
-                        </tabViewItem>
-                        <tabViewItem label="OverDrive" identifier="" id="rCl-rr-t8v">
-                            <view key="view" id="YdN-Pt-zBV">
-                                <rect key="frame" x="10" y="33" width="454" height="452"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <subviews>
-                                    <containerView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCd-y8-kLC">
-                                        <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                    </containerView>
-                                </subviews>
-                            </view>
-                        </tabViewItem>
-                    </tabViewItems>
-                </tabView>
+                </customView>
             </subviews>
-            <point key="canvasLocation" x="-421" y="-408"/>
+            <point key="canvasLocation" x="-435" y="-408"/>
         </customView>
     </objects>
 </document>

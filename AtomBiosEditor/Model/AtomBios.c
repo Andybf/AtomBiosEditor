@@ -1,5 +1,5 @@
 //
-//  AtomBios.m
+//  AtomBios.c
 //  AtomBiosEditor
 //
 //  Created by Anderson Bucchianico on 22/08/19.
@@ -71,11 +71,7 @@ const char * tableNames[] = {
 void ExtractTable(struct ATOM_DATA_AND_CMMD_TABLES abstractTable, const char * extractedTableFilePath) {
     FILE * output = fopen(extractedTableFilePath, "wb");
     fwrite( abstractTable.content, sizeof(char), abstractTable.size, output );
-}
-
-
-void LoadFirmwareFile(struct ATOM_BIOS * atomBios) {
-    
+    fclose(output);
 }
 
 //Carrega as informações do firmware na memória. Necessário para fazer as demais operações no programa
@@ -89,30 +85,30 @@ struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     strcpy(mainTable.romMessage,                 GetFileData(atomBios->firmware.file, mainTable.romMsgOffset  +0x02,  58,     1)       );
     
            mainTable.partNumberOffset = HexToDec(GetFileData(atomBios->firmware.file, OFFSET_STR_START,                1,     0),     2);
-           mainTable.partNumberSize   = GetNumBytesBeforeZero(atomBios->firmware.file, mainTable.partNumberOffset);
-    strcpy(mainTable.partNumber,                 GetFileData(atomBios->firmware.file, mainTable.partNumberOffset,     mainTable.partNumberSize, 1) );
+           mainTable.partNumSize      = GetNumBytesBeforeZero(atomBios->firmware.file, mainTable.partNumberOffset);
+    strcpy(mainTable.partNumber,                 GetFileData(atomBios->firmware.file,  mainTable.partNumberOffset,    mainTable.partNumSize, 1) );
     
-           mainTable.archOffset       = mainTable.partNumberOffset + mainTable.partNumberSize+1;
+           mainTable.archOffset       = mainTable.partNumberOffset + mainTable.partNumSize+1;
            mainTable.archSize         = GetNumBytesBeforeZero(atomBios->firmware.file, mainTable.archOffset);
            mainTable.architecture     = malloc(sizeof(char*) * mainTable.archSize+1);
-    strcpy(mainTable.architecture,               GetFileData(atomBios->firmware.file, mainTable.archOffset,           mainTable.archSize,       1) );
+    strcpy(mainTable.architecture,               GetFileData(atomBios->firmware.file,  mainTable.archOffset,          mainTable.archSize,    1) );
     
            mainTable.conTypeOffset    = mainTable.archOffset + mainTable.archSize+1;
            mainTable.conTypeSize      = GetNumBytesBeforeZero(atomBios->firmware.file, mainTable.conTypeOffset);
            mainTable.connectionType   = malloc(sizeof(char*));
-    strcpy(mainTable.connectionType,            GetFileData(atomBios->firmware.file, mainTable.conTypeOffset,         mainTable.conTypeSize,    1) );
+    strcpy(mainTable.connectionType,            GetFileData(atomBios->firmware.file,   mainTable.conTypeOffset,       mainTable.conTypeSize, 1) );
     
            mainTable.memGenOffset     = mainTable.conTypeOffset + mainTable.conTypeSize+1;
            mainTable.memGenSize       = GetNumBytesBeforeZero(atomBios->firmware.file, mainTable.memGenOffset);
            mainTable.memoryGen        = malloc(sizeof(char*));
-    strcpy(mainTable.memoryGen,                 GetFileData(atomBios->firmware.file, mainTable.memGenOffset,          mainTable.memGenSize,     1) );
+    strcpy(mainTable.memoryGen,                 GetFileData(atomBios->firmware.file,   mainTable.memGenOffset,        mainTable.memGenSize,  1) );
     
-    strcpy(mainTable.biosVersion,                GetFileData(atomBios->firmware.file, mainTable.romMsgOffset  +0x95,  22,     1)       );
-    strcpy(mainTable.compTime,                   GetFileData(atomBios->firmware.file, OFFSET_COMPILATION_TIME,        14,     1)       );
-    strcpy((char*)mainTable.subsystemId,         GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x1A,   2,     0)       );
-    strcpy((char*)mainTable.subsystemVendorId,   GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x18,   2,     0)       );
+    strcpy(mainTable.biosVersion,                GetFileData(atomBios->firmware.file, mainTable.romMsgOffset  +0x95,  22,     1) );
+    strcpy(mainTable.compTime,                   GetFileData(atomBios->firmware.file, OFFSET_COMPILATION_TIME,        14,     1) );
+    strcpy((char*)mainTable.subsystemId,         GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x1A,   2,     0) );
+    strcpy((char*)mainTable.subsystemVendorId,   GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x18,   2,     0) );
     strcpy(mainTable.vendorName, CompanyNames[ VerifySubSysCompany(&mainTable) ][1]);
-    strcpy((char*)mainTable.deviceId,            GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x28,   4,     0)       );
+    strcpy((char*)mainTable.deviceId,            GetFileData(atomBios->firmware.file, mainTable.romInfoOffset +0x28,   4,     0) );
     
     //Checking Generation
     if (atomBios->firmware.genType == 1) {
@@ -230,7 +226,7 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
 void SaveModifiedAtomBios(struct ATOM_BIOS * atomBios, const char * charNewFilePath) {
     FILE * newFilePath = fopen(charNewFilePath,"wb");
     SetFileData(newFilePath, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
-    SetFileData(newFilePath, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumberSize);
+    SetFileData(newFilePath, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
     SetFileData(newFilePath, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
     SetFileData(newFilePath, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
     SetFileData(newFilePath, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
@@ -263,7 +259,6 @@ short VerifyFirmwareArchitecture(FILE * file) {
     } else {
         return 0;
     }
-    return 0;
 }
 
 // Vefirica o checksum do firmware

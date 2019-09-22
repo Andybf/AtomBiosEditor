@@ -9,14 +9,30 @@
 #import <Cocoa/Cocoa.h>
 #import "../Model/AtomBios.h"
 
-@interface MasterViewController : NSViewController
+#import "OverviewController.h"
+#import "TablesController.h"
+#import "PowerPlayController.h"
+#import "OverDriveController.h"
 
-@property (weak) IBOutlet NSView *containerOverview;
-@property (weak) IBOutlet NSView *containerTables;
-@property (weak) IBOutlet NSView *containerPowerPlay;
-@property (weak) IBOutlet NSView *containerOverDrive;
+@interface MasterViewController : NSViewController {
+    struct ATOM_BIOS * atomBios;
+}
+    @property (nonatomic, strong) OverviewController  * varOverviewController;
+    @property (nonatomic, strong) TablesController    * varTablesController;
+    @property (nonatomic, strong) PowerPlayController * varPowerPlayController;
+    @property (nonatomic, strong) OverDriveController * varOverDriveController;
 
-- (void)loadInfo : (struct ATOM_BIOS *) atomBios;
+    @property (weak) IBOutlet NSView *contentView;
+
+- (void)loadInfo : (struct ATOM_BIOS *)atomBios;
 
 @end
 
+@interface SideBar : NSTableView <NSTableViewDelegate, NSTableViewDataSource> {
+    
+    }
+    @property (nonatomic, strong) NSMutableArray * tableTitles;
+
+    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios;
+
+@end

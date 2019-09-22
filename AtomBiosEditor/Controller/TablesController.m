@@ -214,7 +214,7 @@
         //Column configurations
         [tableColumn setEditable: NO];
         [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
-        //[[tableColumn dataCell] setHeight:20];
+        
         if        ([[tableColumn identifier] isEqualToString: columnIdentifiers[0]]) {
             return [self.tableIndex objectAtIndex:row];
         } else if ([[tableColumn identifier] isEqualToString: columnIdentifiers[1]]) {

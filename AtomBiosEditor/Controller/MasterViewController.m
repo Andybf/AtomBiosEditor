@@ -8,44 +8,104 @@
 
 #import "MasterViewController.h"
 
-#import "OverviewController.h"
-#import "TablesController.h"
-#import "PowerPlayController.h"
-#import "OverDriveController.h"
 
 @implementation MasterViewController {
     
-    OverviewController  * varOverviewController;
-    TablesController    * varTablesController;
-    PowerPlayController * varPowerPlayController;
-    OverDriveController * varOverDriveController;
 }
-
+    
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    varOverviewController  = [[OverviewController alloc] initWithNibName:@"Overview" bundle:NULL];
-    [[self containerOverview]  addSubview: self->varOverviewController.view];
+    _varOverviewController  = [[OverviewController  alloc] initWithNibName: @"Overview"  bundle: NULL];
+    _varTablesController    = [[TablesController    alloc] initWithNibName: @"Tables"    bundle: NULL];
+    _varPowerPlayController = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
+    _varOverDriveController = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
     
-    varTablesController    = [[TablesController alloc] initWithNibName: @"Tables" bundle: NULL];
-    [[self containerTables]    addSubview: self->varTablesController.view];
+    [[self contentView] addSubview: self->_varOverviewController.view];
     
-    varPowerPlayController = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
-    [[self containerPowerPlay] addSubview: self->varPowerPlayController.view];
-    
-    varOverDriveController = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
-    [[self containerOverDrive] addSubview: self->varOverDriveController.view];
 }
 
-- (void)loadInfo : (struct ATOM_BIOS *) atomBios {
+- (void)loadInfo : (struct ATOM_BIOS *)atomBios {
     
-    [self->varOverviewController initOverviewInfo: atomBios];
-    [self->varTablesController InitTableTabInfo : atomBios->dataAndCmmdTables : atomBios->firmware.fileName];
+    NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 150, 500)];
+    [sideBarContainer setDrawsBackground:NO];
+    SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 150, 500)];
+    [sideBarContainer setDocumentView: sideBar];
+    [sideBar setBackgroundColor: [NSColor colorWithRed:0 green:0 blue:0 alpha:0]];
+    [sideBar ConstructSideBar: self : atomBios];
     
-    struct POWERPLAY_DATA powerPlay = LoadPowerPlayData(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
+    NSVisualEffectView * effectView = [[NSVisualEffectView alloc] initWithFrame: NSMakeRect(0, 0, 150, 500)];
+    [effectView addSubview: sideBarContainer];
     
-    [self->varPowerPlayController  InitPowerPlayInfo : atomBios->dataAndCmmdTables : &(powerPlay) : 0];
-    [self->varOverDriveController initOverDriveInfo : &(powerPlay)];
+    [[self view] addSubview: effectView];
+    
+    [_varOverviewController initOverviewInfo: atomBios];
 }
+@end
+
+
+@implementation SideBar {
+        MasterViewController * mvc;
+        struct ATOM_BIOS * at;
+        struct POWERPLAY_DATA powerPlay;
+    }
+
+    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios {
+        mvc = masterVC;
+        at = atomBios;
+        NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier: @"menu"];
+        [column setWidth: 150];
+        [column setTitle: @"Main Menu"];
+        [self addTableColumn:column];
+        [self setTableTitles: [[NSMutableArray alloc] initWithCapacity: 5]];
+        NSArray * menuTitles = [NSArray arrayWithObjects:@"Overview Info",@"Tables Info",@"Firmware Info",@"Power Play",@"OverDrive", nil];
+        for (int a=0; a<5; a++) {
+            [_tableTitles addObject: menuTitles[a]];
+        }
+        //[self setHeaderView: NULL];
+        [self setDelegate: self];
+        [self setDataSource: self];
+        [self setEnabled: YES];
+        [self reloadData];
+        [self tableViewSelectionDidChange: [NSNotification notificationWithName: @"teste" object: NULL]];
+    }
+
+    - (void)tableViewSelectionDidChange:(NSNotification *)notification {
+        switch ([self selectedRow]) {
+            case 0:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverviewController] view]];
+                break;
+            case 1:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varTablesController] view]];
+                [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName];
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varPowerPlayController] view]];
+                powerPlay = LoadPowerPlayData(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
+                [[mvc varPowerPlayController] InitPowerPlayInfo : at->dataAndCmmdTables : &(powerPlay) : 0];
+                break;
+            case 4:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverDriveController] view]];
+                [[mvc varOverDriveController] initOverDriveInfo : &(powerPlay)];
+                break;
+            default:
+                break;
+        }
+    }
+
+    - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+        return _tableTitles.count;
+    }
+
+    - (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row:(NSInteger)row {
+        //Column configurations
+        [tableColumn setEditable: NO];
+        [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
+        
+        return [self.tableTitles objectAtIndex:row];
+    }
 
 @end

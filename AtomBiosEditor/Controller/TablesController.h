@@ -35,6 +35,6 @@
     @property (nonatomic, strong) NSMutableArray * formatRev;
     @property (nonatomic, strong) NSMutableArray * contentRev;
 
--(void) initTableStructure : (NSButton*)bDump : (NSButton*)bReplace;
+    -(void) initTableStructure : (NSButton*)bDump : (NSButton*)bReplace;
 
 @end

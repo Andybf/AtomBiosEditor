@@ -17,7 +17,7 @@
 
     - (IBAction)menuItemOpenTriggered:(id)sender {
         NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
-        self->windowView = [[NSWindow alloc] initWithContentRect:NSMakeRect(200, 200, 480, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
+        self->windowView = [[NSWindow alloc] initWithContentRect:NSMakeRect(200, 200, 620, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
         masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
         [windowView setTitle: @"AtomBiosEditor"];
         [[windowView contentView] addSubview: masterVC.view];
@@ -42,14 +42,14 @@
                     [self DisplayAlert : @"Invalid Firmware Signature!" : @"The firmware signature is invalid."];
                     fclose(self->atomBios.firmware.file);
                 } else if ( self->atomBios.firmware.genType == 0) {
-                    [self DisplayAlert : @"Generation not supported!" : @"This firmware generation is not support by this program."];
+                    [self DisplayAlert : @"Unsupported Firmware Generation!" : @"This firmware generation is not supported by this program."];
                     fclose(self->atomBios.firmware.file);
                 } else {
                     NSArray * fileName = [[NSString stringWithUTF8String: self->atomBios.firmware.filePath] componentsSeparatedByString: @"/"];
                     self->atomBios.firmware.fileName = (char*)[fileName[fileName.count-1] UTF8String];
                     [self->windowView setTitle: [NSString stringWithFormat: @"AtomBiosEditor - %@", fileName[fileName.count-1]]];
                     
-                    [self->masterVC loadInfo : &(self->atomBios)];
+                    [self->masterVC loadInfo: &(self->atomBios)];
                 }
             }
         }];
