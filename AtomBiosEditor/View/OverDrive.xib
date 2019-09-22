@@ -28,14 +28,14 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="0Ph-O9-No4">
-            <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
+            <rect key="frame" x="0.0" y="0.0" width="460" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" title="Max OverDrive Clock" translatesAutoresizingMaskIntoConstraints="NO" id="OPG-UA-068">
-                    <rect key="frame" x="7" y="282" width="211" height="148"/>
+                    <rect key="frame" x="7" y="307" width="216" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="EQ1-6s-4VA">
-                        <rect key="frame" x="3" y="3" width="205" height="130"/>
+                        <rect key="frame" x="3" y="3" width="210" height="130"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i7K-Be-ybj">
@@ -96,10 +96,10 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Fan Control" translatesAutoresizingMaskIntoConstraints="NO" id="1my-eS-lFb">
-                    <rect key="frame" x="7" y="16" width="441" height="255"/>
+                    <rect key="frame" x="7" y="41" width="446" height="255"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="3tw-eW-uzn">
-                        <rect key="frame" x="3" y="3" width="435" height="237"/>
+                        <rect key="frame" x="3" y="3" width="440" height="237"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKb-6I-WCx">
@@ -353,10 +353,10 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Thermal Design Power" translatesAutoresizingMaskIntoConstraints="NO" id="0lP-o5-yzY">
-                    <rect key="frame" x="237" y="282" width="211" height="148"/>
+                    <rect key="frame" x="237" y="307" width="216" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Tsh-BY-2EU">
-                        <rect key="frame" x="3" y="3" width="205" height="130"/>
+                        <rect key="frame" x="3" y="3" width="210" height="130"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yAP-Pc-T7W">

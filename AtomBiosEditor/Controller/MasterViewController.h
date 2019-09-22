@@ -13,6 +13,7 @@
 #import "TablesController.h"
 #import "PowerPlayController.h"
 #import "OverDriveController.h"
+#import "FirmwareInfoController.h"
 
 @interface MasterViewController : NSViewController {
     struct ATOM_BIOS * atomBios;
@@ -21,6 +22,7 @@
     @property (nonatomic, strong) TablesController    * varTablesController;
     @property (nonatomic, strong) PowerPlayController * varPowerPlayController;
     @property (nonatomic, strong) OverDriveController * varOverDriveController;
+    @property (nonatomic, strong) FirmwareInfoController * varFirmwareInfoController;
 
     @property (weak) IBOutlet NSView *contentView;
 

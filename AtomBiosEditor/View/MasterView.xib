@@ -21,6 +21,12 @@
                 <customView identifier="ContentView" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cPW-Lj-CWo">
                     <rect key="frame" x="160" y="0.0" width="460" height="500"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <subviews>
+                        <box horizontalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="sIL-pL-eUi">
+                            <rect key="frame" x="-1" y="0.0" width="5" height="500"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        </box>
+                    </subviews>
                 </customView>
             </subviews>
             <point key="canvasLocation" x="-435" y="-408"/>

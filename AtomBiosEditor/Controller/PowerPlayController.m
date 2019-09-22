@@ -17,16 +17,11 @@
 
     -(void)viewDidLoad {
         [super viewDidLoad];
-        short dimensions[3][4] = {
-            {3,3,440,120},
-            {3,3,440,120},
-            {3,3 ,440,120}
-        };
         stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
         [_radioDecimal setState: NSControlStateValueOn];
         for (int c=0; c<3; c++) {
-            tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(dimensions[c][0],dimensions[c][1],dimensions[c][2],dimensions[c][3])];
-            stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,dimensions[c][2],dimensions[c][3])];
+            tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(3,3,435,120)];
+            stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,435,120)];
             if (! (c==0) ) {
                 [stTable[c] initTableStructure: 0];
             } else {

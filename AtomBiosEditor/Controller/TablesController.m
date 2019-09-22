@@ -28,9 +28,9 @@
         }
         [_selectorTable setEnabled : NO];
         //Table Initialization
-        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 385)];
+        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 405)];
         [tableView initTableStructure : _buttonDumpTable : _buttonReplaceTable];
-        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(7, 33, 440, 385)];
+        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 35, 440, 425)];
         // embed the table view in the scroll view, and add the scroll view
         [tableContainer setDocumentView:tableView];
         [tableContainer setHasVerticalScroller:YES];
@@ -43,7 +43,6 @@
         filename = [NSString stringWithUTF8String: fileName];
         [_selectorTable setTitle: @"select.."];
         [self ReloadTableView: 0 : _radioHexadecimal.state];
-        NSLog(@"%ld",tableView.selectedRow);
         [ tableView          setEnabled : YES];
         [_selectorTable      setEnabled : YES];
     }

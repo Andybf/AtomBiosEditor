@@ -21,3 +21,7 @@
 @property (weak) IBOutlet NSMenuItem *menuItemSave;
 
 @end
+
+@interface WindowView : NSWindow
+
+@end

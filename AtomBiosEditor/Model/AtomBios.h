@@ -17,25 +17,19 @@
 //Addresses
 #define OFFSET_ROM_BASE_TABLE     0x04
 #define OFFSET_ROM_CHECKSUM       0x21
-#define OFFSET_ROM_INFO           0x48
+#define OFFSET_ROM_TABLE_PTR      0x48
 #define OFFSET_COMPILATION_TIME   0x50
 #define OFFSET_STR_START          0x6E
 
 //static information found in firmware files
-#define STATIC_ROM_MAGIC_NUMBER    "AA55"
-#define STATIC_ROM_ARCH_TERASCALE2 "E97E"
-#define STATIC_ROM_ARCH_CGN1       "E980"
-#define STATIC_ROM_ARCH_CGN3       "E977"
-#define STATIC_ROM_ARCH_CGN4       "E974"
-#define STATIC_ROM_MESSAGE_BEGIN   "000D0A"
-#define STATIC_ROM_SIGNATURE       "373631323935353230"  //761295520
-#define STATIC_ROM_TYPE            "41544F4D"            //ATOM
-
-// Definições de tipos de dados
-// an integer value between 0 and 65.535 (2 bytes of size)
-typedef unsigned short ushort;
-// an integer value between 0 and 255 (1 byte of size)
-typedef unsigned char byte;
+#define ATOM_BIOS_MAGIC           "AA55" //Filetype
+#define ATOM_BIOS_ARCH_TERASCALE2 "E97E"
+#define ATOM_BIOS_ARCH_CGN1       "E980"
+#define ATOM_BIOS_ARCH_CGN3       "E977"
+#define ATOM_BIOS_ARCH_CGN4       "E974"
+#define ATOM_ROM_MESSAGE_BEGIN    "000D0A"
+#define ATOM_ROM_SIGNATURE        "20373631323935353230"  // 761295520
+#define ATOM_ROM_MAGIC            "41544F4D"            //ATOM
 
 struct FIRMWARE_FILE {
     FILE * file;

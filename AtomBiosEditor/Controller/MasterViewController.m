@@ -11,38 +11,36 @@
 
 @implementation MasterViewController {
     
-}
-    
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    _varOverviewController  = [[OverviewController  alloc] initWithNibName: @"Overview"  bundle: NULL];
-    _varTablesController    = [[TablesController    alloc] initWithNibName: @"Tables"    bundle: NULL];
-    _varPowerPlayController = [[PowerPlayController alloc] initWithNibName: @"PowerPlay" bundle: NULL];
-    _varOverDriveController = [[OverDriveController alloc] initWithNibName: @"OverDrive" bundle: NULL];
-    
-    [[self contentView] addSubview: self->_varOverviewController.view];
-    
-}
+    }
 
-- (void)loadInfo : (struct ATOM_BIOS *)atomBios {
-    
-    NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 150, 500)];
-    [sideBarContainer setDrawsBackground:NO];
-    SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 150, 500)];
-    [sideBarContainer setDocumentView: sideBar];
-    [sideBar setBackgroundColor: [NSColor colorWithRed:0 green:0 blue:0 alpha:0]];
-    [sideBar ConstructSideBar: self : atomBios];
-    
-    NSVisualEffectView * effectView = [[NSVisualEffectView alloc] initWithFrame: NSMakeRect(0, 0, 150, 500)];
-    [effectView addSubview: sideBarContainer];
-    
-    [[self view] addSubview: effectView];
-    
-    [_varOverviewController initOverviewInfo: atomBios];
-}
+    - (void)viewDidLoad {
+        
+        [super viewDidLoad];
+        _varOverviewController     = [[OverviewController     alloc] initWithNibName: @"Overview"     bundle: NULL];
+        _varTablesController       = [[TablesController       alloc] initWithNibName: @"Tables"       bundle: NULL];
+        _varPowerPlayController    = [[PowerPlayController    alloc] initWithNibName: @"PowerPlay"    bundle: NULL];
+        _varOverDriveController    = [[OverDriveController    alloc] initWithNibName: @"OverDrive"    bundle: NULL];
+        _varFirmwareInfoController = [[FirmwareInfoController alloc] initWithNibName: @"FirmwareInfo" bundle: NULL];
+    }
+
+    - (void)loadInfo : (struct ATOM_BIOS *)atomBios {
+        
+        NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 500)];
+        [sideBarContainer setDrawsBackground:NO];
+        SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 160, 500)];
+        [sideBarContainer setDocumentView: sideBar];
+        [sideBar setBackgroundColor: [NSColor colorWithRed:0 green:0 blue:0 alpha:0]];
+        [sideBar ConstructSideBar: self : atomBios];
+        
+        NSVisualEffectView * effectView = [[NSVisualEffectView alloc] initWithFrame: NSMakeRect(0, 0, 160, 500)];
+        
+        [effectView addSubview: sideBarContainer];
+        [[self view] addSubview: effectView];
+        [_varOverviewController initOverviewInfo: atomBios];
+        [[self contentView] addSubview: self->_varOverviewController.view];
+        
+    }
 @end
-
 
 @implementation SideBar {
         MasterViewController * mvc;
@@ -54,7 +52,7 @@
         mvc = masterVC;
         at = atomBios;
         NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier: @"menu"];
-        [column setWidth: 150];
+        [column setWidth: 160];
         [column setTitle: @"Main Menu"];
         [self addTableColumn:column];
         [self setTableTitles: [[NSMutableArray alloc] initWithCapacity: 5]];
@@ -62,6 +60,8 @@
         for (int a=0; a<5; a++) {
             [_tableTitles addObject: menuTitles[a]];
         }
+        [self setRowHeight: 22.0];
+        [self setAllowsColumnReordering: NO];
         //[self setHeaderView: NULL];
         [self setDelegate: self];
         [self setDataSource: self];
@@ -80,7 +80,8 @@
                 [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName];
                 break;
             case 2:
-                
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];
+                [[mvc varFirmwareInfoController] InitFirmwareInfo];
                 break;
             case 3:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varPowerPlayController] view]];
@@ -103,7 +104,7 @@
     - (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row:(NSInteger)row {
         //Column configurations
         [tableColumn setEditable: NO];
-        [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 12.0] ];
+        [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 13.0] ];
         
         return [self.tableTitles objectAtIndex:row];
     }

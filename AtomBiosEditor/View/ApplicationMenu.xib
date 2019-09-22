@@ -87,12 +87,12 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                            <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                            <menuItem title="Close" hidden="YES" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="MenuItemCloseTriggered:" target="AYu-sK-qS6" id="OCp-3s-THb"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
+                            <menuItem title="Save…" hidden="YES" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="menuItemSaveTriggered:" target="AYu-sK-qS6" id="Q83-RE-WYC"/>
                                 </connections>

@@ -19,7 +19,7 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="EfM-6E-II4">
-            <rect key="frame" x="0.0" y="0.0" width="460" height="450"/>
+            <rect key="frame" x="0.0" y="0.0" width="460" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTf-5D-chN">
@@ -32,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-Mm-ZX4">
-                    <rect key="frame" x="101" y="8" width="100" height="17"/>
+                    <rect key="frame" x="104" y="8" width="100" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="QWi-sq-As6">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -43,7 +43,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-kV-iuu">
-                    <rect key="frame" x="206" y="8" width="75" height="17"/>
+                    <rect key="frame" x="209" y="8" width="75" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="v5f-wA-MuO">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -54,26 +54,26 @@
                     </connections>
                 </button>
                 <box fixedFrame="YES" title="PowerPlay States" translatesAutoresizingMaskIntoConstraints="NO" id="4zh-4h-mon">
-                    <rect key="frame" x="2" y="313" width="450" height="140"/>
+                    <rect key="frame" x="7" y="321" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Bcm-c9-8tv">
-                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <rect key="frame" x="3" y="3" width="440" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Memory Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="kSR-jC-8Ce">
-                    <rect key="frame" x="2" y="28" width="450" height="140"/>
+                    <rect key="frame" x="7" y="36" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="a3M-le-TTj">
-                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <rect key="frame" x="3" y="3" width="440" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
                 <box fixedFrame="YES" title="GPU Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="JFY-L2-Evj">
-                    <rect key="frame" x="2" y="169" width="450" height="140"/>
+                    <rect key="frame" x="7" y="177" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="YJV-NF-UO8">
-                        <rect key="frame" x="3" y="3" width="444" height="122"/>
+                        <rect key="frame" x="3" y="3" width="440" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>

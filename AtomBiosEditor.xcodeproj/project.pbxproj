@@ -25,6 +25,9 @@
 		713D123F2325F22600CDBC90 /* AplicationMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 713D123E2325F22600CDBC90 /* AplicationMenuController.m */; };
 		71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CD231C333300EC0BB3 /* Credits.rtf */; };
 		71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CF231C654100EC0BB3 /* Assets.xcassets */; };
+		71F4CC0A2337BEDE0074B0E3 /* FirmwareInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 71F4CC092337BEDE0074B0E3 /* FirmwareInfo.c */; };
+		71F4CC0E2337E40C0074B0E3 /* FirmwareInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71F4CC0D2337E40C0074B0E3 /* FirmwareInfo.xib */; };
+		71F4CC102337E4570074B0E3 /* FirmwareInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 71F4CC0F2337E4570074B0E3 /* FirmwareInfoController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +60,11 @@
 		713D123E2325F22600CDBC90 /* AplicationMenuController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AplicationMenuController.m; sourceTree = "<group>"; };
 		71D855CD231C333300EC0BB3 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		71D855CF231C654100EC0BB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		71F4CC082337BEDE0074B0E3 /* FirmwareInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmwareInfo.h; sourceTree = "<group>"; };
+		71F4CC092337BEDE0074B0E3 /* FirmwareInfo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = FirmwareInfo.c; sourceTree = "<group>"; };
+		71F4CC0D2337E40C0074B0E3 /* FirmwareInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirmwareInfo.xib; sourceTree = "<group>"; };
+		71F4CC0F2337E4570074B0E3 /* FirmwareInfoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirmwareInfoController.m; sourceTree = "<group>"; };
+		71F4CC112337E4650074B0E3 /* FirmwareInfoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmwareInfoController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +123,8 @@
 				7113227123197E4A001758B1 /* PowerPlayController.m */,
 				7113227423197EEF001758B1 /* OverDriveController.h */,
 				7113227523197EEF001758B1 /* OverDriveController.m */,
+				71F4CC112337E4650074B0E3 /* FirmwareInfoController.h */,
+				71F4CC0F2337E4570074B0E3 /* FirmwareInfoController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -126,8 +136,10 @@
 				7111EA882316D9F6006FCC02 /* CoreFunctions.c */,
 				7111EA872316D9F6006FCC02 /* AtomBios.h */,
 				7111EA832316D9F6006FCC02 /* AtomBios.c */,
-				7127B8042320B9C5006F3A49 /* PowerPlay.c */,
 				7127B8052320B9C6006F3A49 /* PowerPlay.h */,
+				7127B8042320B9C5006F3A49 /* PowerPlay.c */,
+				71F4CC082337BEDE0074B0E3 /* FirmwareInfo.h */,
+				71F4CC092337BEDE0074B0E3 /* FirmwareInfo.c */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -141,6 +153,7 @@
 				7111EA9123170A9B006FCC02 /* Tables.xib */,
 				7113226D23197C5A001758B1 /* PowerPlay.xib */,
 				7113226F23197C6E001758B1 /* OverDrive.xib */,
+				71F4CC0D2337E40C0074B0E3 /* FirmwareInfo.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -222,6 +235,7 @@
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
 				71154873231B6ED80073F3AE /* MasterView.xib in Resources */,
 				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
+				71F4CC0E2337E40C0074B0E3 /* FirmwareInfo.xib in Resources */,
 				71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -237,11 +251,13 @@
 				7111EA6E2316D66F006FCC02 /* MasterViewController.m in Sources */,
 				7113227223197E4A001758B1 /* PowerPlayController.m in Sources */,
 				7111EA762316D671006FCC02 /* main.m in Sources */,
+				71F4CC102337E4570074B0E3 /* FirmwareInfoController.m in Sources */,
 				7111EA8B2316D9F6006FCC02 /* CoreFunctions.c in Sources */,
 				7113227623197EEF001758B1 /* OverDriveController.m in Sources */,
 				7111EA9423170AED006FCC02 /* TablesController.m in Sources */,
 				7111EA892316D9F6006FCC02 /* AtomBios.c in Sources */,
 				7111EA812316D8F5006FCC02 /* OverviewController.m in Sources */,
+				71F4CC0A2337BEDE0074B0E3 /* FirmwareInfo.c in Sources */,
 				713D123F2325F22600CDBC90 /* AplicationMenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

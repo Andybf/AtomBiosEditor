@@ -12,26 +12,22 @@
 @implementation AplicationMenuController {
         struct ATOM_BIOS atomBios;
         MasterViewController * masterVC;
-        NSWindow * windowView;
+        WindowView * windowView;
+        NSArray * fileName;
     }
 
     - (IBAction)menuItemOpenTriggered:(id)sender {
-        NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
-        self->windowView = [[NSWindow alloc] initWithContentRect:NSMakeRect(200, 200, 620, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
-        masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
-        [windowView setTitle: @"AtomBiosEditor"];
-        [[windowView contentView] addSubview: masterVC.view];
-        [windowView setIsVisible: YES];
-        
         NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
         //Config
         openPanel.allowsMultipleSelection = false;
         openPanel.canChooseDirectories    = false;
         openPanel.canChooseFiles          = true;
-        [openPanel beginSheetModalForWindow: windowView completionHandler:^(NSModalResponse result) {
+        if ([openPanel runModal] == NSModalResponseOK) {
+            
             self->atomBios.firmware.filePath = (char*)[openPanel.URL.path UTF8String];
             
             if ( (self->atomBios.firmware.file = fopen(self->atomBios.firmware.filePath ,"r")) ) { //carregando o arquivo para dentro da memoria
+                
                 self->atomBios.firmware.genType = VerifyFirmwareArchitecture(self->atomBios.firmware.file);
                 stat(self->atomBios.firmware.filePath ,&self->atomBios.firmware.fileInfo); //Carregando informações sobre o arquivo
                 
@@ -45,24 +41,30 @@
                     [self DisplayAlert : @"Unsupported Firmware Generation!" : @"This firmware generation is not supported by this program."];
                     fclose(self->atomBios.firmware.file);
                 } else {
-                    NSArray * fileName = [[NSString stringWithUTF8String: self->atomBios.firmware.filePath] componentsSeparatedByString: @"/"];
+                    
+                    NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
+                    windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(200, 200, 620, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
+                    [windowView setIsVisible: YES];
+                    masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
+                    [[windowView contentView] addSubview: masterVC.view];
+                    fileName = [[NSString stringWithUTF8String: self->atomBios.firmware.filePath] componentsSeparatedByString: @"/"];
                     self->atomBios.firmware.fileName = (char*)[fileName[fileName.count-1] UTF8String];
                     [self->windowView setTitle: [NSString stringWithFormat: @"AtomBiosEditor - %@", fileName[fileName.count-1]]];
-                    
                     [self->masterVC loadInfo: &(self->atomBios)];
+                    [_menuItemSave setHidden: NO];
+                    [_menuItemClose setHidden: NO];
                 }
             }
-        }];
+        }
     }
 
     - (IBAction)MenuItemCloseTriggered:(id)sender {
-        [windowView setReleasedWhenClosed: NO];
         [windowView close];
     }
 
     - (IBAction)menuItemSaveTriggered:(id)sender {
         NSSavePanel * saveFile = [NSSavePanel savePanel];
-        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s-Modified.rom",atomBios.firmware.fileName] ];
+        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-Modified.rom", fileName[fileName.count-1] ]];
         [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
             if (returnCode == 1) { // if the save button was triggered
                 SaveModifiedAtomBios( &(self->atomBios), [saveFile.URL.path UTF8String] );
@@ -80,4 +82,13 @@
         //Instanciando
         [alert runModal];
     }
+@end
+
+@implementation WindowView
+
+- (void)close {
+    [self setReleasedWhenClosed: NO];
+    [super close];
+}
+
 @end

@@ -86,5 +86,3 @@ int count(int num){
     }
     return contagem;
 }
-
-

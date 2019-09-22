@@ -24,7 +24,7 @@
     //Table Initialization
     tableView = [[OverviewTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
     [tableView initTableStructure];
-    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(7, 33, 440, 405)];
+    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 58, 440, 405)];
     // embed the table view in the scroll view, and add the scroll view
     [tableContainer setDocumentView:tableView];
     [tableContainer setHasVerticalScroller: YES];
