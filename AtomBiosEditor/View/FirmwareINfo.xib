@@ -8,6 +8,17 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FirmwareInfoController">
             <connections>
+                <outlet property="textFieldBootVddcVolt" destination="P4u-Uf-MOp" id="avA-tD-O21"/>
+                <outlet property="textFieldCoreRefClk" destination="JxB-do-zUz" id="YoP-uG-zMi"/>
+                <outlet property="textFieldDefDispEngClk" destination="izV-HD-WUn" id="72a-FK-2GK"/>
+                <outlet property="textFieldDefEngClk" destination="LtN-wB-0tC" id="Rhs-Yy-GCm"/>
+                <outlet property="textFieldDefMemClk" destination="Cc5-VM-24t" id="VWn-Zk-5fi"/>
+                <outlet property="textFieldLcdMaxPixelClk" destination="uQ0-ol-fcj" id="anH-7o-Ueb"/>
+                <outlet property="textFieldLcdMinPixelClk" destination="h6L-Ts-Fyn" id="l66-5f-sHM"/>
+                <outlet property="textFieldMaxPixelClkPll" destination="4iq-Q3-TS8" id="3Gg-AV-eeS"/>
+                <outlet property="textFieldMemRefClk" destination="xs6-Dp-2Us" id="bNL-5K-aEY"/>
+                <outlet property="textFieldMinPixelClkPll" destination="sut-6k-km8" id="9UQ-Hc-ZOX"/>
+                <outlet property="textFieldPixelClk" destination="DnF-6w-6Xf" id="Hps-re-84q"/>
                 <outlet property="view" destination="STA-kk-WaP" id="MTL-BG-nXl"/>
             </connections>
         </customObject>

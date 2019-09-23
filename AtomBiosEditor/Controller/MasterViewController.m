@@ -37,7 +37,6 @@
         [effectView addSubview: sideBarContainer];
         [[self view] addSubview: effectView];
         [_varOverviewController initOverviewInfo: atomBios];
-        [[self contentView] addSubview: self->_varOverviewController.view];
         
     }
 @end
@@ -46,6 +45,7 @@
         MasterViewController * mvc;
         struct ATOM_BIOS * at;
         struct POWERPLAY_DATA powerPlay;
+        struct FIRMWARE_INFO firmwareInfo;
     }
 
     - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios {
@@ -81,7 +81,8 @@
                 break;
             case 2:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];
-                [[mvc varFirmwareInfoController] InitFirmwareInfo];
+                firmwareInfo = LoadFirmwareInfo(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
+                [[mvc varFirmwareInfoController] InitFirmwareInfo: &(firmwareInfo)];
                 break;
             case 3:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varPowerPlayController] view]];

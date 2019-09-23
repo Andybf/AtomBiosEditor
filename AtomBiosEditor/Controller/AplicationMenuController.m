@@ -41,7 +41,6 @@
                     [self DisplayAlert : @"Unsupported Firmware Generation!" : @"This firmware generation is not supported by this program."];
                     fclose(self->atomBios.firmware.file);
                 } else {
-                    
                     NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
                     windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(200, 200, 620, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
                     [windowView setIsVisible: YES];
