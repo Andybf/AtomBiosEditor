@@ -55,5 +55,6 @@ struct POWERPLAY_DATA {
 };
 
 struct POWERPLAY_DATA LoadPowerPlayData  (FILE * , struct ATOM_DATA_AND_CMMD_TABLES);
+void SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct POWERPLAY_DATA powerPlay);
 
 #endif /* PowerPlay_h */

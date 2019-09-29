@@ -11,6 +11,8 @@
 
 @implementation AplicationMenuController {
         struct ATOM_BIOS atomBios;
+        struct POWERPLAY_DATA powerPlay;
+        struct FIRMWARE_INFO firmwareInfo;
         MasterViewController * masterVC;
         WindowView * windowView;
         NSArray * fileName;
@@ -42,14 +44,14 @@
                     fclose(self->atomBios.firmware.file);
                 } else {
                     NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
-                    windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(200, 200, 620, 500) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
+                    windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(200, 200, 620, 460) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
                     [windowView setIsVisible: YES];
                     masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
                     [[windowView contentView] addSubview: masterVC.view];
                     fileName = [[NSString stringWithUTF8String: self->atomBios.firmware.filePath] componentsSeparatedByString: @"/"];
                     self->atomBios.firmware.fileName = (char*)[fileName[fileName.count-1] UTF8String];
                     [self->windowView setTitle: [NSString stringWithFormat: @"AtomBiosEditor - %@", fileName[fileName.count-1]]];
-                    [self->masterVC loadInfo: &(self->atomBios)];
+                    [self->masterVC loadInfo: &(self->atomBios) : &(powerPlay) : &(firmwareInfo)];
                     [_menuItemSave setHidden: NO];
                     [_menuItemClose setHidden: NO];
                 }
@@ -66,7 +68,11 @@
         [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-Modified.rom", fileName[fileName.count-1] ]];
         [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
             if (returnCode == 1) { // if the save button was triggered
-                SaveModifiedAtomBios( &(self->atomBios), [saveFile.URL.path UTF8String] );
+                FILE * newFirmwareFile = fopen([saveFile.URL.path UTF8String],"wb");
+                SaveFirmwareInfo(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04], self->firmwareInfo);
+                SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], self->powerPlay);
+                SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
+                fclose(newFirmwareFile);
             }
         }];
     }

@@ -48,5 +48,6 @@ struct FIRMWARE_INFO {
 // Functions Declarations
 
 struct FIRMWARE_INFO LoadFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable);
+void SaveFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct FIRMWARE_INFO firmwareInfo);
 
 #endif /* FirmwareInfo_h */

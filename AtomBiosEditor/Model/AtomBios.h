@@ -122,7 +122,7 @@ void                   loadCmmdAndDataTables (struct ATOM_BIOS * atomBios);
 void                   ReplaceTable          (struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort index, const char * tablePath);
 
 //Save
-void                   SaveModifiedAtomBios  (struct ATOM_BIOS * atomBios, const char * charNewFilePath);
+void                   SaveAtomBiosData      (struct ATOM_BIOS * atomBios, FILE * firmware);
 
 //Verify
 short                  VerifyFirmwareSize    (struct stat);

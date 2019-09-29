@@ -28,11 +28,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="0Ph-O9-No4">
-            <rect key="frame" x="0.0" y="0.0" width="460" height="500"/>
+            <rect key="frame" x="0.0" y="0.0" width="460" height="460"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" title="Max OverDrive Clock" translatesAutoresizingMaskIntoConstraints="NO" id="OPG-UA-068">
-                    <rect key="frame" x="7" y="307" width="216" height="148"/>
+                    <rect key="frame" x="7" y="287" width="216" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="EQ1-6s-4VA">
                         <rect key="frame" x="3" y="3" width="210" height="130"/>
@@ -96,7 +96,7 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Fan Control" translatesAutoresizingMaskIntoConstraints="NO" id="1my-eS-lFb">
-                    <rect key="frame" x="7" y="41" width="446" height="255"/>
+                    <rect key="frame" x="7" y="21" width="446" height="255"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="3tw-eW-uzn">
                         <rect key="frame" x="3" y="3" width="440" height="237"/>
@@ -353,7 +353,7 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Thermal Design Power" translatesAutoresizingMaskIntoConstraints="NO" id="0lP-o5-yzY">
-                    <rect key="frame" x="237" y="307" width="216" height="148"/>
+                    <rect key="frame" x="237" y="287" width="216" height="148"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Tsh-BY-2EU">
                         <rect key="frame" x="3" y="3" width="210" height="130"/>

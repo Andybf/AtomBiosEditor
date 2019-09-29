@@ -23,16 +23,16 @@
         _varFirmwareInfoController = [[FirmwareInfoController alloc] initWithNibName: @"FirmwareInfo" bundle: NULL];
     }
 
-    - (void)loadInfo : (struct ATOM_BIOS *)atomBios {
+    - (void)loadInfo : (struct ATOM_BIOS *)atomBios : (struct POWERPLAY_DATA*)powerPlay : (struct FIRMWARE_INFO *)firmwareInfo{
         
-        NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 500)];
+        NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 460)];
         [sideBarContainer setDrawsBackground:NO];
-        SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 160, 500)];
+        SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 160, 460)];
         [sideBarContainer setDocumentView: sideBar];
         [sideBar setBackgroundColor: [NSColor colorWithRed:0 green:0 blue:0 alpha:0]];
-        [sideBar ConstructSideBar: self : atomBios];
+        [sideBar ConstructSideBar: self : atomBios : powerPlay : firmwareInfo];
         
-        NSVisualEffectView * effectView = [[NSVisualEffectView alloc] initWithFrame: NSMakeRect(0, 0, 160, 500)];
+        NSVisualEffectView * effectView = [[NSVisualEffectView alloc] initWithFrame: NSMakeRect(0, 0, 160, 460)];
         
         [effectView addSubview: sideBarContainer];
         [[self view] addSubview: effectView];
@@ -44,13 +44,15 @@
 @implementation SideBar {
         MasterViewController * mvc;
         struct ATOM_BIOS * at;
-        struct POWERPLAY_DATA powerPlay;
-        struct FIRMWARE_INFO firmwareInfo;
+        struct POWERPLAY_DATA * powerPlay;
+        struct FIRMWARE_INFO * firmwareInfo;
     }
 
-    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios {
+- (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios : (struct POWERPLAY_DATA *) pp : (struct FIRMWARE_INFO *) fi {
         mvc = masterVC;
         at = atomBios;
+        powerPlay = pp;
+        firmwareInfo = fi;
         NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier: @"menu"];
         [column setWidth: 160];
         [column setTitle: @"Main Menu"];
@@ -81,17 +83,17 @@
                 break;
             case 2:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];
-                firmwareInfo = LoadFirmwareInfo(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
-                [[mvc varFirmwareInfoController] InitFirmwareInfo: &(firmwareInfo)];
+                *firmwareInfo = LoadFirmwareInfo(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
+                [[mvc varFirmwareInfoController] InitFirmwareInfo: firmwareInfo];
                 break;
             case 3:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varPowerPlayController] view]];
-                powerPlay = LoadPowerPlayData(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
-                [[mvc varPowerPlayController] InitPowerPlayInfo : at->dataAndCmmdTables : &(powerPlay) : 0];
+                *powerPlay = LoadPowerPlayData(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
+                [[mvc varPowerPlayController] InitPowerPlayInfo : at->dataAndCmmdTables : powerPlay : 0];
                 break;
             case 4:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverDriveController] view]];
-                [[mvc varOverDriveController] initOverDriveInfo : &(powerPlay)];
+                [[mvc varOverDriveController] initOverDriveInfo : powerPlay];
                 break;
             default:
                 break;

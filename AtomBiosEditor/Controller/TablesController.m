@@ -28,9 +28,9 @@
         }
         [_selectorTable setEnabled : NO];
         //Table Initialization
-        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 405)];
+        tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 385)];
         [tableView initTableStructure : _buttonDumpTable : _buttonReplaceTable];
-        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 35, 440, 425)];
+        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 35, 440, 385)];
         // embed the table view in the scroll view, and add the scroll view
         [tableContainer setDocumentView:tableView];
         [tableContainer setHasVerticalScroller:YES];

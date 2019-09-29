@@ -28,3 +28,20 @@ struct FIRMWARE_INFO LoadFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMM
     
     return firmwareInfo;
 }
+
+void SaveFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct FIRMWARE_INFO firmwareInfo) {
+    
+    // Function | target | Big Endian to Little |       property     |                   offset                          | Size Multiplier by 2
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.defaultEngineClock*100), abstractTable.offset + OFFSET_DEFAULT_ENGINE_CLOCK  );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.defaultMemoryClock*100), abstractTable.offset + OFFSET_DEFAULT_MEMORY_CLOCK  );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.deftDispEngineClk *100), abstractTable.offset + OFFSET_DEFT_DISP_ENGINE_CLK  );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.bootUpVDDCVoltage     ), abstractTable.offset + OFFSET_BOOT_VDDC_VOLTAGE     );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.LcdMinPixelClock      ), abstractTable.offset + OFFSET_LCD_MIN_PIXEL_CLOCK   );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.LcdMaxPixelClock      ), abstractTable.offset + OFFSET_LCD_MAX_PIXEL_CLOCK   );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.maxPixelClock     *100), abstractTable.offset + OFFSET_MAX_PIXEL_CLOCK       );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.minPixelClockPLLInput ), abstractTable.offset + OFFSET_MIN_PIXEL_CLK_INPUT   );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.maxPixelClockPLLInput ), abstractTable.offset + OFFSET_MAX_PIXEL_CLK_INPUT   );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.coreReferenceClock    ), abstractTable.offset + OFFSET_CORE_REFERENCE_CLOCK  );
+    SetFileDataNumber(firmware, BtoL16(firmwareInfo.memoryReferenceClock  ), abstractTable.offset + OFFSET_MEMORY_REFERENCE_CLOCK);
+    
+}
