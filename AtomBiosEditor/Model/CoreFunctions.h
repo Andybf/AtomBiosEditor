@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 //quantidades
 #define QUANTITY_COMMAND_TABLES 81
@@ -37,8 +38,10 @@ typedef unsigned short ushort;
 typedef unsigned char byte;
 
 // Core Functions
+ushort BtoL16      (ushort num);
 char * GetFileData (FILE * file, int offset, ushort size, short endianness);
-short  SetFileData (FILE * fileOutput, char * data, ushort offset, ushort size);
+void   SetFileDataNumber (FILE * fileOutput, ushort chars, ushort offset);
+void   SetFileDataString(FILE * fileOutput, char * data, ushort offset, ushort size);
 ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos);
 int    HexToDec    (char [], int );
 int    count       (int num);

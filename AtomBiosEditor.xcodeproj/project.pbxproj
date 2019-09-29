@@ -23,6 +23,8 @@
 		7127B8062320B9C6006F3A49 /* PowerPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 7127B8042320B9C5006F3A49 /* PowerPlay.c */; };
 		713D12392325ED2200CDBC90 /* ApplicationMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 713D12382325ED2200CDBC90 /* ApplicationMenu.xib */; };
 		713D123F2325F22600CDBC90 /* AplicationMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 713D123E2325F22600CDBC90 /* AplicationMenuController.m */; };
+		71A11B2A2340251900803BEB /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 71A11B282340251900803BEB /* README.md */; };
+		71A11B2B2340251900803BEB /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 71A11B292340251900803BEB /* LICENSE */; };
 		71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CD231C333300EC0BB3 /* Credits.rtf */; };
 		71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71D855CF231C654100EC0BB3 /* Assets.xcassets */; };
 		71F4CC0A2337BEDE0074B0E3 /* FirmwareInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 71F4CC092337BEDE0074B0E3 /* FirmwareInfo.c */; };
@@ -58,6 +60,8 @@
 		713D12382325ED2200CDBC90 /* ApplicationMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplicationMenu.xib; sourceTree = "<group>"; };
 		713D123D2325F13200CDBC90 /* AplicationMenuController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AplicationMenuController.h; sourceTree = "<group>"; };
 		713D123E2325F22600CDBC90 /* AplicationMenuController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AplicationMenuController.m; sourceTree = "<group>"; };
+		71A11B282340251900803BEB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		71A11B292340251900803BEB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		71D855CD231C333300EC0BB3 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		71D855CF231C654100EC0BB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71F4CC082337BEDE0074B0E3 /* FirmwareInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmwareInfo.h; sourceTree = "<group>"; };
@@ -81,6 +85,8 @@
 		7111EA5D2316D66F006FCC02 = {
 			isa = PBXGroup;
 			children = (
+				71A11B292340251900803BEB /* LICENSE */,
+				71A11B282340251900803BEB /* README.md */,
 				7111EA682316D66F006FCC02 /* AtomBiosEditor */,
 				7111EA672316D66F006FCC02 /* Products */,
 			);
@@ -230,8 +236,10 @@
 			files = (
 				7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */,
 				7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */,
+				71A11B2A2340251900803BEB /* README.md in Resources */,
 				713D12392325ED2200CDBC90 /* ApplicationMenu.xib in Resources */,
 				71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */,
+				71A11B2B2340251900803BEB /* LICENSE in Resources */,
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
 				71154873231B6ED80073F3AE /* MasterView.xib in Resources */,
 				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
@@ -381,6 +389,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = NJTSLY2P32;
@@ -392,6 +401,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.abucchianico.AtomBiosEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -400,6 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = NJTSLY2P32;
@@ -411,6 +422,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = br.com.abucchianico.AtomBiosEditor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

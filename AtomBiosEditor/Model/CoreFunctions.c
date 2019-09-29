@@ -8,6 +8,10 @@
 
 #include "CoreFunctions.h"
 
+ushort BtoL16(ushort num) {
+    return (num>>8) | (num<<8);
+}
+
 // Transforma um vetor de caracteres[4] com hexadecimais em um numero decimal
 int HexToDec(char input[6],int quantHex) {
     int c, d, asciiCode, output = 0;
@@ -62,10 +66,14 @@ char * GetFileData(FILE * file, int posInicial, ushort quantBytes, short endiann
     return formated_output;
 }
 
-short SetFileData(FILE * fileOutput, char * data, ushort offset, ushort size) {
+void SetFileDataNumber(FILE * fileOutput, ushort data, ushort offset) {
     fseek(fileOutput, offset, SEEK_SET);
-    fwrite( data, sizeof(char), size, fileOutput);
-    return 0;
+    fwrite((const void*)&data, sizeof(ushort), 1, fileOutput);
+}
+
+void SetFileDataString(FILE * fileOutput, char * data, ushort offset, ushort size) {
+    fseek(fileOutput, offset, SEEK_SET);
+    fwrite(data, sizeof(char), size, fileOutput);
 }
 
 ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos) {

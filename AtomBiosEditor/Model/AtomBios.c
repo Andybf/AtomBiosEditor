@@ -223,16 +223,16 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
     //FixChecksum(newBiosPath, FW->fileInfo.st_size , atomTable );
 }
 
-void SaveModifiedAtomBios(struct ATOM_BIOS * atomBios, const char * charNewFilePath) {
-    FILE * newFilePath = fopen(charNewFilePath,"wb");
-    SetFileData(newFilePath, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
-    SetFileData(newFilePath, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
-    SetFileData(newFilePath, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
-    SetFileData(newFilePath, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
-    SetFileData(newFilePath, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
-    SetFileData(newFilePath, atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME, 14);
-    SetFileData(newFilePath, atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
-    fclose(newFilePath);
+void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
+    
+    SetFileDataString(firmware, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
+    SetFileDataString(firmware, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
+    SetFileDataString(firmware, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
+    SetFileDataString(firmware, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
+    SetFileDataString(firmware, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
+    SetFileDataString(firmware, atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME, 14);
+    SetFileDataString(firmware, atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
+    
 }
 
 short VerifyFirmwareSize(struct stat fileInfo) {

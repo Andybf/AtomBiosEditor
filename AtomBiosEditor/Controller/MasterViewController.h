@@ -26,7 +26,7 @@
 
     @property (weak) IBOutlet NSView *contentView;
 
-- (void)loadInfo : (struct ATOM_BIOS *)atomBios;
+    - (void)loadInfo : (struct ATOM_BIOS *)atomBios : (struct POWERPLAY_DATA*)powerPlay : (struct FIRMWARE_INFO *)firmwareInfo;
 
 @end
 
@@ -35,6 +35,6 @@
     }
     @property (nonatomic, strong) NSMutableArray * tableTitles;
 
-    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios;
+    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios : (struct POWERPLAY_DATA *) pp : (struct FIRMWARE_INFO *) fi;
 
 @end
