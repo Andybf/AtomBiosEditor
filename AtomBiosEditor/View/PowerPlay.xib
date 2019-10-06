@@ -11,8 +11,8 @@
                 <outlet property="BoxGpuStates" destination="JFY-L2-Evj" id="lBc-PN-qKx"/>
                 <outlet property="BoxMemStates" destination="kSR-jC-8Ce" id="aRm-FJ-eYp"/>
                 <outlet property="BoxPowerPlay" destination="Bcm-c9-8tv" id="0kL-iN-z7K"/>
-                <outlet property="radioDecimal" destination="Tqm-kV-iuu" id="Ei0-9X-vso"/>
-                <outlet property="radioHexadecimal" destination="nxa-Mm-ZX4" id="1ek-mx-BVM"/>
+                <outlet property="radioDecimal" destination="bHX-lp-MPE" id="qkA-J0-D3g"/>
+                <outlet property="radioHexadecimal" destination="Dj7-Mh-UUM" id="JUw-n4-gTY"/>
                 <outlet property="view" destination="EfM-6E-II4" id="Ka7-Ob-Vgy"/>
             </connections>
         </customObject>
@@ -22,39 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="460" height="460"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTf-5D-chN">
-                    <rect key="frame" x="8" y="8" width="90" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="View Mode:" id="PEw-RV-DMj">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nxa-Mm-ZX4">
-                    <rect key="frame" x="104" y="7" width="100" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="QWi-sq-As6">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="RadioHexChanged:" target="-2" id="oTj-Ml-omY"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tqm-kV-iuu">
-                    <rect key="frame" x="209" y="7" width="75" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="v5f-wA-MuO">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="RadioDecChanged:" target="-2" id="dw9-Oy-h66"/>
-                    </connections>
-                </button>
                 <box fixedFrame="YES" title="PowerPlay States" translatesAutoresizingMaskIntoConstraints="NO" id="4zh-4h-mon">
-                    <rect key="frame" x="7" y="312" width="446" height="140"/>
+                    <rect key="frame" x="7" y="316" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Bcm-c9-8tv">
                         <rect key="frame" x="3" y="3" width="440" height="122"/>
@@ -62,7 +31,7 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Memory Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="kSR-jC-8Ce">
-                    <rect key="frame" x="7" y="27" width="446" height="140"/>
+                    <rect key="frame" x="7" y="31" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="a3M-le-TTj">
                         <rect key="frame" x="3" y="3" width="440" height="122"/>
@@ -70,11 +39,46 @@
                     </view>
                 </box>
                 <box fixedFrame="YES" title="GPU Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="JFY-L2-Evj">
-                    <rect key="frame" x="7" y="168" width="446" height="140"/>
+                    <rect key="frame" x="7" y="172" width="446" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="YJV-NF-UO8">
                         <rect key="frame" x="3" y="3" width="440" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </box>
+                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-RR-fid">
+                    <rect key="frame" x="7" y="1" width="446" height="44"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" id="O84-no-mHJ">
+                        <rect key="frame" x="3" y="3" width="440" height="26"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Mh-UUM">
+                                <rect key="frame" x="105" y="6" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="QV7-1f-UuQ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHX-lp-MPE">
+                                <rect key="frame" x="210" y="6" width="75" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="nc5-CK-A7X">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zZ1-yn-yHQ">
+                                <rect key="frame" x="13" y="6" width="90" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="View Mode:" id="yWN-NF-Uce">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
                     </view>
                 </box>
             </subviews>

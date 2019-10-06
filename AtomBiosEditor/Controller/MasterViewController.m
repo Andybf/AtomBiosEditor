@@ -23,7 +23,14 @@
         _varFirmwareInfoController = [[FirmwareInfoController alloc] initWithNibName: @"FirmwareInfo" bundle: NULL];
     }
 
-    - (void)loadInfo : (struct ATOM_BIOS *)atomBios : (struct POWERPLAY_DATA*)powerPlay : (struct FIRMWARE_INFO *)firmwareInfo{
+    - (void)loadInfo : (struct ATOM_BIOS *)atomBios : (struct POWERPLAY_DATA*)powerPlay : (struct FIRMWARE_INFO *)firmwareInfo {
+        
+        // Loading the formware data into memory
+        atomBios->mainTable = loadMainTable(atomBios);
+        loadOffsetsTable(     atomBios);
+        loadCmmdAndDataTables(atomBios);
+        *firmwareInfo = LoadFirmwareInfo(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
+        *powerPlay = LoadPowerPlayData(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
         
         NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 460)];
         [sideBarContainer setDrawsBackground:NO];
@@ -36,8 +43,6 @@
         
         [effectView addSubview: sideBarContainer];
         [[self view] addSubview: effectView];
-        [_varOverviewController initOverviewInfo: atomBios];
-        
     }
 @end
 
@@ -69,26 +74,21 @@
         [self setDataSource: self];
         [self setEnabled: YES];
         [self reloadData];
-        [self tableViewSelectionDidChange: [NSNotification notificationWithName: @"teste" object: NULL]];
+        [self tableViewSelectionDidChange: [NSNotification notificationWithName: @"NSTableViewSelectionDidChangeNotification" object: NULL] ];
     }
 
     - (void)tableViewSelectionDidChange:(NSNotification *)notification {
         switch ([self selectedRow]) {
-            case 0:
-                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverviewController] view]];
-                break;
             case 1:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varTablesController] view]];
                 [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName];
                 break;
             case 2:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];
-                *firmwareInfo = LoadFirmwareInfo(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
                 [[mvc varFirmwareInfoController] InitFirmwareInfo: firmwareInfo];
                 break;
             case 3:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varPowerPlayController] view]];
-                *powerPlay = LoadPowerPlayData(at->firmware.file, at->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
                 [[mvc varPowerPlayController] InitPowerPlayInfo : at->dataAndCmmdTables : powerPlay : 0];
                 break;
             case 4:
@@ -96,6 +96,8 @@
                 [[mvc varOverDriveController] initOverDriveInfo : powerPlay];
                 break;
             default:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverviewController] view]];
+                [[mvc varOverviewController] initOverviewInfo: at];
                 break;
         }
     }
@@ -107,8 +109,7 @@
     - (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row:(NSInteger)row {
         //Column configurations
         [tableColumn setEditable: NO];
-        [[tableColumn dataCell] setFont: [NSFont systemFontOfSize: 13.0] ];
-        
+        [ [tableColumn dataCell] setFont: [NSFont systemFontOfSize: 13.0] ];
         return [self.tableTitles objectAtIndex:row];
     }
 

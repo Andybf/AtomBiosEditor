@@ -17,6 +17,7 @@
 //Addresses
 #define OFFSET_ROM_BASE_TABLE     0x04
 #define OFFSET_ROM_CHECKSUM       0x21
+#define OFFSET_ATOM_MAGIC_PTR     0x30
 #define OFFSET_ROM_TABLE_PTR      0x48
 #define OFFSET_COMPILATION_TIME   0x50
 #define OFFSET_STR_START          0x6E
@@ -123,6 +124,7 @@ void                   ReplaceTable          (struct ATOM_DATA_AND_CMMD_TABLES *
 
 //Save
 void                   SaveAtomBiosData      (struct ATOM_BIOS * atomBios, FILE * firmware);
+void                   SaveChecksum          (FILE * firmware, const char * filePath);
 
 //Verify
 short                  VerifyFirmwareSize    (struct stat);

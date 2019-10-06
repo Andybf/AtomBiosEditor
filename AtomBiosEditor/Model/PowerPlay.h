@@ -44,11 +44,11 @@ struct POWERPLAY_DATA {
     ushort * memFreqState;
     
     ushort fanInfoOffset;
-    ushort hysteresis;
+    char hysteresis;
     ushort tempTarget[3];
     ushort fanSpeed[3];
     ushort maxTemp;
-    ushort maxFanSpeed;
+    char maxFanSpeed;
     
     ushort minTdp;
     ushort maxTdp;

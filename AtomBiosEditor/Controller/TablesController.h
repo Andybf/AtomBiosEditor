@@ -19,6 +19,7 @@
     @property (weak) IBOutlet NSButton *buttonReplaceTable;
     @property (weak) IBOutlet NSButton *radioHexadecimal;
     @property (weak) IBOutlet NSButton *radioDecimal;
+    @property (weak) IBOutlet NSBox    *tableBox;
 
     -(void) ReloadTableView: (short)type : (NSControlStateValue)HexOrDecIsEnabled;
     -(void) InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName;

@@ -224,15 +224,28 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
 }
 
 void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
+    fwrite(GetFileData(atomBios->firmware.file, 0x0, (int)atomBios->firmware.fileInfo.st_size, 1), sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
     
-    SetFileDataString(firmware, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
-    SetFileDataString(firmware, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
-    SetFileDataString(firmware, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
-    SetFileDataString(firmware, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
-    SetFileDataString(firmware, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
-    SetFileDataString(firmware, atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME, 14);
-    SetFileDataString(firmware, atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
-    
+    SetFile8bitValue(firmware, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
+    SetFile8bitValue(firmware, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
+    SetFile8bitValue(firmware, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
+    SetFile8bitValue(firmware, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
+    SetFile8bitValue(firmware, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
+    SetFile8bitValue(firmware, atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME,              14);
+    SetFile8bitValue(firmware, atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
+}
+
+void SaveChecksum(FILE * firmware, const char * filePath) {
+    fseek(firmware, 0x0, SEEK_SET);
+    struct stat fileInfo;
+    stat(filePath ,&fileInfo); //Carregando informações sobre o arquivo
+    int checksum = 0;
+    for (int c=0; c<fileInfo.st_size / 2; c++ ) {
+        checksum += fgetc(firmware);
+    }
+    checksum = HexToDec(GetFileData(firmware, OFFSET_ROM_CHECKSUM, 1, 0),2) - checksum & 0xFF;
+    char chkbyte = checksum;
+    SetFile8bitValue(firmware, &chkbyte, OFFSET_ROM_CHECKSUM, 1);
 }
 
 short VerifyFirmwareSize(struct stat fileInfo) {
@@ -248,13 +261,13 @@ short VerifyFirmwareSignature(FILE * file) {
 }
 
 short VerifyFirmwareArchitecture(FILE * file) {
-    if ( strcmp(ATOM_BIOS_ARCH_TERASCALE2,GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    if ( strcmp(ATOM_BIOS_ARCH_TERASCALE2, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 1;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN1,GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_BIOS_ARCH_CGN1, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 2;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN3,GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_BIOS_ARCH_CGN3, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 3;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN4,GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_BIOS_ARCH_CGN4, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 4;
     } else {
         return 0;

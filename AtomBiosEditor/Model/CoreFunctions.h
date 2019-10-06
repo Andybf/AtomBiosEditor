@@ -39,11 +39,12 @@ typedef unsigned char byte;
 
 // Core Functions
 ushort BtoL16      (ushort num);
-char * GetFileData (FILE * file, int offset, ushort size, short endianness);
-void   SetFileDataNumber (FILE * fileOutput, ushort chars, ushort offset);
-void   SetFileDataString(FILE * fileOutput, char * data, ushort offset, ushort size);
+char * GetFileData (FILE * file, int offset, int size, short endianness);
+void   SetFile16bitValue (FILE * fileOutput, ushort chars, ushort offset, ushort size);
+void   SetFile8bitValue(FILE * fileOutput, char * data, ushort offset, ushort size);
 ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos);
 int    HexToDec    (char [], int );
 int    count       (int num);
+char * substr      (char *string, int position, int size);
 
 #endif /* ABELibrary_h */

@@ -69,10 +69,13 @@
         [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
             if (returnCode == 1) { // if the save button was triggered
                 FILE * newFirmwareFile = fopen([saveFile.URL.path UTF8String],"wb");
+                SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
                 SaveFirmwareInfo(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04], self->firmwareInfo);
                 SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], self->powerPlay);
-                SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
                 fclose(newFirmwareFile);
+                FILE * savedFirmwareFile = fopen([saveFile.URL.path UTF8String],"r+b"); // Reading and writing on existing binary file
+                SaveChecksum(savedFirmwareFile, [saveFile.URL.path UTF8String]);
+                fclose(savedFirmwareFile);
             }
         }];
     }

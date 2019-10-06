@@ -11,27 +11,37 @@
 
 #import "../Model/FirmwareInfo.h"
 
+@interface CustomTextField : NSTextField  {
+    
+}
+    @property (nonatomic) short TypeIdentifier;
+    @property struct FIRMWARE_INFO * firmwareInfo;
+
+@end
+
 @interface FirmwareInfoController : NSViewController {
     
-    }
+        }
 
-//Properties Declaration
-@property (weak) IBOutlet NSTextField *textFieldDefEngClk;
-@property (weak) IBOutlet NSTextField *textFieldDefMemClk;
-@property (weak) IBOutlet NSTextField *textFieldDefDispEngClk;
-@property (weak) IBOutlet NSTextField *textFieldCoreRefClk;
-@property (weak) IBOutlet NSTextField *textFieldMemRefClk;
+    //Properties Declaration
+    @property (strong) IBOutlet CustomTextField *textFieldDefEngClk;
+    @property (strong) IBOutlet CustomTextField *textFieldDefMemClk;
+    @property (strong) IBOutlet CustomTextField *textFieldDefDispEngClk;
+    @property (strong) IBOutlet CustomTextField *textFieldCoreRefClk;
+    @property (strong) IBOutlet CustomTextField *textFieldMemRefClk;
 
-@property (weak) IBOutlet NSTextField *textFieldPixelClk;
-@property (weak) IBOutlet NSTextField *textFieldMinPixelClkPll;
-@property (weak) IBOutlet NSTextField *textFieldMaxPixelClkPll;
-@property (weak) IBOutlet NSTextField *textFieldLcdMinPixelClk;
-@property (weak) IBOutlet NSTextField *textFieldLcdMaxPixelClk;
+    @property (weak) IBOutlet CustomTextField *textFieldPixelClk;
+    @property (weak) IBOutlet CustomTextField *textFieldMinPixelClkPll;
+    @property (weak) IBOutlet CustomTextField *textFieldMaxPixelClkPll;
+    @property (weak) IBOutlet CustomTextField *textFieldLcdMinPixelClk;
+    @property (weak) IBOutlet CustomTextField *textFieldLcdMaxPixelClk;
 
-@property (weak) IBOutlet NSTextField *textFieldBootVddcVolt;
+    @property (weak) IBOutlet CustomTextField *textFieldBootVddcVolt;
 
 
 // Functions Declaration
 - (void)InitFirmwareInfo: (struct FIRMWARE_INFO *) firmwareInfo;;
 
 @end
+
+
