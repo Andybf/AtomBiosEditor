@@ -20,10 +20,11 @@
     @property (weak) IBOutlet NSTextField *textFieldDeviceId;
     @property (weak) IBOutlet NSTextField *textFieldSubId;
     @property (weak) IBOutlet NSTextField *textFieldVendorId;
-    @property (weak) IBOutlet NSButton *checkChecksum;
-    @property (weak) IBOutlet NSButton *checkUefiSupport;
+    @property (weak) IBOutlet NSButton    *checkChecksum;
+    @property (weak) IBOutlet NSButton    *checkUefiSupport;
     @property (weak) IBOutlet NSTextField *textFieldMTSize;
     @property (weak) IBOutlet NSTextField *textFieldMTOffset;
+    @property (weak) IBOutlet NSBox       *OverviewBox;
 
     - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios;
 
@@ -34,7 +35,11 @@
     @property (nonatomic, strong) NSMutableArray * rowDesc;
     @property (nonatomic, strong) NSMutableArray * rowValue;
 
--(void)initTableStructure;
+    - (void)reloadData : (struct ATOM_BIOS*)atomBios;
+    - (void)initTableStructure;
 
 @end
+
+
+
 

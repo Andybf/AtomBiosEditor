@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="OverviewController">
             <connections>
+                <outlet property="OverviewBox" destination="rJi-IQ-c4M" id="zSR-K9-wUp"/>
                 <outlet property="view" destination="xq4-Rf-c3L" id="z3M-WH-DG4"/>
             </connections>
         </customObject>
@@ -17,31 +18,49 @@
             <rect key="frame" x="0.0" y="0.0" width="460" height="460"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AjU-qO-bVc">
-                    <rect key="frame" x="104" y="7" width="100" height="17"/>
+                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rJi-IQ-c4M">
+                    <rect key="frame" x="5" y="36" width="450" height="426"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="seS-40-Nfk">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4C7-9v-C3K">
-                    <rect key="frame" x="209" y="7" width="75" height="17"/>
+                    <view key="contentView" id="Xnf-Ho-I4M">
+                        <rect key="frame" x="3" y="3" width="444" height="408"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </box>
+                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="skQ-od-mH9">
+                    <rect key="frame" x="5" y="7" width="450" height="44"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="jfa-Wh-2yf">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mba-Lg-iCY">
-                    <rect key="frame" x="8" y="8" width="90" height="17"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="View Mode:" id="0JQ-T7-Tbc">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                    <view key="contentView" id="qmd-KQ-Dsy">
+                        <rect key="frame" x="3" y="3" width="444" height="26"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Irb-DQ-T61">
+                                <rect key="frame" x="105" y="6" width="100" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Hexadecimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="WYo-i3-Mfa">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsJ-ts-cqy">
+                                <rect key="frame" x="210" y="6" width="75" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="radio" title="Decimal" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="LCD-Mk-Jcz">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fCC-11-ool">
+                                <rect key="frame" x="13" y="6" width="90" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="View Mode:" id="hts-5M-Eyr">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                    </view>
+                </box>
             </subviews>
             <point key="canvasLocation" x="-258" y="-323"/>
         </customView>

@@ -30,12 +30,12 @@
         //Table Initialization
         tableView = [[AtomTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 385)];
         [tableView initTableStructure : _buttonDumpTable : _buttonReplaceTable];
-        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(10, 35, 440, 385)];
+        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(2, 2, 440, 385)];
         // embed the table view in the scroll view, and add the scroll view
         [tableContainer setDocumentView:tableView];
         [tableContainer setHasVerticalScroller:YES];
         //Add the container to window
-        [[self view] addSubview:tableContainer];
+        [_tableBox addSubview: tableContainer];
     }
 
     -(void)InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName {
