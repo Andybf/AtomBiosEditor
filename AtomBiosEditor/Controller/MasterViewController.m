@@ -32,6 +32,7 @@
         *firmwareInfo = LoadFirmwareInfo(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
         *powerPlay = LoadPowerPlayData(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
         
+        //Creating the sidebar
         NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 460)];
         [sideBarContainer setDrawsBackground:NO];
         SideBar * sideBar = [[SideBar alloc] initWithFrame: NSMakeRect(0, 0, 160, 460)];

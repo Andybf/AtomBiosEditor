@@ -31,11 +31,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
-                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hwT-7f-wEy">
-                    <rect key="frame" x="5" y="2" width="450" height="44"/>
+                <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="hwT-7f-wEy">
+                    <rect key="frame" x="5" y="1" width="450" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView" id="Wb5-oD-rhZ">
-                        <rect key="frame" x="3" y="3" width="444" height="26"/>
+                    <view key="contentView" ambiguous="YES" id="Wb5-oD-rhZ">
+                        <rect key="frame" x="3" y="3" width="444" height="29"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wdx-DI-82t">
@@ -117,7 +117,7 @@
                                 <rect key="frame" x="8" y="5" width="76" height="17"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Table Type" id="gG5-Pm-PJM">
-                                    <font key="font" metaFont="system" size="12"/>
+                                    <font key="font" metaFont="cellTitle"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>

@@ -8,7 +8,7 @@
 
 #include "CoreFunctions.h"
 
-ushort BtoL16(ushort num) {
+ushort BigToLittleEndian(ushort num) {
     return (num>>8) | (num<<8);
 }
 

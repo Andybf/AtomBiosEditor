@@ -35,7 +35,7 @@
     [_textFieldMaxMem  setEnabled: YES];
     [_textFieldMaxTdp  setEnabled: YES];
     [_textFieldMinTdp  setEnabled: YES];
-    [_textFieldTdp     setEnabled: YES];
+    [_textFieldTdp     setEnabled: NO ];
     [_textFieldTemp1   setEnabled: YES];
     [_textFieldTemp2   setEnabled: YES];
     [_textFieldTemp3   setEnabled: YES];
@@ -75,7 +75,6 @@
     [_textFieldFan2     setPowerPlay: powerPlay];
     [_textFieldFan3     setPowerPlay: powerPlay];
     [_textFieldMaxFan   setPowerPlay: powerPlay];
-    
 }
 
 @end
@@ -85,6 +84,7 @@
 - (void)textDidChange:(NSNotification *)notification {
     [super textDidChange:notification];
     printf(" TextDidChangeEditing | value: %s | ClassName: %s | typeId: %d \n",[[self stringValue] UTF8String],[[self className] UTF8String],[self TypeIdentifier]);
+    printf(" ");
     switch ([self TypeIdentifier]) {
         case 1:
             self.powerPlay->maxGpuClock = [[self stringValue] intValue];
@@ -99,49 +99,69 @@
             self.powerPlay->minTdp = [[self stringValue] intValue];
             break;
         case 5:
-            
+            // TDP Text Box is not meant to be modified
             break;
         case 6:
-            self.powerPlay->tempTarget[0] = [[self stringValue] intValue];
+            if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 128) {
+                self.powerPlay->tempTarget[0] = [[self stringValue] intValue];
+            } else {
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->tempTarget[0]];
+            }
             break;
         case 7:
-            self.powerPlay->tempTarget[1] = [[self stringValue] intValue];
+            if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 128) {
+                self.powerPlay->tempTarget[1] = [[self stringValue] intValue];
+            } else {
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->tempTarget[1]];
+            }
             break;
         case 8:
-            self.powerPlay->tempTarget[2] = [[self stringValue] intValue];
+            if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 128) {
+                self.powerPlay->tempTarget[2] = [[self stringValue] intValue];
+            } else {
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->tempTarget[2]];
+            }
             break;
         case 9:
-            self.powerPlay->hysteresis = [[self stringValue] intValue];
+            if ( [[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 100) {
+                self.powerPlay->hysteresis = [[self stringValue] intValue];
+            } else {
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->hysteresis];
+            }
             break;
         case 10:
-            self.powerPlay->maxTemp = [[self stringValue] intValue];
+            if ( [[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 100) {
+                self.powerPlay->maxTemp = [[self stringValue] intValue];
+            } else {
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->maxTemp];
+            }
             break;
         case 11:
-            if ([[self stringValue] intValue] <= 100 && [[self stringValue] intValue] >= 0) {
+            if ( [[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 100) {
                 self.powerPlay->fanSpeed[0] = [[self stringValue] intValue];
             } else {
-                self.stringValue = @"100";
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->fanSpeed[0]];
             }
             break;
         case 12:
-            if ([[self stringValue] intValue] <= 100 && [[self stringValue] intValue] >= 0) {
+            if ( [[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 100) {
                 self.powerPlay->fanSpeed[1] = [[self stringValue] intValue];
             } else {
-                self.stringValue = @"100";
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->fanSpeed[1]];
             }
             break;
         case 13:
-            if ([[self stringValue] intValue] <= 100 && [[self stringValue] intValue] >= 0) {
+            if ( [[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 100) {
                 self.powerPlay->fanSpeed[2] = [[self stringValue] intValue];
             } else {
-                self.stringValue = @"100";
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->fanSpeed[2]];
             }
             break;
         case 14:
             if ([[self stringValue] intValue] <= 100 && [[self stringValue] intValue] >= 0) {
                 self.powerPlay->maxFanSpeed = [[self stringValue] intValue];
             } else {
-                self.stringValue = @"100";
+                self.stringValue = [NSString stringWithFormat: @"%d", self.powerPlay->maxFanSpeed];
             }
             break;
         default:
@@ -149,5 +169,4 @@
             break;
     }
 }
-
 @end

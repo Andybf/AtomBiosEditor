@@ -46,11 +46,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
-                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-RR-fid">
-                    <rect key="frame" x="7" y="1" width="446" height="44"/>
+                <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="sPJ-RR-fid">
+                    <rect key="frame" x="5" y="1" width="450" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView" id="O84-no-mHJ">
-                        <rect key="frame" x="3" y="3" width="440" height="26"/>
+                    <view key="contentView" ambiguous="YES" id="O84-no-mHJ">
+                        <rect key="frame" x="3" y="3" width="444" height="29"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dj7-Mh-UUM">
@@ -60,6 +60,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="RadioHexChanged:" target="-2" id="oNO-Tu-EWf"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bHX-lp-MPE">
                                 <rect key="frame" x="210" y="6" width="75" height="17"/>
@@ -68,6 +71,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="RadioDecChanged:" target="-2" id="vQT-TL-mgn"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zZ1-yn-yHQ">
                                 <rect key="frame" x="13" y="6" width="90" height="17"/>
