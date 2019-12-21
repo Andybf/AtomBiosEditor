@@ -15,10 +15,58 @@
         struct FIRMWARE_INFO firmwareInfo;
         MasterViewController * masterVC;
         WindowView * windowView;
+        WindowView * launchScreen;
         NSArray * fileName;
     }
 
     - (IBAction)menuItemOpenTriggered:(id)sender {
+        [self OpenNewFile];
+    }
+
+    - (IBAction)MenuItemCloseTriggered:(id)sender {
+        [windowView close];
+    }
+
+    - (IBAction)menuItemSaveTriggered:(id)sender {
+        NSSavePanel * saveFile = [NSSavePanel savePanel];
+        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-Modified.rom", fileName[fileName.count-1] ]];
+        [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
+            if (returnCode == 1) { // if the save button was triggered
+                FILE * newFirmwareFile = fopen([saveFile.URL.path UTF8String],"wb");
+                SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
+                SaveFirmwareInfo(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04], self->firmwareInfo);
+                SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], self->powerPlay);
+                fclose(newFirmwareFile);
+                FILE * savedFirmwareFile = fopen([saveFile.URL.path UTF8String],"r+b"); // Reading and writing on existing binary file
+                SaveChecksum(savedFirmwareFile, [saveFile.URL.path UTF8String]);
+                fclose(savedFirmwareFile);
+            }
+        }];
+    }
+
+
+    - (IBAction)buttonOpenTriggered:(id)sender {
+        [self OpenNewFile];
+    }
+
+    - (IBAction)buttonExitTriggered:(id)sender {
+        exit(0);
+    }
+
+    - (void) DisplayAlert : (NSString *) title : (NSString *) info  {
+        //Craindo um alerta
+        NSAlert * alert = [NSAlert new];
+        //Configuração
+        alert.messageText = title;
+        alert.informativeText = info;
+        alert.alertStyle = NSAlertStyleCritical;
+        //Instanciando
+        [alert runModal];
+    }
+
+    - (void) OpenNewFile {
+        
+        
         NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
         //Config
         openPanel.allowsMultipleSelection = false;
@@ -44,7 +92,7 @@
                     fclose(self->atomBios.firmware.file);
                 } else {
                     NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;
-                    windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(200, 200, 620, 460) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
+                    windowView = [[WindowView alloc] initWithContentRect:NSMakeRect(650, 310, 620, 460) styleMask: windowStyleMask backing: NSBackingStoreBuffered defer: NO];
                     [windowView setIsVisible: YES];
                     masterVC = [[MasterViewController alloc] initWithNibName:@"MasterView" bundle: NULL];
                     [[windowView contentView] addSubview: masterVC.view];
@@ -54,41 +102,10 @@
                     [self->masterVC loadInfo: &(self->atomBios) : &(powerPlay) : &(firmwareInfo)];
                     [_menuItemSave setHidden: NO];
                     [_menuItemClose setHidden: NO];
+                    [_launchScreenWindow close];
                 }
             }
         }
-    }
-
-    - (IBAction)MenuItemCloseTriggered:(id)sender {
-        [windowView close];
-    }
-
-    - (IBAction)menuItemSaveTriggered:(id)sender {
-        NSSavePanel * saveFile = [NSSavePanel savePanel];
-        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-Modified.rom", fileName[fileName.count-1] ]];
-        [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
-            if (returnCode == 1) { // if the save button was triggered
-                FILE * newFirmwareFile = fopen([saveFile.URL.path UTF8String],"wb");
-                SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
-                SaveFirmwareInfo(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04], self->firmwareInfo);
-                SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], self->powerPlay);
-                fclose(newFirmwareFile);
-                FILE * savedFirmwareFile = fopen([saveFile.URL.path UTF8String],"r+b"); // Reading and writing on existing binary file
-                SaveChecksum(savedFirmwareFile, [saveFile.URL.path UTF8String]);
-                fclose(savedFirmwareFile);
-            }
-        }];
-    }
-
-    - (void) DisplayAlert : (NSString *) title : (NSString *) info  {
-        //Craindo um alerta
-        NSAlert * alert = [NSAlert new];
-        //Configuração
-        alert.messageText = title;
-        alert.informativeText = info;
-        alert.alertStyle = NSAlertStyleCritical;
-        //Instanciando
-        [alert runModal];
     }
 @end
 
@@ -96,6 +113,7 @@
 
 - (void)close {
     [self setReleasedWhenClosed: NO];
+    
     [super close];
 }
 

@@ -77,7 +77,7 @@ void ExtractTable(struct ATOM_DATA_AND_CMMD_TABLES abstractTable, const char * e
 //Carrega as informações do firmware na memória. Necessário para fazer as demais operações no programa
 struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     struct ATOM_MAIN_TABLE mainTable;
-           //propriedade                                          arquivo               endereço inicial            bytes | Endian | hexbytes
+           //property                           |                  file              | initial address         |  bytes | Endian | hexbytes
            mainTable.size             = HexToDec(GetFileData(atomBios->firmware.file, OFFSET_ROM_BASE_TABLE,           2,     0),     4);
            mainTable.checksum         = HexToDec(GetFileData(atomBios->firmware.file, OFFSET_ROM_CHECKSUM,             1,     0),     2);
            mainTable.romInfoOffset    = HexToDec(GetFileData(atomBios->firmware.file, OFFSET_ROM_TABLE_PTR,            2,     0),     4);
@@ -124,7 +124,7 @@ struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     }
     
     // Checking UEFI Support
-    if( strcmp(GetFileData(atomBios->firmware.file, QUANTITY_64KB, 0x2, 0), ATOM_ROM_MAGIC) == 0 ) {
+    if( strcmp(GetFileData(atomBios->firmware.file, QUANTITY_64KB, 0x2, 0), ATOM_BIOS_MAGIC) == 0 ) {
         mainTable.uefiSupport = 1;
     } else {
         mainTable.uefiSupport = 0;
@@ -132,7 +132,7 @@ struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     return mainTable;
 }
 
-// Carrega a tabela onde se localiza os endereços das data e command tables
+// Load the table where is located the addresses of data tables and command tables
 void loadOffsetsTable (struct ATOM_BIOS * atomBios) {
     int step = 0;
     for (int a=0; a<2; a++) { // 0 = CMMD | 1 = DATA
@@ -142,7 +142,7 @@ void loadOffsetsTable (struct ATOM_BIOS * atomBios) {
     }
 }
 
-// Carrega na memória as datas e command tables
+// Load into memory the data tables and the command tables
 void loadCmmdAndDataTables (struct ATOM_BIOS * atomBios) {
     long posOffTbl = 0;
     int c=0;
@@ -175,7 +175,7 @@ void loadCmmdAndDataTables (struct ATOM_BIOS * atomBios) {
     }
 }
 
-//substitui a tabela indicado por outra em um arquivo binario .bin
+// Replace the table selected by user to another table located in a binary file .bin on the system
 void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort index, const char * tablePath) {
     FILE * tableBin;
     if ( !(tableBin = fopen(tablePath, "r")) ) {
@@ -238,7 +238,7 @@ void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
 void SaveChecksum(FILE * firmware, const char * filePath) {
     fseek(firmware, 0x0, SEEK_SET);
     struct stat fileInfo;
-    stat(filePath ,&fileInfo); //Carregando informações sobre o arquivo
+    stat(filePath ,&fileInfo); // Loading informations about the file
     int checksum = 0;
     for (int c=0; c<fileInfo.st_size / 2; c++ ) {
         checksum += fgetc(firmware);
@@ -274,7 +274,7 @@ short VerifyFirmwareArchitecture(FILE * file) {
     }
 }
 
-// Vefirica o checksum do firmware
+// checking checksum of the firmware
 short VerifyChecksum(struct ATOM_BIOS * atomBios) {
     fseek(atomBios->firmware.file, 0x0, SEEK_SET);
     int chksum = 0;

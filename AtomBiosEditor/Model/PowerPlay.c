@@ -10,7 +10,7 @@
 struct POWERPLAY_DATA LoadPowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable) {
     struct POWERPLAY_DATA powerPlay = *(struct POWERPLAY_DATA *) malloc(sizeof(struct POWERPLAY_DATA *));
     
-    // Property                                        file                    offset                                  size | endian| chars
+    // Property                                        file                    offset                                  size | endian | chars
     powerPlay.overDriveOffset   = HexToDec(GetFileData(firmware, abstractTable.offset + OFFSET_SUBTABLE_LIMITS,         0x2,    0),    4);
     powerPlay.maxGpuClock       = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset   +2, 0x3,    0),    6)/100;
     powerPlay.maxMemClock       = HexToDec(GetFileData(firmware, abstractTable.offset + powerPlay.overDriveOffset   +6, 0x3,    0),    6)/100;
@@ -63,12 +63,12 @@ void SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstra
     SetFile16bitValue(firmware, powerPlay.maxTdp                 , abstractTable.offset + OFFSET_INFO_MAX_TDP,          1);
     SetFile16bitValue(firmware, powerPlay.minTdp                 , abstractTable.offset + OFFSET_INFO_MIN_TDP,          1);
     SetFile8bitValue (firmware, &powerPlay.hysteresis            , abstractTable.offset + powerPlay.fanInfoOffset +  1, 1);
-    SetFile16bitValue(firmware, BtoL16(powerPlay.maxTemp    *100), abstractTable.offset + powerPlay.fanInfoOffset + 14, 2);
+    SetFile16bitValue(firmware, BigToLittleEndian(powerPlay.maxTemp    *100), abstractTable.offset + powerPlay.fanInfoOffset + 14, 2);
     SetFile8bitValue (firmware, &powerPlay.maxFanSpeed           , abstractTable.offset + powerPlay.fanInfoOffset + 17, 1);
     int step = 0;
     for (short c=0; c<3; c++) {
         if (c == 0) { step = 0; } else { step += 2;}
-        SetFile16bitValue(firmware, BtoL16(powerPlay.tempTarget[c]*100), abstractTable.offset + powerPlay.fanInfoOffset +2+step, 0x2);
-        SetFile16bitValue(firmware, BtoL16(powerPlay.fanSpeed[c]*100)  , abstractTable.offset + powerPlay.fanInfoOffset +8+step, 0x2);
+        SetFile16bitValue(firmware, BigToLittleEndian(powerPlay.tempTarget[c]*100), abstractTable.offset + powerPlay.fanInfoOffset +2+step, 0x2);
+        SetFile16bitValue(firmware, BigToLittleEndian(powerPlay.fanSpeed[c]*100)  , abstractTable.offset + powerPlay.fanInfoOffset +8+step, 0x2);
     }
 }

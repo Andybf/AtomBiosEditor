@@ -28,8 +28,8 @@
     StatesTable * stTable[3];
 }
     @property (weak) IBOutlet NSView *BoxPowerPlay;
-    @property (weak) IBOutlet NSBox *BoxGpuStates;
-    @property (weak) IBOutlet NSBox *BoxMemStates;
+    @property (weak) IBOutlet NSBox  *BoxGpuStates;
+    @property (weak) IBOutlet NSBox  *BoxMemStates;
 
     @property (weak) IBOutlet NSButton *radioHexadecimal;
     @property (weak) IBOutlet NSButton *radioDecimal;

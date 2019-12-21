@@ -10,6 +10,7 @@
 
 @implementation OverviewController {
     OverviewTable * tableView;
+    struct ATOM_BIOS * atombios;
 }
 
 - (void)viewDidLoad {
@@ -17,42 +18,42 @@
 }
 
 - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios {
-    
+    atombios = atomBios;
+    [_radioDecimal setState : NSControlStateValueOn];
     //Table Initialization
     tableView = [[OverviewTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
     [tableView initTableStructure];
     NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(2, 2, 440, 405)];
-    // embed the table view in the scroll view, and add the scroll view
+    // embed the table view in the scroll view, and then, add the scroll view to the box
     [tableContainer setDocumentView:tableView];
     [tableContainer setHasVerticalScroller: YES];
     [tableContainer setAutohidesScrollers:  YES];
-    [tableView reloadData : atomBios];
+    [tableView reloadData : atomBios : false];
     //Add the container to window
     [_OverviewBox addSubview:tableContainer];
 }
 
-- (IBAction)CheckCheksum:(id)sender {
-    if (! [_checkChecksum state]) {
-        [ _checkChecksum setState: NSControlStateValueOn];
-    } else {
-        [ _checkChecksum setState: NSControlStateValueOff];
+- (IBAction)RadioHexChanged:(id)sender {
+    if (_radioHexadecimal.state) {
+        [_radioDecimal setState:NSControlStateValueOff];
+        [tableView reloadData : atombios : true];
     }
 }
-
-- (IBAction)CheckUefiChangedState:(id)sender {
-    if (! [ _checkUefiSupport state]) {
-        [ _checkUefiSupport setState: NSControlStateValueOn];
-    } else {
-        [ _checkUefiSupport setState: NSControlStateValueOff];
+- (IBAction)RadioDecChanged:(id)sender {
+    if (_radioDecimal.state) {
+        [_radioHexadecimal setState:NSControlStateValueOff];
+        [tableView reloadData : atombios : false];
     }
 }
 @end
 
 @implementation OverviewTable {
         NSString * columnIdentifiers[2];
+        NSArray * stringFormat;
     }
 
     -(void)initTableStructure {
+        stringFormat = [NSArray arrayWithObjects: @"%i",@"%02X", nil];
         NSString * tempColumnIdentifiers[] = {@"description",@"value"};
         for (int a=0; a<2; a++) {
             columnIdentifiers[a] = tempColumnIdentifiers[a];
@@ -96,57 +97,55 @@
 
     - (void)tableViewSelectionDidChange:(NSNotification *)notification {
         if ([self selectedRow] > 0) {
+            NSLog(@"teste");
         }
     }
 
-- (void)reloadData : (struct ATOM_BIOS*)atomBios {
-    
-    NSString * rowDescLabels[] = {
-        @"ROM Message",@"Generation",@"Architecture",
-        @"Connection Type",@"Memory Generation",@"Part Number",
-        @"Compilation Date",@"BIOS Version", @"Device ID",
-        @"Subsystem ID",@"Vendor ID",@"Vendor Name",
-        @"Checksum", @"UEFI Support",@"Main Table Size",
-        @"Main Table Offset",@"Data Tbl. Addr. Off.",@"Data Tbl. Addr. Size",
-        @"Cmd Tbl. Addr. Off.",@"Cmd Tbl. Addr. Size"
-    };
-    [self setRowDesc:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows
-    [self setRowValue:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows
-    
-    for (int a=0; a<20; a++) {
-        [[self rowDesc]  addObject: [NSString stringWithFormat: @"%@", rowDescLabels[a]]];
+    - (void)reloadData : (struct ATOM_BIOS*)atomBios : (bool)viewMode {
+        
+        NSString * rowDescLabels[] = {
+            @"ROM Message",@"Generation",@"Architecture",
+            @"Connection Type",@"Memory Generation",@"Part Number",
+            @"Compilation Date",@"BIOS Version", @"Device ID",
+            @"Subsystem ID",@"Vendor ID",@"Vendor Name",
+            @"Checksum", @"UEFI Support",@"Main Table Size",
+            @"Main Table Offset",@"Data Tbl. Addr. Off.",@"Data Tbl. Addr. Size",
+            @"Cmd Tbl. Addr. Off.",@"Cmd Tbl. Addr. Size"
+        };
+        [self setRowDesc:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows
+        [self setRowValue:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows
+        
+        for (int a=0; a<20; a++) {
+            [[self rowDesc]  addObject: [NSString stringWithFormat: @"%@", rowDescLabels[a]]];
+        }
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.romMessage]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.generation]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.architecture]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.connectionType]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.memoryGen]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.partNumber]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.compTime]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.biosVersion]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: (char *)atomBios->mainTable.deviceId]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: (char *)atomBios->mainTable.subsystemId]];
+        [[self rowValue] addObject: [NSString stringWithFormat: @"%s",(char *)atomBios->mainTable.subsystemVendorId]];
+        [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.vendorName]];
+        if ( VerifyChecksum(atomBios) != 0) {
+            [[self rowValue] addObject: [NSString stringWithFormat: @"Valid! - 0x%02X", atomBios->mainTable.checksum]];
+        } else {
+            [[self rowValue] addObject: [NSString stringWithFormat: @"Invalid! - 0x%02X", atomBios->mainTable.checksum]];
+        }
+        if (atomBios->mainTable.uefiSupport != 0) {
+            [[self rowValue] addObject: @"Supported!"];
+        } else {
+            [[self rowValue] addObject: @"Unsupported!"];
+        }
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomBios->mainTable.size]];
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], 0x04]];
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomBios->offsetsTable[0].offset]];
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomBios->offsetsTable[0].size]];
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomBios->offsetsTable[1].offset]];
+        [[self rowValue] addObject: [NSString stringWithFormat: stringFormat[viewMode], atomBios->offsetsTable[1].size]];
+        [super reloadData];
     }
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.romMessage]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.generation]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.architecture]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.connectionType]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.memoryGen]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.partNumber]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.compTime]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.biosVersion]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: (char *)atomBios->mainTable.deviceId]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: (char *)atomBios->mainTable.subsystemId]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%s",(char *)atomBios->mainTable.subsystemVendorId]];
-    [[self rowValue] addObject: [NSString stringWithUTF8String: atomBios->mainTable.vendorName]];
-    if ( VerifyChecksum(atomBios) != 0) {
-        [ [self rowValue] addObject: [NSString stringWithFormat: @"Valid! - 0x%02X", atomBios->mainTable.checksum] ];
-    } else {
-        [ [self rowValue] addObject: [NSString stringWithFormat: @"Invalid! - 0x%02X", atomBios->mainTable.checksum] ];
-    }
-    if (atomBios->mainTable.uefiSupport != 0) {
-        [[self rowValue] addObject: @"Supported!"];
-    } else {
-        [[self rowValue] addObject: @"Unsupported!"];
-    }
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%i",atomBios->mainTable.size]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"0x04"]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%i",atomBios->offsetsTable[0].offset]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%i",atomBios->offsetsTable[0].size]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%i",atomBios->offsetsTable[1].offset]];
-    [[self rowValue] addObject: [NSString stringWithFormat: @"%i",atomBios->offsetsTable[1].size]];
-    
-    [super reloadData];
-}
-
 @end
-

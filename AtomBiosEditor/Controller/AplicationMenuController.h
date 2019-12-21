@@ -20,6 +20,11 @@
 @property (weak) IBOutlet NSMenuItem *menuItemClose;
 @property (weak) IBOutlet NSMenuItem *menuItemSave;
 
+@property (weak) IBOutlet NSWindow *launchScreenWindow;
+@property (weak) IBOutlet NSButton *launchButtonOpen;
+@property (weak) IBOutlet NSButton *launchButtonAbout;
+@property (weak) IBOutlet NSButton *launchButtonExit;
+
 @end
 
 @interface WindowView : NSWindow

@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -674,6 +675,10 @@
                 </menuItem>
             </items>
             <connections>
+                <outlet property="launchButtonAbout" destination="j7M-or-wk9" id="ff3-qK-zBf"/>
+                <outlet property="launchButtonExit" destination="Ymt-Ff-TKN" id="H6p-5y-QGr"/>
+                <outlet property="launchButtonOpen" destination="eFN-qN-XoP" id="FRN-xY-rgz"/>
+                <outlet property="launchScreenWindow" destination="dWO-md-oAm" id="Ey3-67-CHG"/>
                 <outlet property="menuItemClose" destination="DVo-aG-piG" id="A46-tI-lQ4"/>
                 <outlet property="menuItemNewWindow" destination="Was-JA-tGl" id="RYd-SS-NDR"/>
                 <outlet property="menuItemOpen" destination="IAo-SY-fd9" id="eMh-DK-2XR"/>
@@ -681,5 +686,89 @@
             </connections>
             <point key="canvasLocation" x="88" y="108"/>
         </menu>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="dWO-md-oAm">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
+            <rect key="contentRect" x="824" y="380" width="330" height="340"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="V8u-Rg-d9x">
+                <rect key="frame" x="0.0" y="0.0" width="330" height="340"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="J6H-EO-Tr8">
+                        <rect key="frame" x="168" y="-4" width="165" height="346"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <view key="contentView" ambiguous="YES" id="uCT-Sj-dwY">
+                            <rect key="frame" x="3" y="3" width="159" height="340"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eFN-qN-XoP">
+                                    <rect key="frame" x="15" y="185" width="128" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="push" title="Open ROM file" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lh5-s6-XrZ">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="buttonOpenTriggered:" target="AYu-sK-qS6" id="HRe-yO-Hmd"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ymt-Ff-TKN">
+                                    <rect key="frame" x="15" y="119" width="128" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="push" title="Exit" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1E1-9m-EPw">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="buttonExitTriggered:" target="AYu-sK-qS6" id="lND-rp-GgS"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j7M-or-wk9">
+                                    <rect key="frame" x="15" y="152" width="128" height="32"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    <buttonCell key="cell" type="push" title="About" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DJx-gd-6Q4">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="orderFrontStandardAboutPanel:" target="-1" id="ERp-LK-bUN"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                        </view>
+                    </box>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tfg-n8-dId">
+                        <rect key="frame" x="21" y="190" width="122" height="116"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="logo" id="JE8-6y-Yhe"/>
+                    </imageView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wU5-rW-OUG">
+                        <rect key="frame" x="0.0" y="158" width="165" height="24"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" allowsUndo="NO" alignment="center" title="AtomBiosEditor" id="3Wv-Wc-ENm">
+                            <font key="font" size="19" name="Helvetica-Light"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="74" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3x-OQ-Kbr">
+                        <rect key="frame" x="43" y="116" width="78" height="34"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textFieldCell key="cell" alignment="center" title="V. 0.0.1 Build 025" id="2nQ-ti-B1a">
+                            <font key="font" size="11" name="Helvetica-Light"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="3Gv-aZ-A7Z"/>
+            </connections>
+            <point key="canvasLocation" x="106" y="345"/>
+        </window>
     </objects>
+    <resources>
+        <image name="logo" width="512" height="512"/>
+    </resources>
 </document>

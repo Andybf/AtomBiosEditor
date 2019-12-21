@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
-int main(int argc, const char * argv[]) {
+static int extracted(int argc, const char **argv) {
     return NSApplicationMain(argc, argv);
+}
+
+int main(int argc, const char * argv[]) {
+    return extracted(argc, argv);
 }

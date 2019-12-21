@@ -240,7 +240,7 @@
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cw0-Ja-iWd">
                                 <rect key="frame" x="18" y="48" width="90" height="20"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Hysteresis" id="jaO-cF-nvP">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" alignment="right" title="Hysteresis" id="jaO-cF-nvP">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

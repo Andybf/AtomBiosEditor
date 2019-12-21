@@ -11,20 +11,9 @@
 
 @interface OverviewController : NSViewController
 
-    @property (weak) IBOutlet NSTextField *textFieldGeneration;
-    @property (weak) IBOutlet NSTextField *textFieldArchitecture;
-    @property (weak) IBOutlet NSTextField *textFieldRomMsg;
-    @property (weak) IBOutlet NSTextField *textFieldPartNumber;
-    @property (weak) IBOutlet NSTextField *textFieldCompDate;
-    @property (weak) IBOutlet NSTextField *textFieldBiosVersion;
-    @property (weak) IBOutlet NSTextField *textFieldDeviceId;
-    @property (weak) IBOutlet NSTextField *textFieldSubId;
-    @property (weak) IBOutlet NSTextField *textFieldVendorId;
-    @property (weak) IBOutlet NSButton    *checkChecksum;
-    @property (weak) IBOutlet NSButton    *checkUefiSupport;
-    @property (weak) IBOutlet NSTextField *textFieldMTSize;
-    @property (weak) IBOutlet NSTextField *textFieldMTOffset;
-    @property (weak) IBOutlet NSBox       *OverviewBox;
+    @property (weak) IBOutlet NSBox    *OverviewBox;
+    @property (weak) IBOutlet NSButton *radioHexadecimal;
+    @property (weak) IBOutlet NSButton *radioDecimal;
 
     - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios;
 
@@ -35,7 +24,7 @@
     @property (nonatomic, strong) NSMutableArray * rowDesc;
     @property (nonatomic, strong) NSMutableArray * rowValue;
 
-    - (void)reloadData : (struct ATOM_BIOS*)atomBios;
+- (void)reloadData : (struct ATOM_BIOS*)atomBios : (bool)viewMode;
     - (void)initTableStructure;
 
 @end

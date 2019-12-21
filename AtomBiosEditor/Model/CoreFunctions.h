@@ -6,15 +6,15 @@
 //  Copyright © 2019 Anderson Bucchianico. All rights reserved.
 //
 
-#ifndef ABELibrary_h
-#define ABELibrary_h
+#ifndef CoreFunctions_h
+#define CoreFunctions_h
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 
-//quantidades
+//Quantities
 #define QUANTITY_COMMAND_TABLES 81
 #define QUANTITY_DATA_TABLES    34
 #define QUANTITY_TOTAL_TABLES   QUANTITY_DATA_TABLES + QUANTITY_COMMAND_TABLES
@@ -23,22 +23,22 @@
 #define QUANTITY_128KB          131072
 #define QUANTITY_256KB          263168
 
-//Códigos ASCII
+//ASCII codes
 #define ASCII_DEC_CODE_0        48
 #define ASCII_DEC_CODE_9        57
 #define ASCII_DEC_CODE_A        65
 
-//Formatações
+//formatting
 #define FORMAT_HEX                 "%02X"
 
-// Definições de tipos de dados
+// data type definitions
 // an integer value between 0 and 65.535 (2 bytes of size)
 typedef unsigned short ushort;
 // an integer value between 0 and 255 (1 byte of size)
 typedef unsigned char byte;
 
 // Core Functions
-ushort BtoL16      (ushort num);
+ushort BigToLittleEndian      (ushort num);
 char * GetFileData (FILE * file, int offset, int size, short endianness);
 void   SetFile16bitValue (FILE * fileOutput, ushort chars, ushort offset, ushort size);
 void   SetFile8bitValue(FILE * fileOutput, char * data, ushort offset, ushort size);
@@ -47,4 +47,4 @@ int    HexToDec    (char [], int );
 int    count       (int num);
 char * substr      (char *string, int position, int size);
 
-#endif /* ABELibrary_h */
+#endif

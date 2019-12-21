@@ -9,13 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AtomBiosEditor/Controller/MasterViewController.m"
-            timestampString = "591429483.63169"
+            filePath = "AtomBiosEditor/Controller/PowerPlayController.m"
+            timestampString = "598651874.867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "-tableViewSelectionDidChange:"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-InitPowerPlayInfo:::"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AtomBiosEditor/Controller/PowerPlayController.m"
-            timestampString = "591273748.523324"
+            filePath = "AtomBiosEditor/Controller/AplicationMenuController.m"
+            timestampString = "598657462.875375"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-InitPowerPlayInfo:::"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "-OpenNewFile"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AtomBiosEditor/Controller/OverDriveController.m"
+            timestampString = "598657462.875635"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-textDidChange:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
