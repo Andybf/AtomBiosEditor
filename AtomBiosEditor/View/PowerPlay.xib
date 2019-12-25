@@ -23,26 +23,26 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" title="PowerPlay States" translatesAutoresizingMaskIntoConstraints="NO" id="4zh-4h-mon">
-                    <rect key="frame" x="7" y="316" width="446" height="140"/>
+                    <rect key="frame" x="5" y="313" width="450" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="Bcm-c9-8tv">
-                        <rect key="frame" x="3" y="3" width="440" height="122"/>
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
                 <box fixedFrame="YES" title="Memory Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="kSR-jC-8Ce">
-                    <rect key="frame" x="7" y="31" width="446" height="140"/>
+                    <rect key="frame" x="5" y="33" width="450" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="a3M-le-TTj">
-                        <rect key="frame" x="3" y="3" width="440" height="122"/>
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>
                 <box fixedFrame="YES" title="GPU Clock States" translatesAutoresizingMaskIntoConstraints="NO" id="JFY-L2-Evj">
-                    <rect key="frame" x="7" y="172" width="446" height="140"/>
+                    <rect key="frame" x="5" y="173" width="450" height="140"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="YJV-NF-UO8">
-                        <rect key="frame" x="3" y="3" width="440" height="122"/>
+                        <rect key="frame" x="3" y="3" width="444" height="122"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                 </box>

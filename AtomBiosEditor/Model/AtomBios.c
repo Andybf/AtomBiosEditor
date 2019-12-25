@@ -234,7 +234,6 @@ void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
             for (int b=0; b<atomBios->dataAndCmmdTables[a].size; b++) {
                 fwrite(&atomBios->dataAndCmmdTables[a].content[b], sizeof(char), 0x1, firmware);
             }
-    
         }
     }
     SetFileData(firmware, (unsigned char*)atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);

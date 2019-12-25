@@ -34,10 +34,8 @@ unsigned char * BigToLittleEndian(unsigned int num) {
 }
 
 unsigned char* DecToHex(unsigned int result) {
-    
     static unsigned char hex[9];
     unsigned int resto[8];
-    
     for (int p=7; p>=0; p--) {
         resto[p] = (int) result % 16;
         result   = (int) result / 16;
@@ -136,18 +134,4 @@ int count(int num){
         num /= 10;
     }
     return contagem;
-}
-
-char * substr(char *string, int position, int size) {
-    char *substring = (char*)malloc(size);
-    int a=0, b=0;
-    while(string[b]!='\0') {
-        if ( b >= position && a < size ) {
-            substring[a] = string[b];
-            a++;
-        }
-        b++;
-    }
-    substring[a] = '\0';
-    return substring;
 }

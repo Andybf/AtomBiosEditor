@@ -19,7 +19,7 @@
     @property (nonatomic, strong) NSMutableArray * offset;
     @property (nonatomic, strong) NSMutableArray * size;
 
-    -(void) initTableStructure : (short)type;
+    -(void) initTableStructure : (short)type : (struct POWERPLAY_DATA *)pPlay;
 
 @end
 

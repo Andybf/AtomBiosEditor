@@ -34,11 +34,12 @@
                 FILE * newFirmwareFile = fopen([saveFile.URL.path UTF8String],"wb");
                 SaveAtomBiosData(&(self->atomBios), newFirmwareFile);
                 SaveFirmwareInfo(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04], self->firmwareInfo);
-                SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], self->powerPlay);
+                SavePowerPlayData(newFirmwareFile, self->atomBios.dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F], &(self->powerPlay));
                 fclose(newFirmwareFile);
                 FILE * savedFirmwareFile = fopen([saveFile.URL.path UTF8String],"r+b"); // Reading and writing on existing binary file
                 SaveChecksum(savedFirmwareFile, [saveFile.URL.path UTF8String]);
                 fclose(savedFirmwareFile);
+                //[self DisplayAlert:@"Successfully saved!" :  @"All the changes has been written in the new firmware file." : 0];
             }
         }];
     }
@@ -51,20 +52,21 @@
         exit(0);
     }
 
-    - (void) DisplayAlert : (NSString *) title : (NSString *) info  {
-        //Craindo um alerta
+    - (void) DisplayAlert : (NSString *) title : (NSString *) content : (BOOL) type {
         NSAlert * alert = [NSAlert new];
-        //Configuração
         alert.messageText = title;
-        alert.informativeText = info;
-        alert.alertStyle = NSAlertStyleCritical;
-        //Instanciando
+        alert.informativeText = content;
+        if (type == 0) {
+            alert.alertStyle = NSAlertStyleInformational;
+        } else {
+            alert.alertStyle = NSAlertStyleCritical;
+        }
         [alert runModal];
     }
 
     - (void) OpenNewFile {
         
-        NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
+        NSOpenPanel* openPanel = [NSOpenPanel openPanel];
         //Config
         openPanel.allowsMultipleSelection = false;
         openPanel.canChooseDirectories    = false;
@@ -72,20 +74,19 @@
         if ([openPanel runModal] == NSModalResponseOK) {
             
             self->atomBios.firmware.filePath = (char*)[openPanel.URL.path UTF8String];
-            
             if ( (self->atomBios.firmware.file = fopen(self->atomBios.firmware.filePath ,"r")) ) { //carregando o arquivo para dentro da memoria
                 
                 self->atomBios.firmware.genType = VerifyFirmwareArchitecture(self->atomBios.firmware.file);
                 stat(self->atomBios.firmware.filePath ,&self->atomBios.firmware.fileInfo); //Carregando informações sobre o arquivo
                 
                 if (! VerifyFirmwareSize(self->atomBios.firmware.fileInfo) ) {
-                    [self DisplayAlert: @"Invalid File Size!" : @"The size of the file selected is invalid, the file size must be between 64KB and 256KB."];
+                    [self DisplayAlert: @"Invalid File Size!" : @"The size of the file selected is invalid, the file size must be between 64KB and 256KB." : 1];
                     fclose(self->atomBios.firmware.file);
                 } else if (! VerifyFirmwareSignature(self->atomBios.firmware.file) ) {
-                    [self DisplayAlert : @"Invalid Firmware Signature!" : @"The firmware signature is invalid."];
+                    [self DisplayAlert : @"Invalid Firmware Signature!" : @"The firmware signature is invalid." : 1];
                     fclose(self->atomBios.firmware.file);
                 } else if ( self->atomBios.firmware.genType == 0) {
-                    [self DisplayAlert : @"Unsupported Firmware Generation!" : @"This firmware generation is not supported by this program."];
+                    [self DisplayAlert : @"Unsupported Firmware Generation!" : @"This firmware generation is not supported by this program." : 1];
                     fclose(self->atomBios.firmware.file);
                 } else {
                     NSUInteger windowStyleMask = NSWindowStyleMaskTitled|NSWindowStyleMaskClosable|NSWindowStyleMaskMiniaturizable;

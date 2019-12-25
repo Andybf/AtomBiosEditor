@@ -14,15 +14,17 @@
 
 @interface AplicationMenuController : NSMenu <NSMenuDelegate>
 
-@property (weak) IBOutlet NSMenuItem *menuItemOpen;
-@property (weak) IBOutlet NSMenuItem *menuItemNewWindow;
-@property (weak) IBOutlet NSMenuItem *menuItemClose;
-@property (weak) IBOutlet NSMenuItem *menuItemSave;
+    @property (weak) IBOutlet NSMenuItem *menuItemOpen;
+    @property (weak) IBOutlet NSMenuItem *menuItemNewWindow;
+    @property (weak) IBOutlet NSMenuItem *menuItemClose;
+    @property (weak) IBOutlet NSMenuItem *menuItemSave;
 
-@property (weak) IBOutlet NSWindow *launchScreenWindow;
-@property (weak) IBOutlet NSButton *launchButtonOpen;
-@property (weak) IBOutlet NSButton *launchButtonAbout;
-@property (weak) IBOutlet NSButton *launchButtonExit;
+    @property (weak) IBOutlet NSWindow *launchScreenWindow;
+    @property (weak) IBOutlet NSButton *launchButtonOpen;
+    @property (weak) IBOutlet NSButton *launchButtonAbout;
+    @property (weak) IBOutlet NSButton *launchButtonExit;
+
+    - (void) DisplayAlert : (NSString *) title : (NSString *) info : (BOOL) type;
 
 @end
 
