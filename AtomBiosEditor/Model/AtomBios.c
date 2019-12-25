@@ -8,7 +8,8 @@
 
 #include "AtomBios.h"
 
-const char * CompanyNames[11][2] = {
+const char * CompanyNames[12][2] = {
+    {"0000","Unknown"},
     {"1002","AMD/ATI"},
     {"106B","Apple"},
     {"1043","Asus"},
@@ -236,13 +237,16 @@ void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
             }
         }
     }
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME,              14);
-    SetFileData(firmware, (unsigned char*)atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.romMessage,            atomBios->mainTable.romMsgOffset      +  0x2, 58);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.architecture,          atomBios->mainTable.archOffset,               atomBios->mainTable.archSize);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.connectionType,        atomBios->mainTable.conTypeOffset,            atomBios->mainTable.conTypeSize);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.memoryGen,             atomBios->mainTable.memGenOffset,             atomBios->mainTable.memGenSize);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.partNumber,            atomBios->mainTable.partNumberOffset,         atomBios->mainTable.partNumSize);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.compTime,              OFFSET_COMPILATION_TIME,                      14);
+    SetFileData(firmware,                   (unsigned char*)atomBios->mainTable.biosVersion,           atomBios->mainTable.romMsgOffset      + 0x95, 22);
+    SetFileData(firmware, BigToLittleEndian(HexToDec((char*)atomBios->mainTable.deviceId,8)),          atomBios->mainTable.romInfoOffset     + 0x28, 4);
+    SetFileData(firmware, BigToLittleEndian(HexToDec((char*)atomBios->mainTable.subsystemId,4)),       atomBios->mainTable.romInfoOffset     + 0x1A, 2);
+    SetFileData(firmware, BigToLittleEndian(HexToDec((char*)atomBios->mainTable.subsystemVendorId,4)), atomBios->mainTable.romInfoOffset     + 0x18, 2);
 }
 
 void SaveChecksum(FILE * firmware, const char * filePath) {
@@ -296,10 +300,10 @@ short VerifyChecksum(struct ATOM_BIOS * atomBios) {
 }
 
 short VerifySubSysCompany(struct ATOM_MAIN_TABLE * atomTable) {
-    for (int a=0; a<11; a++) {
+    for (int a=0; a<12; a++) {
         if ( strcmp((char*)atomTable->subsystemVendorId, CompanyNames[a][0]) == 0 ) {
             return a;
         }
     }
-    return -1;
+    return 0;
 }

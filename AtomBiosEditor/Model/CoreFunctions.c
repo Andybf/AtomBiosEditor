@@ -17,6 +17,8 @@ unsigned char * BigToLittleEndian(unsigned int num) {
         size = 0x2;
     } else if (num < 16777215) {
         size = 0x3;
+    } else {
+        size = 0x4;
     }
     // filling the array in the little endian way
     unsigned char * data = malloc(sizeof(char*) * size);
@@ -29,6 +31,11 @@ unsigned char * BigToLittleEndian(unsigned int num) {
         data[0] = (num & 0x0000ff)>>0;
         data[1] = (num & 0x00ff00)>>8;
         data[2] = (num & 0xff0000)>>16;
+    } else if (size == 0x4) {
+        data[0] = (num & 0x000000ff)>>0;
+        data[1] = (num & 0x0000ff00)>>8;
+        data[2] = (num & 0x00ff0000)>>16;
+        data[3] = (num & 0xff000000)>>24;
     }
     return data;
 }
@@ -51,28 +58,35 @@ unsigned char* DecToHex(unsigned int result) {
 }
 
 // Transforma um vetor de caracteres[4] com hexadecimais em um numero decimal
-int HexToDec(char input[6],int quantHex) {
-    int c, d, asciiCode, output = 0;
-    d = 6-quantHex;
-    for (c=0; c<6; c++) {
+int HexToDec(char input[8],int quantHex) {
+    int c, d, asciiCode;
+    unsigned int output = 0;
+    d = 8-quantHex;
+    for (c=0; c<8; c++) {
         asciiCode = input[c] > ASCII_DEC_CODE_9 ? 55 : ASCII_DEC_CODE_0;
         switch (d) {
             case 0:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16;
+                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16 *16 *16;
                 break;
             case 1:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16;
+                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16 *16;
                 break;
             case 2:
-                output += (input[c]-asciiCode) * 16 * 16 * 16;
+                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16;
                 break;
             case 3:
-                output += (input[c]-asciiCode) * 16 * 16;
+                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16;
                 break;
             case 4:
-                output += (input[c]-asciiCode) * 16;
+                output += (input[c]-asciiCode) * 16 * 16 * 16;
                 break;
             case 5:
+                output += (input[c]-asciiCode) * 16 * 16;
+                break;
+            case 6:
+                output += (input[c]-asciiCode) * 16;
+                break;
+            case 7:
                 output += (input[c]-asciiCode) * 1;
                 break;
         }
