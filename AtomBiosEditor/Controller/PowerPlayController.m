@@ -53,6 +53,7 @@
             [[stTable[0] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuClock[a]]];
             [[stTable[0] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memClock[a]]];
             [[stTable[0] size]   addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->voltage[a]]];
+            [stTable[0] setEnabled: YES];
         }
         
         for (int a=0; a<powerPlay->numberOfGpuStates; a++) {
@@ -60,6 +61,7 @@
             [[stTable[1] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqState[a] ]];
             [[stTable[1] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
             [[stTable[1] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+            [stTable[1] setEnabled:NO];
         }
         
         for (int a=0; a<powerPlay->numberOfMemStates; a++) {
@@ -67,10 +69,10 @@
             [[stTable[2] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqState[a] ]];
             [[stTable[2] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
             [[stTable[2] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+            [stTable[2] setEnabled:NO];
         }
         for (int a=0; a<3; a++){
             [stTable[a] reloadData];
-            [stTable[a] setEnabled: YES];
         }
     }
 
@@ -80,6 +82,7 @@
             [self InitPowerPlayInfo : dcTable : &(pPlay) : 1];
         }
     }
+
     - (IBAction)RadioDecChanged:(id)sender {
         if (_radioDecimal.state) {
             [_radioHexadecimal setState:NSControlStateValueOff];
@@ -117,14 +120,31 @@
             [columns[a] setTitle:titles[a]];
             [self       addTableColumn:columns[a]];
         }
-        // [self setDelegate:self];
+        [self setDelegate:self];
         [self setDataSource: self];
         [self setAllowsColumnResizing: NO];
         [self setAllowsColumnReordering: NO];
         [self setAllowsMultipleSelection: NO];
         [self setUsesAlternatingRowBackgroundColors: YES];
-        [self setEnabled: NO];
         [self reloadData];
+    }
+
+    - (void)tableViewSelectionDidChange:(NSNotification *)notification {
+        NSLog(@"TESTE01\n");
+    }
+
+    // Update the datacell modified bt the user
+    - (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
+        NSLog(@"Identifier: %@",[tableColumn identifier]);
+        if ([[tableColumn identifier]  isEqual: @"gpu"]) {
+            [_Clock replaceObjectAtIndex:row withObject: object];
+        } else if ([[tableColumn identifier] isEqual: @"voltage"]) {
+            [_offset replaceObjectAtIndex:row withObject: object];
+        } else if ([[tableColumn identifier] isEqual: @"size"]) {
+            [_size replaceObjectAtIndex:row withObject: object];
+        } else {
+            exit(9);
+        }
     }
 
     - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {

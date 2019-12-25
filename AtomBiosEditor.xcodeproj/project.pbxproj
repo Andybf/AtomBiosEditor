@@ -19,7 +19,7 @@
 		7113227023197C6E001758B1 /* OverDrive.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7113226F23197C6E001758B1 /* OverDrive.xib */; };
 		7113227223197E4A001758B1 /* PowerPlayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227123197E4A001758B1 /* PowerPlayController.m */; };
 		7113227623197EEF001758B1 /* OverDriveController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7113227523197EEF001758B1 /* OverDriveController.m */; };
-		71154873231B6ED80073F3AE /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 71154872231B6ED80073F3AE /* MasterView.xib */; };
+		711939A023B2E31800CA40DB /* MasterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7119399E23B2E31800CA40DB /* MasterView.xib */; };
 		7127B8062320B9C6006F3A49 /* PowerPlay.c in Sources */ = {isa = PBXBuildFile; fileRef = 7127B8042320B9C5006F3A49 /* PowerPlay.c */; };
 		713D12392325ED2200CDBC90 /* ApplicationMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 713D12382325ED2200CDBC90 /* ApplicationMenu.xib */; };
 		713D123F2325F22600CDBC90 /* AplicationMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 713D123E2325F22600CDBC90 /* AplicationMenuController.m */; };
@@ -54,7 +54,7 @@
 		7113227323197E5A001758B1 /* PowerPlayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PowerPlayController.h; sourceTree = "<group>"; };
 		7113227423197EEF001758B1 /* OverDriveController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverDriveController.h; sourceTree = "<group>"; };
 		7113227523197EEF001758B1 /* OverDriveController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverDriveController.m; sourceTree = "<group>"; };
-		71154872231B6ED80073F3AE /* MasterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MasterView.xib; sourceTree = "<group>"; };
+		7119399F23B2E31800CA40DB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterView.xib; sourceTree = "<group>"; };
 		7127B8042320B9C5006F3A49 /* PowerPlay.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = PowerPlay.c; sourceTree = "<group>"; };
 		7127B8052320B9C6006F3A49 /* PowerPlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PowerPlay.h; sourceTree = "<group>"; };
 		713D12382325ED2200CDBC90 /* ApplicationMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ApplicationMenu.xib; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				713D12382325ED2200CDBC90 /* ApplicationMenu.xib */,
-				71154872231B6ED80073F3AE /* MasterView.xib */,
+				7119399E23B2E31800CA40DB /* MasterView.xib */,
 				7111EA8E2316F8DE006FCC02 /* Overview.xib */,
 				7111EA9123170A9B006FCC02 /* Tables.xib */,
 				7113226D23197C5A001758B1 /* PowerPlay.xib */,
@@ -236,12 +236,12 @@
 			files = (
 				7113226E23197C5A001758B1 /* PowerPlay.xib in Resources */,
 				7111EA8F2316F8DE006FCC02 /* Overview.xib in Resources */,
+				711939A023B2E31800CA40DB /* MasterView.xib in Resources */,
 				71A11B2A2340251900803BEB /* README.md in Resources */,
 				713D12392325ED2200CDBC90 /* ApplicationMenu.xib in Resources */,
 				71D855CE231C333300EC0BB3 /* Credits.rtf in Resources */,
 				71A11B2B2340251900803BEB /* LICENSE in Resources */,
 				7111EA9223170A9B006FCC02 /* Tables.xib in Resources */,
-				71154873231B6ED80073F3AE /* MasterView.xib in Resources */,
 				7113227023197C6E001758B1 /* OverDrive.xib in Resources */,
 				71F4CC0E2337E40C0074B0E3 /* FirmwareInfo.xib in Resources */,
 				71D855D0231C654100EC0BB3 /* Assets.xcassets in Resources */,
@@ -271,6 +271,17 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7119399E23B2E31800CA40DB /* MasterView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7119399F23B2E31800CA40DB /* en */,
+			);
+			name = MasterView.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7111EA782316D671006FCC02 /* Debug */ = {

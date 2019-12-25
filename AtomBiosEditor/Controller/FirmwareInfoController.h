@@ -21,7 +21,7 @@
 
 @interface FirmwareInfoController : NSViewController {
     
-        }
+    }
 
     //Properties Declaration
     @property (strong) IBOutlet CustomTextField *textFieldDefEngClk;
@@ -38,10 +38,7 @@
 
     @property (weak) IBOutlet CustomTextField *textFieldBootVddcVolt;
 
-
-// Functions Declaration
-- (void)InitFirmwareInfo: (struct FIRMWARE_INFO *) firmwareInfo;;
+    // Functions Declaration
+    - (void)InitFirmwareInfo: (struct FIRMWARE_INFO *) firmwareInfo;
 
 @end
-
-

@@ -176,28 +176,30 @@ void loadCmmdAndDataTables (struct ATOM_BIOS * atomBios) {
 }
 
 // Replace the table selected by user to another table located in a binary file .bin on the system
-void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort index, const char * tablePath) {
+void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort index, const char * tableFilePath) {
     FILE * tableBin;
-    if ( !(tableBin = fopen(tablePath, "r")) ) {
+    if ( !(tableBin = fopen(tableFilePath, "r")) ) {
         exit(1);
     } //Carregando o arquivo binário referenciado pelo usuario e colocando em um buffer
     struct stat tableFileInfo;
-    stat(tablePath,&tableFileInfo);
+    stat(tableFilePath,&tableFileInfo);
     char * tableChar = malloc(sizeof(char*) * tableFileInfo.st_size);
     tableChar = GetFileData(tableBin, 0x0, (int)tableFileInfo.st_size, 1);
     
-    if (tableFileInfo.st_size == dataAndCmmdTables[index].size ){
-        strcpy(dataAndCmmdTables[index].content, tableChar);
+    if (tableFileInfo.st_size == dataAndCmmdTables->size) {
+        for (int a=0; a<tableFileInfo.st_size; a++) {
+            dataAndCmmdTables->content[a] = tableChar[a];
+        }
     }
-    else if (tableFileInfo.st_size <dataAndCmmdTables[index].size) {
-        strcpy(dataAndCmmdTables[index].content, tableChar);
+    else if (tableFileInfo.st_size <dataAndCmmdTables->size) {
+        strcpy(dataAndCmmdTables->content, tableChar);
         ushort writingPoint = tableFileInfo.st_size + 1;
-        for (int a=0; a<dataAndCmmdTables[index].size - (int)tableFileInfo.st_size; a++) {
-            dataAndCmmdTables[index].content[writingPoint] = '\0';
+        for (int a=0; a<dataAndCmmdTables->size - (int)tableFileInfo.st_size; a++) {
+            dataAndCmmdTables->content[writingPoint] = '\0';
             writingPoint++;
         }
     }
-    else if (tableFileInfo.st_size > dataAndCmmdTables[index].size) {
+    else if (tableFileInfo.st_size > dataAndCmmdTables->size) {
 //        abstractTable->size    = tableFileInfo.st_size;
 //        abstractTable->content = realloc(abstractTable->content, abstractTable->size);
 //        abstractTable->content = GetFileData(tableBin, 0, (int)tableFileInfo.st_size, 1);
@@ -220,19 +222,28 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
     }
     free(tableChar);
     fclose(tableBin);
-    //FixChecksum(newBiosPath, FW->fileInfo.st_size , atomTable );
 }
 
 void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
-    fwrite(GetFileData(atomBios->firmware.file, 0x0, (int)atomBios->firmware.fileInfo.st_size, 1), sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
     
-    SetFile8bitValue(firmware, atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
-    SetFile8bitValue(firmware, atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
-    SetFile8bitValue(firmware, atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
-    SetFile8bitValue(firmware, atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
-    SetFile8bitValue(firmware, atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
-    SetFile8bitValue(firmware, atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME,              14);
-    SetFile8bitValue(firmware, atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
+    fwrite(GetFileData(atomBios->firmware.file, 0x0, (int)atomBios->firmware.fileInfo.st_size, 1), sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
+    // Writing the data content in data tables and command tables
+    for (int a=0; a<QUANTITY_TOTAL_TABLES; a++) {
+        if (atomBios->dataAndCmmdTables[a].size > 0) {
+            fseek(firmware, atomBios->dataAndCmmdTables[a].offset, SEEK_SET);
+            for (int b=0; b<atomBios->dataAndCmmdTables[a].size; b++) {
+                fwrite(&atomBios->dataAndCmmdTables[a].content[b], sizeof(char), 0x1, firmware);
+            }
+    
+        }
+    }
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.romMessage,     atomBios->mainTable.romMsgOffset+0x2, 58);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.partNumber,     atomBios->mainTable.partNumberOffset, atomBios->mainTable.partNumSize);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.architecture,   atomBios->mainTable.archOffset,       atomBios->mainTable.archSize);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.connectionType, atomBios->mainTable.conTypeOffset,    atomBios->mainTable.conTypeSize);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.memoryGen,      atomBios->mainTable.memGenOffset,     atomBios->mainTable.memGenSize);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.compTime,       OFFSET_COMPILATION_TIME,              14);
+    SetFileData(firmware, (unsigned char*)atomBios->mainTable.biosVersion,    atomBios->mainTable.romMsgOffset +0x95, 22);
 }
 
 void SaveChecksum(FILE * firmware, const char * filePath) {
@@ -245,7 +256,7 @@ void SaveChecksum(FILE * firmware, const char * filePath) {
     }
     checksum = HexToDec(GetFileData(firmware, OFFSET_ROM_CHECKSUM, 1, 0),2) - checksum & 0xFF;
     char chkbyte = checksum;
-    SetFile8bitValue(firmware, &chkbyte, OFFSET_ROM_CHECKSUM, 1);
+    SetFileData(firmware, (unsigned char*)&chkbyte, OFFSET_ROM_CHECKSUM, 1);
 }
 
 short VerifyFirmwareSize(struct stat fileInfo) {

@@ -25,6 +25,7 @@
     @property (nonatomic, strong) FirmwareInfoController * varFirmwareInfoController;
 
     @property (weak) IBOutlet NSView *contentView;
+    @property (weak) IBOutlet NSView *warningView;
 
     - (void)loadInfo : (struct ATOM_BIOS *)atomBios : (struct POWERPLAY_DATA*)powerPlay : (struct FIRMWARE_INFO *)firmwareInfo;
 

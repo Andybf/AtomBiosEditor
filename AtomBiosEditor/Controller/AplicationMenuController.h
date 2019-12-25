@@ -14,7 +14,6 @@
 
 @interface AplicationMenuController : NSMenu <NSMenuDelegate>
 
-
 @property (weak) IBOutlet NSMenuItem *menuItemOpen;
 @property (weak) IBOutlet NSMenuItem *menuItemNewWindow;
 @property (weak) IBOutlet NSMenuItem *menuItemClose;
