@@ -23,10 +23,10 @@
             <rect key="frame" x="0.0" y="0.0" width="460" height="460"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dfx-4i-SJ3">
-                    <rect key="frame" x="5" y="32" width="450" height="404"/>
+                <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dfx-4i-SJ3">
+                    <rect key="frame" x="5" y="33" width="450" height="392"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView" id="Tmk-4p-3vg">
+                    <view key="contentView" ambiguous="YES" id="Tmk-4p-3vg">
                         <rect key="frame" x="3" y="3" width="444" height="386"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>

@@ -19,13 +19,19 @@
         [super viewDidLoad];
         stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
         [_radioDecimal setState: NSControlStateValueOn];
+        [_radioDecimal     setEnabled : YES];
+        [_radioHexadecimal setEnabled : YES];
+    }
+
+    -(void) InitPowerPlayInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)dataAndCmmdTables : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived{
+        
         for (int c=0; c<3; c++) {
-            tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(3,3,435,120)];
-            stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,435,120)];
+            tableContainer[c] = [[NSScrollView alloc] initWithFrame:NSMakeRect(3,3,439,120)];
+            stTable[c] = [[StatesTable alloc] initWithFrame: NSMakeRect(0,0,439,120)];
             if (! (c==0) ) {
-                [stTable[c] initTableStructure: 0];
+                [stTable[c] initTableStructure: 0 : powerPlay];
             } else {
-                [stTable[c] initTableStructure: 1];
+                [stTable[c] initTableStructure: 1 : powerPlay];
             }
             [tableContainer[c] setDocumentView: stTable[c]];
             [tableContainer[c] setHasVerticalScroller:YES];
@@ -33,11 +39,7 @@
             [_BoxGpuStates addSubview:tableContainer[1]];
             [_BoxMemStates addSubview:tableContainer[2]];
         }
-    }
-
-    -(void) InitPowerPlayInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)dataAndCmmdTables : (struct POWERPLAY_DATA *)powerPlay : (short)HexActived{
-        [_radioDecimal     setEnabled : YES];
-        [_radioHexadecimal setEnabled : YES];
+        
         pPlay = *powerPlay;
         dcTable = dataAndCmmdTables;
         ushort rows[3] = { powerPlay->numberOfStates, powerPlay->numberOfGpuStates, powerPlay->numberOfMemStates};
@@ -94,10 +96,11 @@
 
 @implementation StatesTable {
         NSString * columnIdentifiers[4];
+        struct POWERPLAY_DATA * powerPlay;
     }
 
-    -(void)initTableStructure : (short)type{
-        
+    -(void)initTableStructure : (short)type : (struct POWERPLAY_DATA *)pPlay {
+        powerPlay = pPlay;
         CGFloat widths[] = {60.0,130.0,130.0,100.0};
         NSString * titles[] = {@"Index",@"Value",@"Offset",@"Size"};
         NSString * tempColumnIdentifiers[] = {@"index",@"value",@"offset",@"size"};
@@ -130,20 +133,36 @@
     }
 
     - (void)tableViewSelectionDidChange:(NSNotification *)notification {
-        NSLog(@"TESTE01\n");
+        //PlaceHolder
     }
 
     // Update the datacell modified bt the user
-    - (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row{
+    - (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
         NSLog(@"Identifier: %@",[tableColumn identifier]);
         if ([[tableColumn identifier]  isEqual: @"gpu"]) {
+            for (int a=0; a<powerPlay->numberOfGpuStates; a++) {
+                if (powerPlay->gpuFreqState[a] == powerPlay->gpuClock[row]) {
+                    [_Clock replaceObjectAtIndex:row withObject: object];
+                    powerPlay->gpuClock[row] = [object intValue];
+                    powerPlay->gpuFreqState[a] = powerPlay->gpuClock[row];
+                }
+            }
             [_Clock replaceObjectAtIndex:row withObject: object];
+            powerPlay->gpuClock[row] = [object intValue];
         } else if ([[tableColumn identifier] isEqual: @"voltage"]) {
+            for (int a=0; a<powerPlay->numberOfMemStates; a++) {
+                printf("%d | %d \n",powerPlay->memFreqState[a],powerPlay->memClock[row]);
+                if (powerPlay->memFreqState[a] == powerPlay->memClock[row]) {
+                    [_offset replaceObjectAtIndex:row withObject: object];
+                    powerPlay->memClock[row] = [object intValue];
+                    powerPlay->memFreqState[a] = powerPlay->memClock[row];
+                }
+            }
             [_offset replaceObjectAtIndex:row withObject: object];
+            powerPlay->memClock[row] = [object intValue];
         } else if ([[tableColumn identifier] isEqual: @"size"]) {
             [_size replaceObjectAtIndex:row withObject: object];
-        } else {
-            exit(9);
+            powerPlay->voltage[row] = [object intValue];
         }
     }
 

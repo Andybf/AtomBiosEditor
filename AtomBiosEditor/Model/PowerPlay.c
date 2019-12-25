@@ -56,31 +56,40 @@ struct POWERPLAY_DATA LoadPowerPlayData (struct ATOM_DATA_AND_CMMD_TABLES abstra
     return powerPlay;
 }
 
-void SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct POWERPLAY_DATA powerPlay) {
+void SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct POWERPLAY_DATA * powerPlay) {
     
     //PowerPlay Part
     int step = 0;
-    for (int a=0; a<powerPlay.numberOfStates; a++) {
-        if (a == 0) { step = 2; } else { step += powerPlay.lengthPerState;}
+    for (int a=0; a<powerPlay->numberOfStates; a++) {
+        if (a == 0) { step = 2; } else { step += powerPlay->lengthPerState;}
         //       FILE * fileOutput,               char * data,                                            ushort offset                  | size
-        SetFileData(firmware, BigToLittleEndian(powerPlay.gpuClock[a]*100), abstractTable.offset + powerPlay.clockInfoOffset + step,       0x3);
-        SetFileData(firmware, BigToLittleEndian(powerPlay.memClock[a]*100), abstractTable.offset + powerPlay.clockInfoOffset + step + 0x3, 0x3);
-        SetFileData(firmware, BigToLittleEndian(powerPlay.voltage[a]     ), abstractTable.offset + powerPlay.clockInfoOffset + step + 0x6, 0x2);
+        SetFileData(firmware, BigToLittleEndian(powerPlay->gpuClock[a]*100), abstractTable.offset + powerPlay->clockInfoOffset + step,       0x3);
+        SetFileData(firmware, BigToLittleEndian(powerPlay->memClock[a]*100), abstractTable.offset + powerPlay->clockInfoOffset + step + 0x3, 0x3);
+        SetFileData(firmware, BigToLittleEndian(powerPlay->voltage[a]     ), abstractTable.offset + powerPlay->clockInfoOffset + step + 0x6, 0x2);
+    }
+    step = 0;
+    for (int c=0; c<powerPlay->numberOfGpuStates; c++) {
+        if (c == 0) { step = 1; } else { step += 5;}
+        SetFileData(firmware, BigToLittleEndian(powerPlay->gpuFreqState[c]*100), abstractTable.offset + powerPlay->gpuFreqOffset + step, 0x3);
+    }
+    for (int c=0; c<powerPlay->numberOfMemStates; c++) {
+        if (c == 0) { step = 0; } else { step += 5;}
+        SetFileData(firmware, BigToLittleEndian(powerPlay->memFreqState[c]*100), abstractTable.offset + powerPlay->memFreqOffset + step + 0x1, 0x3);
     }
     
     //Overdrive Part
     //       FILE * fileOutput,               char * data,                                            ushort offset, ushort size
-    SetFileData(firmware, BigToLittleEndian(powerPlay.maxGpuClock*100), abstractTable.offset + powerPlay.overDriveOffset +  2, 3);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.maxMemClock*100), abstractTable.offset + powerPlay.overDriveOffset +  6, 3);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.maxTdp)         , abstractTable.offset + OFFSET_INFO_MAX_TDP,         1);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.minTdp)         , abstractTable.offset + OFFSET_INFO_MIN_TDP,         1);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.hysteresis)     , abstractTable.offset + powerPlay.fanInfoOffset   +  1, 1);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.maxTemp    *100), abstractTable.offset + powerPlay.fanInfoOffset   + 14, 2);
-    SetFileData(firmware, BigToLittleEndian(powerPlay.maxFanSpeed)    , abstractTable.offset + powerPlay.fanInfoOffset   + 17, 1);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->maxGpuClock*100), abstractTable.offset + powerPlay->overDriveOffset +  2, 3);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->maxMemClock*100), abstractTable.offset + powerPlay->overDriveOffset +  6, 3);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->maxTdp)         , abstractTable.offset + OFFSET_INFO_MAX_TDP,         1);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->minTdp)         , abstractTable.offset + OFFSET_INFO_MIN_TDP,         1);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->hysteresis)     , abstractTable.offset + powerPlay->fanInfoOffset   +  1, 1);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->maxTemp    *100), abstractTable.offset + powerPlay->fanInfoOffset   + 14, 2);
+    SetFileData(firmware, BigToLittleEndian(powerPlay->maxFanSpeed)    , abstractTable.offset + powerPlay->fanInfoOffset   + 17, 1);
     step = 0;
     for (short c=0; c<3; c++) {
         if (c == 0) { step = 0; } else { step += 2;}
-        SetFileData(firmware, BigToLittleEndian(powerPlay.tempTarget[c]*100), abstractTable.offset + powerPlay.fanInfoOffset +2+step, 0x2);
-        SetFileData(firmware, BigToLittleEndian(powerPlay.fanSpeed[c]*100)  , abstractTable.offset + powerPlay.fanInfoOffset +8+step, 0x2);
+        SetFileData(firmware, BigToLittleEndian(powerPlay->tempTarget[c]*100), abstractTable.offset + powerPlay->fanInfoOffset +2+step, 0x2);
+        SetFileData(firmware, BigToLittleEndian(powerPlay->fanSpeed[c]*100)  , abstractTable.offset + powerPlay->fanInfoOffset +8+step, 0x2);
     }
 }

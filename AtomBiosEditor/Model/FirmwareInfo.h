@@ -9,8 +9,6 @@
 #ifndef FirmwareInfo_h
 #define FirmwareInfo_h
 
-#include <stdio.h>
-
 #include "AtomBios.h"
 #include "CoreFunctions.h"
 

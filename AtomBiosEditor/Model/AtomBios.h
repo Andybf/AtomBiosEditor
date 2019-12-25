@@ -32,6 +32,8 @@
 #define ATOM_ROM_SIGNATURE        "20373631323935353230"  // 761295520
 #define ATOM_ROM_MAGIC            "41544F4D"            //ATOM
 
+
+
 struct FIRMWARE_FILE {
     FILE * file;
     char * filePath;
@@ -105,7 +107,6 @@ struct ATOM_BIOS {
     struct ATOM_MAIN_TABLE           mainTable;
     struct ATOM_OFFSETS_TABLE        offsetsTable[2];
     struct ATOM_DATA_AND_CMMD_TABLES dataAndCmmdTables[QUANTITY_TOTAL_TABLES];
-    
 };
 
 //Functions Definition

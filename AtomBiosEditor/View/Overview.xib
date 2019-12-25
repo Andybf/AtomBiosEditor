@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="rJi-IQ-c4M">
-                    <rect key="frame" x="5" y="36" width="450" height="412"/>
+                    <rect key="frame" x="5" y="33" width="450" height="412"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" ambiguous="YES" id="Xnf-Ho-I4M">
                         <rect key="frame" x="3" y="3" width="444" height="406"/>
