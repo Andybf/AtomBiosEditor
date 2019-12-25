@@ -21,15 +21,16 @@ The file extracted is in binary form, the read it's difficult to humans, but not
  * Adjust various pixel clocks values
  * Default engine clock and default memory clock
  * Reference clocks
- * Change powerPlay GPU clocks (in development)
- * Change powerpaly Memory clocks  (in development)
- * Change powerPlay voltage values  (in development)
+ * Change powerPlay GPU clocks
+ * Change powerplay Memory clocks
+ * Change powerPlay voltage values
 
 ### Warning
 
 #### This tool is not meant to be used by people with very low knowledge about graphics processing mechanics, the application is not 100% reliable and bugs can occour during the execution.
 #### Make sure that you will only change the values if you know what they are representing, and try to not insert absurd values.
 #### Flashing a custom rom on your GPU is a dangerous process and if this are done in a bad way it may brick you graphics card or in extreme cases destroyng the internal components.
+#### Before flashing the firmware in your GPU that has been modified by this tool, keep in mind that this software comes without any type of warranty, and the creator is not responsible for any type of damage or mal-function caused by bad flashing. Use this tool on your own risk.
 
 ### Operating System Compatibility
 
