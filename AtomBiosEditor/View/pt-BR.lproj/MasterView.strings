@@ -1,0 +1,9 @@
+
+/* Class = "NSTextFieldCell"; title = "Please, read this before using this software:\n\nThis tool is not meant to be used by people with very low knowledge about graphics processing mechanics, the application is not 100% reliable and bugs can occour during the execution.\n\nMake sure that you will only change the values if you know what they are representing, and only with small increments or decrements in the fields.\n\nFlashing a custom firmware on your GPU can be a dangerous process, if this are done in a bad way it may brick you graphics card or in extreme cases destroying the internal components.\n\nBefore flashing the firmware in your GPU that has been modified by this tool, keep in mind that the creator of this application is not responsible for any type of damage caused by bad flashing. Use this tool in your own risk."; ObjectID = "BNE-te-mj6"; */
+"BNE-te-mj6.title" = "Please, read this before using this software:\n\nThis tool is not meant to be used by people with very low knowledge about graphics processing mechanics, the application is not 100% reliable and bugs can occour during the execution.\n\nMake sure that you will only change the values if you know what they are representing, and only with small increments or decrements in the fields.\n\nFlashing a custom firmware on your GPU can be a dangerous process, if this are done in a bad way it may brick you graphics card or in extreme cases destroying the internal components.\n\nBefore flashing the firmware in your GPU that has been modified by this tool, keep in mind that the creator of this application is not responsible for any type of damage caused by bad flashing. Use this tool in your own risk.";
+
+/* Class = "NSTextFieldCell"; title = "Warning"; ObjectID = "XNt-Fj-GmJ"; */
+"XNt-Fj-GmJ.title" = "Warning";
+
+/* Class = "NSBox"; title = "Box"; ObjectID = "YgI-ds-akQ"; */
+"YgI-ds-akQ.title" = "Box";

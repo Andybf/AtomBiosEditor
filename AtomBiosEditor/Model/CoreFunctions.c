@@ -8,20 +8,41 @@
 
 #include "CoreFunctions.h"
 
-ushort BigToLittleEndian(ushort num) {
-    return (num>>8) | (num<<8);
+unsigned char * BigToLittleEndian(unsigned int num) {
+    short size = 0;
+    // checking the size in bytes that the number occupies
+    if (num < 256) {
+        size = 0x1;
+    } else if (num < 65536) {
+        size = 0x2;
+    } else if (num < 16777215) {
+        size = 0x3;
+    }
+    // filling the array in the little endian way
+    unsigned char * data = malloc(sizeof(char*) * size);
+    if (size == 0x1) {
+        data[0] = (num & 0x0000ff)>>0;
+    } else if (size == 0x2) {
+        data[0] = (num & 0x0000ff)>>0;
+        data[1] = (num & 0x00ff00)>>8;
+    } else if (size == 0x3) {
+        data[0] = (num & 0x0000ff)>>0;
+        data[1] = (num & 0x00ff00)>>8;
+        data[2] = (num & 0xff0000)>>16;
+    }
+    return data;
 }
 
-unsigned char* decToHex(unsigned int result) {
+unsigned char* DecToHex(unsigned int result) {
     
     static unsigned char hex[9];
     unsigned int resto[8];
     
     for (int p=7; p>=0; p--) {
-        resto[p] = (int) result % 16; //resto da divisão por 16
-        result   = (int) result / 16; //dividido por 16
+        resto[p] = (int) result % 16;
+        result   = (int) result / 16;
     }
-    for (int c=7; c>=0; c--) {// este for tem que se repetir quatro vezes apenas.
+    for (int c=7; c>=0; c--) {
         if (resto[c] < 10) {
             hex[c] = resto[c] + 48;
         } else {
@@ -62,18 +83,29 @@ int HexToDec(char input[6],int quantHex) {
     return output;
 }
 
-// Extrai uma quantidade específica de bytes em um arquivo. Suporta Little e Big Endian
-char * GetFileData(FILE * file, int posInicial, int quantBytes, short endianness) {
-    char * formated_output = (char *) malloc(quantBytes * sizeof(char*));
+// Works like a substring function, returns un hex array in string format
+char * GetContentData(char * data, ushort initialOffset, ushort size) {
+    char * value = (char*)calloc( sizeof(char*), size*2 );
+    int step = size-1;
+    for (int position=0; position<size*2; position+=2) {
+        sprintf((char*)&value[position], "%02X", data[initialOffset+step] & 0xFF);
+        step -= 1;
+    }
+    return value;
+}
+
+// Extract a specific size of bytes form the file with the given offset
+char * GetFileData(FILE * file, int offset, int size, short endianness) {
+    char * formated_output = (char *) malloc(size * sizeof(char*));
     if (endianness == 0) { // Little Endian
-        fseek(file, posInicial+(quantBytes-1), SEEK_SET);
-        for (int c=0; c<quantBytes*2; c+=2){
+        fseek(file, offset+(size-1), SEEK_SET);
+        for (int c=0; c<size*2; c+=2){
             sprintf((char*)&formated_output[c], FORMAT_HEX, fgetc(file));
             fseek(file, ftell(file)-2, SEEK_SET);
         }
     } else if (endianness == 1) { // Big Endian
-        fseek(file, posInicial, SEEK_SET);
-        for (int c=0; c<quantBytes; c++){
+        fseek(file, offset, SEEK_SET);
+        for (int c=0; c<size; c++){
             sprintf((char*)&formated_output[c], "%c", fgetc(file));
         }
     } else {
@@ -82,20 +114,9 @@ char * GetFileData(FILE * file, int posInicial, int quantBytes, short endianness
     return formated_output;
 }
 
-void SetFile16bitValue(FILE * fileOutput, ushort data, ushort offset, ushort size) {
-    unsigned char * byte = malloc(sizeof(unsigned char *)*size);
-    int step = 8-(size*2);
-    for (short a=0; a<size; a++) {
-        byte[a] = strtol( substr((char*)decToHex(data), step, 2) ,NULL,16) & 0xFF;
-        step += 2;
-    }
-    fseek(fileOutput, offset, SEEK_SET);
-    fwrite(byte, sizeof(ushort), 1, fileOutput);
-}
-
-void SetFile8bitValue(FILE * fileOutput, char * data, ushort offset, ushort size) {
-    fseek(fileOutput, offset, SEEK_SET);
-    fwrite(data, sizeof(char), size, fileOutput);
+void SetFileData(FILE * file, unsigned char * data, ushort offset, ushort size) {
+    fseek(file, offset, SEEK_SET);
+    fwrite(data, sizeof(char), size, file);
 }
 
 ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos) {

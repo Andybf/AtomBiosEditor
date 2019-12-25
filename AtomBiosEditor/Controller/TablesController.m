@@ -11,13 +11,15 @@
 @implementation TablesController {
         AtomTable * tableView;
         struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables;
+        struct FIRMWARE_INFO * firmwareInfoData;
+        struct POWERPLAY_DATA * powerPlayData;
         NSString * filename;
         NSArray * stringFormat;
         ushort rows, aInitial, aFinal;
     }
 
     -(void)viewDidLoad {
-        [super viewDidLoad];
+        [super viewDidLoad]; 
         
         [_radioDecimal setState : NSControlStateValueOn];
         stringFormat = [NSArray arrayWithObjects: @"%d",@"%02X", nil];
@@ -38,7 +40,9 @@
         [_tableBox addSubview: tableContainer];
     }
 
-    -(void)InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName {
+    -(void)InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName : (struct FIRMWARE_INFO*) fwd : (struct POWERPLAY_DATA*) ppd {
+        firmwareInfoData = fwd;
+        powerPlayData = ppd;
         dataAndCmmdTables = atmtable;
         filename = [NSString stringWithUTF8String: fileName];
         [_selectorTable setTitle: @"select.."];
@@ -138,15 +142,17 @@
             }
             [openPanel beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse result) {
                 if (openPanel.URL.path != NULL) {
-                    ReplaceTable( self->dataAndCmmdTables, selectedRow, [openPanel.URL.path UTF8String]);
-                    char size[5];
-                    sprintf(&size[0], "%02X", self->dataAndCmmdTables[selectedRow].content[1]);
-                    sprintf(&size[2], "%02X", self->dataAndCmmdTables[selectedRow].content[0]);
-                    
+                    ReplaceTable( &self->dataAndCmmdTables[selectedRow], selectedRow, [openPanel.URL.path UTF8String]);
+                    char size[6];
+                    sprintf(&size[0], "%02X", self->dataAndCmmdTables[selectedRow].content[1] & 0xff);
+                    sprintf(&size[2], "%02X", self->dataAndCmmdTables[selectedRow].content[0] & 0xff);
                     self->dataAndCmmdTables[selectedRow].size = HexToDec(size, 4);
                     self->dataAndCmmdTables[selectedRow].formatRev = self->dataAndCmmdTables[selectedRow].content[2];
                     self->dataAndCmmdTables[selectedRow].contentRev = self->dataAndCmmdTables[selectedRow].content[3];
                     [self ReloadTableView: [self->_selectorTable indexOfSelectedItem ] : [self->_radioHexadecimal state ] ];
+                    //Realoading tables powerplay and firmawareinfo
+                    *self->powerPlayData = LoadPowerPlayData(self->dataAndCmmdTables[96]);
+                    *self->firmwareInfoData = LoadFirmwareInfo(self->dataAndCmmdTables[85]);
                 }
             }];
         }

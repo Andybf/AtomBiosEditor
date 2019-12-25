@@ -38,12 +38,13 @@ typedef unsigned short ushort;
 typedef unsigned char byte;
 
 // Core Functions
-ushort BigToLittleEndian      (ushort num);
+unsigned char * BigToLittleEndian(unsigned int num);
+char * GetContentData(char * data, ushort initialOffset, ushort size);
 char * GetFileData (FILE * file, int offset, int size, short endianness);
-void   SetFile16bitValue (FILE * fileOutput, ushort chars, ushort offset, ushort size);
-void   SetFile8bitValue(FILE * fileOutput, char * data, ushort offset, ushort size);
+void   SetFileData(FILE * fileOutput, unsigned char * data, ushort offset, ushort size);
 ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos);
 int    HexToDec    (char [], int );
+unsigned char* DecToHex(unsigned int result);
 int    count       (int num);
 char * substr      (char *string, int position, int size);
 

@@ -8,7 +8,6 @@
 
 #import "AplicationMenuController.h"
 
-
 @implementation AplicationMenuController {
         struct ATOM_BIOS atomBios;
         struct POWERPLAY_DATA powerPlay;
@@ -44,7 +43,6 @@
         }];
     }
 
-
     - (IBAction)buttonOpenTriggered:(id)sender {
         [self OpenNewFile];
     }
@@ -65,7 +63,6 @@
     }
 
     - (void) OpenNewFile {
-        
         
         NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
         //Config
@@ -111,10 +108,9 @@
 
 @implementation WindowView
 
-- (void)close {
-    [self setReleasedWhenClosed: NO];
-    
-    [super close];
-}
+    - (void)close {
+        [self setReleasedWhenClosed: NO];
+        [super close];
+    }
 
 @end

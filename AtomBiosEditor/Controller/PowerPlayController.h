@@ -12,7 +12,7 @@
 #import "../Model/AtomBios.h"
 #import "../Model/PowerPlay.h"
 
-@interface StatesTable : NSTableView <NSTableViewDataSource>
+@interface StatesTable : NSTableView <NSTableViewDataSource,NSTableViewDelegate>
 
     @property (nonatomic, strong) NSMutableArray * index;
     @property (nonatomic, strong) NSMutableArray * Clock;
@@ -23,10 +23,10 @@
 
 @end
 
-
 @interface PowerPlayController : NSViewController {
-    StatesTable * stTable[3];
-}
+        StatesTable * stTable[3];
+    }
+
     @property (weak) IBOutlet NSView *BoxPowerPlay;
     @property (weak) IBOutlet NSBox  *BoxGpuStates;
     @property (weak) IBOutlet NSBox  *BoxMemStates;

@@ -11,6 +11,8 @@
 
 #import "../Model/AtomBios.h"
 #import "../Model/CoreFunctions.h"
+#import "../Model/PowerPlay.h"
+#import "../Model/FirmwareInfo.h"
 
 @interface TablesController : NSViewController
 
@@ -22,7 +24,7 @@
     @property (weak) IBOutlet NSBox    *tableBox;
 
     -(void) ReloadTableView: (short)type : (NSControlStateValue)HexOrDecIsEnabled;
-    -(void) InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName;
+-(void)InitTableTabInfo : (struct ATOM_DATA_AND_CMMD_TABLES *)atmtable : (char *)fileName : (struct FIRMWARE_INFO*) fwd : (struct POWERPLAY_DATA*) ppd;
 
 @end
 

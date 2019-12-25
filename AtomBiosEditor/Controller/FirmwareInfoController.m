@@ -35,17 +35,17 @@
         [_textFieldLcdMaxPixelClk setEnabled: YES];
         [_textFieldBootVddcVolt   setEnabled: YES];
         
-        [_textFieldDefEngClk      setTypeIdentifier:1];
-        [_textFieldDefMemClk      setTypeIdentifier:2];
-        [_textFieldDefDispEngClk  setTypeIdentifier:3];
-        [_textFieldCoreRefClk     setTypeIdentifier:4];
-        [_textFieldMemRefClk      setTypeIdentifier:5];
-        [_textFieldPixelClk       setTypeIdentifier:6];
-        [_textFieldMinPixelClkPll setTypeIdentifier:7];
-        [_textFieldMaxPixelClkPll setTypeIdentifier:8];
-        [_textFieldLcdMinPixelClk setTypeIdentifier:9];
-        [_textFieldLcdMaxPixelClk setTypeIdentifier:10];
-        [_textFieldBootVddcVolt   setTypeIdentifier:11];
+        [_textFieldDefEngClk      setTypeIdentifier: 1];
+        [_textFieldDefMemClk      setTypeIdentifier: 2];
+        [_textFieldDefDispEngClk  setTypeIdentifier: 3];
+        [_textFieldCoreRefClk     setTypeIdentifier: 4];
+        [_textFieldMemRefClk      setTypeIdentifier: 5];
+        [_textFieldPixelClk       setTypeIdentifier: 6];
+        [_textFieldMinPixelClkPll setTypeIdentifier: 7];
+        [_textFieldMaxPixelClkPll setTypeIdentifier: 8];
+        [_textFieldLcdMinPixelClk setTypeIdentifier: 9];
+        [_textFieldLcdMaxPixelClk setTypeIdentifier: 10];
+        [_textFieldBootVddcVolt   setTypeIdentifier: 11];
         
         [_textFieldDefEngClk      setFirmwareInfo: firmwareInfo];
         [_textFieldDefMemClk      setFirmwareInfo: firmwareInfo];
@@ -65,45 +65,87 @@
 
     - (void)textDidChange:(NSNotification *)notification {
         [super textDidChange:notification];
-        printf(" TextDidChangeEditing | value: %s | ClassName: %s | typeId: %d \n",[[self stringValue] UTF8String],[[self className] UTF8String],[self TypeIdentifier]);
         switch ([self TypeIdentifier]) {
             case 1:
-                self.firmwareInfo->defaultEngineClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->defaultEngineClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->defaultEngineClock];
+                }
                 break;
             case 2:
-                self.firmwareInfo->defaultMemoryClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->defaultMemoryClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->defaultMemoryClock];
+                }
                 break;
             case 3:
-                self.firmwareInfo->deftDispEngineClk = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->deftDispEngineClk = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->deftDispEngineClk];
+                }
                 break;
             case 4:
-                self.firmwareInfo->coreReferenceClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->coreReferenceClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->coreReferenceClock];
+                }
                 break;
             case 5:
-                self.firmwareInfo->memoryReferenceClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->memoryReferenceClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->memoryReferenceClock];
+                }
                 break;
             case 6:
-                self.firmwareInfo->maxPixelClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->maxPixelClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->maxPixelClock];
+                }
                 break;
             case 7:
-                self.firmwareInfo->minPixelClockPLLInput = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->minPixelClockPLLInput = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->minPixelClockPLLInput];
+                }
                 break;
             case 8:
-                self.firmwareInfo->maxPixelClockPLLInput = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->maxPixelClockPLLInput = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->maxPixelClockPLLInput];
+                }
                 break;
             case 9:
-                self.firmwareInfo->LcdMinPixelClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->LcdMinPixelClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->LcdMinPixelClock];
+                }
                 break;
             case 10:
-                self.firmwareInfo->LcdMaxPixelClock = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 4096) {
+                    self.firmwareInfo->LcdMaxPixelClock = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->LcdMaxPixelClock];
+                }
                 break;
             case 11:
-                self.firmwareInfo->bootUpVDDCVoltage = [[self stringValue] intValue];
+                if ([[self stringValue] intValue] >= 0 && [[self stringValue] intValue] <= 2000) {
+                    self.firmwareInfo->bootUpVDDCVoltage = [[self stringValue] intValue];
+                } else {
+                    self.stringValue = [NSString stringWithFormat: @"%d", self.firmwareInfo->bootUpVDDCVoltage];
+                }
                 break;
             default:
                 exit(10);
                 break;
         }
     }
-
 @end

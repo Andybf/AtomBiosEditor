@@ -9,42 +9,43 @@
 #import "OverviewController.h"
 
 @implementation OverviewController {
-    OverviewTable * tableView;
-    struct ATOM_BIOS * atombios;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios {
-    atombios = atomBios;
-    [_radioDecimal setState : NSControlStateValueOn];
-    //Table Initialization
-    tableView = [[OverviewTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
-    [tableView initTableStructure];
-    NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(2, 2, 440, 405)];
-    // embed the table view in the scroll view, and then, add the scroll view to the box
-    [tableContainer setDocumentView:tableView];
-    [tableContainer setHasVerticalScroller: YES];
-    [tableContainer setAutohidesScrollers:  YES];
-    [tableView reloadData : atomBios : false];
-    //Add the container to window
-    [_OverviewBox addSubview:tableContainer];
-}
-
-- (IBAction)RadioHexChanged:(id)sender {
-    if (_radioHexadecimal.state) {
-        [_radioDecimal setState:NSControlStateValueOff];
-        [tableView reloadData : atombios : true];
+        OverviewTable * tableView;
+        struct ATOM_BIOS * atombios;
     }
-}
-- (IBAction)RadioDecChanged:(id)sender {
-    if (_radioDecimal.state) {
-        [_radioHexadecimal setState:NSControlStateValueOff];
-        [tableView reloadData : atombios : false];
+
+    - (void)viewDidLoad {
+        [super viewDidLoad];
     }
-}
+
+    - (void) initOverviewInfo: (struct ATOM_BIOS *)atomBios {
+        atombios = atomBios;
+        [_radioDecimal setState : NSControlStateValueOn];
+        //Table Initialization
+        tableView = [[OverviewTable alloc] initWithFrame: NSMakeRect(0, 0, 440, 380)];
+        [tableView initTableStructure];
+        NSScrollView * tableContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(2, 2, 440, 405)];
+        // embed the table view in the scroll view, and then, add the scroll view to the box
+        [tableContainer setDocumentView:tableView];
+        [tableContainer setHasVerticalScroller: YES];
+        [tableContainer setAutohidesScrollers:  YES];
+        [tableView reloadData : atomBios : false];
+        //Add the container to window
+        [_OverviewBox addSubview:tableContainer];
+    }
+
+    - (IBAction)RadioHexChanged:(id)sender {
+        if (_radioHexadecimal.state) {
+            [_radioDecimal setState:NSControlStateValueOff];
+            [tableView reloadData : atombios : true];
+        }
+    }
+
+    - (IBAction)RadioDecChanged:(id)sender {
+        if (_radioDecimal.state) {
+            [_radioHexadecimal setState:NSControlStateValueOff];
+            [tableView reloadData : atombios : false];
+        }
+    }
 @end
 
 @implementation OverviewTable {

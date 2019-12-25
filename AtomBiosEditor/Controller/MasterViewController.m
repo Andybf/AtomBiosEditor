@@ -8,7 +8,6 @@
 
 #import "MasterViewController.h"
 
-
 @implementation MasterViewController {
     
     }
@@ -29,8 +28,8 @@
         atomBios->mainTable = loadMainTable(atomBios);
         loadOffsetsTable(     atomBios);
         loadCmmdAndDataTables(atomBios);
-        *firmwareInfo = LoadFirmwareInfo(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
-        *powerPlay = LoadPowerPlayData(atomBios->firmware.file, atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
+        *firmwareInfo = LoadFirmwareInfo(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
+        *powerPlay = LoadPowerPlayData(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
         
         //Creating the sidebar
         NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 460)];
@@ -54,17 +53,17 @@
         struct FIRMWARE_INFO * firmwareInfo;
     }
 
-- (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios : (struct POWERPLAY_DATA *) pp : (struct FIRMWARE_INFO *) fi {
+    - (void)ConstructSideBar: (MasterViewController *)masterVC : (struct ATOM_BIOS *) atomBios : (struct POWERPLAY_DATA *) pp : (struct FIRMWARE_INFO *) fi {
         mvc = masterVC;
         at = atomBios;
         powerPlay = pp;
         firmwareInfo = fi;
         NSTableColumn * column = [[NSTableColumn alloc] initWithIdentifier: @"menu"];
         [column setWidth: 160];
-        [column setTitle: @"Main Menu"];
+        [column setTitle: @"  Main Menu"];
         [self addTableColumn:column];
         [self setTableTitles: [[NSMutableArray alloc] initWithCapacity: 5]];
-        NSArray * menuTitles = [NSArray arrayWithObjects:@"Overview Info",@"Tables Info",@"Firmware Info",@"Power Play",@"OverDrive", nil];
+        NSArray * menuTitles = [NSArray arrayWithObjects:@"  Overview Info",@"  Tables Info",@"  Firmware Info",@"  Power Play",@"  OverDrive", nil];
         for (int a=0; a<5; a++) {
             [_tableTitles addObject: menuTitles[a]];
         }
@@ -80,9 +79,13 @@
 
     - (void)tableViewSelectionDidChange:(NSNotification *)notification {
         switch ([self selectedRow]) {
+            case 0:
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverviewController] view]];
+                [[mvc varOverviewController] initOverviewInfo: at];
+                break;
             case 1:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varTablesController] view]];
-                [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName];
+                [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName : firmwareInfo : powerPlay];
                 break;
             case 2:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];
@@ -97,8 +100,7 @@
                 [[mvc varOverDriveController] initOverDriveInfo : powerPlay];
                 break;
             default:
-                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varOverviewController] view]];
-                [[mvc varOverviewController] initOverviewInfo: at];
+                [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [mvc warningView]];
                 break;
         }
     }
