@@ -77,6 +77,12 @@ void ExtractTable(struct ATOM_DATA_AND_CMMD_TABLES abstractTable, const char * e
 
 //Carrega as informações do firmware na memória. Necessário para fazer as demais operações no programa
 struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
+    
+    fseek(atomBios->firmware.file, 0x0, SEEK_SET);
+    atomBios->firmware.fileContent = malloc(sizeof(char*) * atomBios->firmware.fileInfo.st_size);
+    for (int c=0; c<atomBios->firmware.fileInfo.st_size; c++){
+        sprintf(&atomBios->firmware.fileContent[c], "%c", fgetc(atomBios->firmware.file));
+    }
     struct ATOM_MAIN_TABLE mainTable;
            //property                           |                  file              | initial address         |  bytes | Endian | hexbytes
            mainTable.size             = HexToDec(GetFileData(atomBios->firmware.file, OFFSET_ROM_BASE_TABLE,           2,     0),     4);
@@ -191,9 +197,10 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
         for (int a=0; a<tableFileInfo.st_size; a++) {
             dataAndCmmdTables->content[a] = tableChar[a];
         }
-    }
-    else if (tableFileInfo.st_size <dataAndCmmdTables->size) {
-        strcpy(dataAndCmmdTables->content, tableChar);
+    } else if (tableFileInfo.st_size < dataAndCmmdTables->size) {
+        for (int a=0; a<tableFileInfo.st_size; a++) {
+            dataAndCmmdTables->content[a] = tableChar[a];
+        }
         ushort writingPoint = tableFileInfo.st_size + 1;
         for (int a=0; a<dataAndCmmdTables->size - (int)tableFileInfo.st_size; a++) {
             dataAndCmmdTables->content[writingPoint] = '\0';
@@ -227,7 +234,7 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
 
 void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
     
-    fwrite(GetFileData(atomBios->firmware.file, 0x0, (int)atomBios->firmware.fileInfo.st_size, 1), sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
+    fwrite(atomBios->firmware.fileContent, sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
     // Writing the data content in data tables and command tables
     for (int a=0; a<QUANTITY_TOTAL_TABLES; a++) {
         if (atomBios->dataAndCmmdTables[a].size > 0) {
@@ -260,6 +267,21 @@ void SaveChecksum(FILE * firmware, const char * filePath) {
     checksum = HexToDec(GetFileData(firmware, OFFSET_ROM_CHECKSUM, 1, 0),2) - checksum & 0xFF;
     char chkbyte = checksum;
     SetFileData(firmware, (unsigned char*)&chkbyte, OFFSET_ROM_CHECKSUM, 1);
+}
+
+void SaveExecutableBinaries(FILE * file, struct ATOM_BIOS * atomBios) {
+    fseek(file, 0x0, SEEK_SET);
+    for (int a=atomBios->mainTable.size+0x4; a<atomBios->offsetsTable[0].offset; a++) {
+        fwrite(&atomBios->firmware.fileContent[a], sizeof(char), 0x1, file);
+    }
+}
+
+void SaveUefiBinaries(FILE * file, struct ATOM_BIOS * atomBios) {
+    fseek(file, 0x0, SEEK_SET);
+    int uefiOffset = HexToDec(GetContentData(atomBios->firmware.fileContent, 65536 + 0x58, 0x2), 4);
+    for (int a=65536; a<uefiOffset+65536+0x58; a++) {
+        fwrite(&atomBios->firmware.fileContent[a], sizeof(char), 0x1, file);
+    }
 }
 
 short VerifyFirmwareSize(struct stat fileInfo) {

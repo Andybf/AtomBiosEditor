@@ -96,7 +96,7 @@ int HexToDec(char input[8],int quantHex) {
 }
 
 // Works like a substring function, returns un hex array in string format
-char * GetContentData(char * data, ushort initialOffset, ushort size) {
+char * GetContentData(char * data, int initialOffset, ushort size) {
     char * value = (char*)calloc( sizeof(char*), size*2 );
     int step = size-1;
     for (int position=0; position<size*2; position+=2) {

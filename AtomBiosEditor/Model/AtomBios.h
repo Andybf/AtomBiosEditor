@@ -35,7 +35,8 @@
 
 
 struct FIRMWARE_FILE {
-    FILE * file;
+    FILE * file; // Deprecated
+    char * fileContent;
     char * filePath;
     char * fileName;
     struct stat fileInfo;
@@ -125,6 +126,8 @@ void                   ReplaceTable          (struct ATOM_DATA_AND_CMMD_TABLES *
 
 //Save
 void                   SaveAtomBiosData      (struct ATOM_BIOS * atomBios, FILE * firmware);
+void                   SaveExecutableBinaries(FILE * file, struct ATOM_BIOS * atomBios);
+void                   SaveUefiBinaries      (FILE * file, struct ATOM_BIOS * atomBios);
 void                   SaveChecksum          (FILE * firmware, const char * filePath);
 
 //Verify

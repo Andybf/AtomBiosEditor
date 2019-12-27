@@ -19,6 +19,10 @@
     @property (weak) IBOutlet NSMenuItem *menuItemClose;
     @property (weak) IBOutlet NSMenuItem *menuItemSave;
 
+    @property (weak) IBOutlet NSMenuItem *menuTools;
+    @property (weak) IBOutlet NSMenuItem *menuItemExtractExeBinaries;
+    @property (weak) IBOutlet NSMenuItem *menuItemExtractUefi;
+
     @property (weak) IBOutlet NSWindow *launchScreenWindow;
     @property (weak) IBOutlet NSButton *launchButtonOpen;
     @property (weak) IBOutlet NSButton *launchButtonAbout;
@@ -29,5 +33,7 @@
 @end
 
 @interface WindowView : NSWindow
+
+@property (nonatomic, strong) NSMenuItem * menuTools;
 
 @end

@@ -39,7 +39,7 @@ typedef unsigned char byte;
 
 // Core Functions
 unsigned char * BigToLittleEndian     (unsigned int num);
-char          * GetContentData        (char * data, ushort initialOffset, ushort size);
+char          * GetContentData        (char * data, int initialOffset, ushort size);
 char          * GetFileData           (FILE * file, int offset, int size, short endianness);
 void            SetFileData           (FILE * fileOutput, unsigned char * data, ushort offset, ushort size);
 ushort          GetNumBytesBeforeZero (FILE * file, ushort initialPos);

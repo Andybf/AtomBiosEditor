@@ -39,9 +39,36 @@
                 FILE * savedFirmwareFile = fopen([saveFile.URL.path UTF8String],"r+b"); // Reading and writing on existing binary file
                 SaveChecksum(savedFirmwareFile, [saveFile.URL.path UTF8String]);
                 fclose(savedFirmwareFile);
-                //[self DisplayAlert:@"Successfully saved!" :  @"All the changes has been written in the new firmware file." : 0];
             }
         }];
+    }
+
+    - (IBAction)MenuItemExtractExeBinaries:(id)sender {
+        NSSavePanel * saveFile = [NSSavePanel savePanel];
+        [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-ExeBinaries.rom", fileName[fileName.count-1] ]];
+        [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
+            if (returnCode == 1) { // if the save button was triggered
+                FILE * ExeBinariesFile = fopen([saveFile.URL.path UTF8String],"wb");
+                SaveExecutableBinaries(ExeBinariesFile,&(self->atomBios));
+                fclose(ExeBinariesFile);
+            }
+        }];
+    }
+
+    - (IBAction)MenuItemExtractUefi:(id)sender {
+        if (atomBios.mainTable.uefiSupport != 0) {
+            NSSavePanel * saveFile = [NSSavePanel savePanel];
+            [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-UefiBinaries.rom", fileName[fileName.count-1] ]];
+            [saveFile beginSheetModalForWindow: windowView completionHandler:^(NSInteger returnCode) {
+                if (returnCode == 1) { // if the save button was triggered
+                    FILE * UefiBinariesFile = fopen([saveFile.URL.path UTF8String],"wb");
+                    SaveUefiBinaries(UefiBinariesFile,&(self->atomBios));
+                    fclose(UefiBinariesFile);
+                }
+            }];
+        } else {
+            [self DisplayAlert: @"No UEFI Section Found" : @"Your firmware file doesn't have UEFI support." : 1 ];
+        }
     }
 
     - (IBAction)buttonOpenTriggered:(id)sender {
@@ -75,7 +102,6 @@
             
             self->atomBios.firmware.filePath = (char*)[openPanel.URL.path UTF8String];
             if ( (self->atomBios.firmware.file = fopen(self->atomBios.firmware.filePath ,"r")) ) { //carregando o arquivo para dentro da memoria
-                
                 self->atomBios.firmware.genType = VerifyFirmwareArchitecture(self->atomBios.firmware.file);
                 stat(self->atomBios.firmware.filePath ,&self->atomBios.firmware.fileInfo); //Carregando informações sobre o arquivo
                 
@@ -100,6 +126,13 @@
                     [self->masterVC loadInfo: &(self->atomBios) : &(powerPlay) : &(firmwareInfo)];
                     [_menuItemSave setHidden: NO];
                     [_menuItemClose setHidden: NO];
+                    [_menuTools setEnabled:YES];
+                    [_menuTools setHidden:NO];
+                    [_menuItemExtractUefi setEnabled:YES];
+                    [_menuItemExtractUefi setHidden:NO];
+                    [_menuItemExtractExeBinaries setEnabled:YES];
+                    [_menuItemExtractExeBinaries setHidden:NO];
+                    [windowView setMenuTools: _menuTools];
                     [_launchScreenWindow close];
                 }
             }
@@ -111,7 +144,11 @@
 
     - (void)close {
         [self setReleasedWhenClosed: NO];
+        [_menuTools setEnabled:NO];
         [super close];
     }
 
+    - (void)setMenuTools:(NSMenuItem *)menuTools {
+        _menuTools = menuTools;
+    }
 @end
