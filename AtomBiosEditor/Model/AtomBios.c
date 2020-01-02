@@ -75,7 +75,7 @@ void ExtractTable(struct ATOM_DATA_AND_CMMD_TABLES abstractTable, const char * e
     fclose(output);
 }
 
-//Carrega as informações do firmware na memória. Necessário para fazer as demais operações no programa
+//Load base information of the firmware
 struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     
     fseek(atomBios->firmware.file, 0x0, SEEK_SET);
@@ -161,8 +161,8 @@ void loadCmmdAndDataTables (struct ATOM_BIOS * atomBios) {
         }
         posOffTbl = ftell(atomBios->firmware.file);
         atomBios->dataAndCmmdTables[b].index = c;
-        atomBios->dataAndCmmdTables[b].name       = (char *) malloc(sizeof(char*) * sizeof(tableNames[b]));
-        strcpy( atomBios->dataAndCmmdTables[b].name, tableNames[b]);
+        atomBios->dataAndCmmdTables[b].tableName       = (char *) malloc(sizeof(char*) * sizeof(tableNames[b]));
+        strcpy( atomBios->dataAndCmmdTables[b].tableName, tableNames[b]);
         atomBios->dataAndCmmdTables[b].offset     = HexToDec(GetFileData(atomBios->firmware.file, (int) ftell(atomBios->firmware.file),  2,  0),4);
         
         atomBios->dataAndCmmdTables[b].size = 0;
@@ -187,54 +187,62 @@ void ReplaceTable ( struct ATOM_DATA_AND_CMMD_TABLES * dataAndCmmdTables, ushort
     FILE * tableBin;
     if ( !(tableBin = fopen(tableFilePath, "r")) ) {
         exit(1);
-    } //Carregando o arquivo binário referenciado pelo usuario e colocando em um buffer
+    }
     struct stat tableFileInfo;
     stat(tableFilePath,&tableFileInfo);
     char * tableChar = malloc(sizeof(char*) * tableFileInfo.st_size);
     tableChar = GetFileData(tableBin, 0x0, (int)tableFileInfo.st_size, 1);
+    fclose(tableBin);
     
-    if (tableFileInfo.st_size == dataAndCmmdTables->size) {
+    if (tableFileInfo.st_size == dataAndCmmdTables[index].size) {
         for (int a=0; a<tableFileInfo.st_size; a++) {
-            dataAndCmmdTables->content[a] = tableChar[a];
+            dataAndCmmdTables[index].content[a] = tableChar[a];
         }
-    } else if (tableFileInfo.st_size < dataAndCmmdTables->size) {
+    } else if (tableFileInfo.st_size < dataAndCmmdTables[index].size) {
         for (int a=0; a<tableFileInfo.st_size; a++) {
-            dataAndCmmdTables->content[a] = tableChar[a];
+            dataAndCmmdTables[index].content[a] = tableChar[a];
         }
         ushort writingPoint = tableFileInfo.st_size + 1;
-        for (int a=0; a<dataAndCmmdTables->size - (int)tableFileInfo.st_size; a++) {
-            dataAndCmmdTables->content[writingPoint] = '\0';
+        for (int a=0; a<dataAndCmmdTables[index].size - (int)tableFileInfo.st_size; a++) {
+            dataAndCmmdTables[index].content[writingPoint] = '\0';
             writingPoint++;
         }
+    } else if (tableFileInfo.st_size > dataAndCmmdTables[index].size) {
+        // Verify if we have space for aditional bytes
+        if (QUANTITY_64KB - (dataAndCmmdTables[31].offset + dataAndCmmdTables[31].size) > 0 ) {
+            dataAndCmmdTables[index].content = realloc(dataAndCmmdTables[index].content, tableFileInfo.st_size);
+            //Replacing the content
+            for (int a=0; a<tableFileInfo.st_size; a++) {
+                dataAndCmmdTables->content[a] = tableChar[a];
+            }
+            for (int b=0; b<QUANTITY_TOTAL_TABLES; b++) {
+                if (dataAndCmmdTables[b].offset > dataAndCmmdTables[index].offset) {
+                    dataAndCmmdTables[b].offset += (tableFileInfo.st_size - dataAndCmmdTables[index].size);
+                }
+            }
+            dataAndCmmdTables[index].size = tableFileInfo.st_size;
+        }
     }
-    else if (tableFileInfo.st_size > dataAndCmmdTables->size) {
-//        abstractTable->size    = tableFileInfo.st_size;
-//        abstractTable->content = realloc(abstractTable->content, abstractTable->size);
-//        abstractTable->content = GetFileData(tableBin, 0, (int)tableFileInfo.st_size, 1);
-//        short diff = (unsigned short)tableFileInfo.st_size - abstractTable->size;
-//
-//        for (int a=1; a<QUANTITY_TOTAL_TABLES; a++) { // Calculando a diferença no offset das tabelas seguintes
-//            if (atomTable->atomTables[a].offset - atomTable->atomTables[a-1].offset+atomTable->atomTables[a-1].size < 0) {
-//                atomTable->atomTables[a].offset += diff;
-//            }
-//        }
-//        for (int a=1; a<QUANTITY_TOTAL_TABLES; a++) {
-//            printf("%c", atomTable->atomTables[a].offset  );
-//            //fprintf ( newBios, "%c", atomTable->atomTables[a].offset );
-//            //fwrite(atomTable->atomTables[a].offset, sizeof(char), 0x2, newBios);
-//            //atomTable->tblOffsets[1]->offset = atomTable->atomTables[a].offset;
-//            // Falta mudar as tabelas com enedreços das tables
-//        }
-//
-//        // e finalmente gravar tudo na nova bios
+    for (int c=0; c<2; c++){
+        dataAndCmmdTables[index].content[c] = BigToLittleEndian(dataAndCmmdTables[index].size)[c];
     }
+    dataAndCmmdTables[index].formatRev  = dataAndCmmdTables[index].content[2];
+    dataAndCmmdTables[index].contentRev = dataAndCmmdTables[index].content[3];
     free(tableChar);
-    fclose(tableBin);
 }
 
 void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
     
     fwrite(atomBios->firmware.fileContent, sizeof(char), atomBios->firmware.fileInfo.st_size, firmware);
+    
+    //Writing Address table, without writing size and content rev
+    fseek(firmware, atomBios->offsetsTable[0].offset+0x4, SEEK_SET);
+    for (int a=0; a<QUANTITY_TOTAL_TABLES; a++) {
+        if (a == 81) {
+            fseek(firmware, atomBios->dataAndCmmdTables[a].offset+0x4, SEEK_CUR);
+        }
+        fwrite(BigToLittleEndian(atomBios->dataAndCmmdTables[a].offset), sizeof(char), 0x2, firmware);
+    }
     // Writing the data content in data tables and command tables
     for (int a=0; a<QUANTITY_TOTAL_TABLES; a++) {
         if (atomBios->dataAndCmmdTables[a].size > 0) {

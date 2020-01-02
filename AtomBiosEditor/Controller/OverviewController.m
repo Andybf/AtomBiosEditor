@@ -165,8 +165,8 @@
             @"Compilation Date",@"BIOS Version", @"Device ID",
             @"Subsystem ID",@"Vendor ID",@"Vendor Name",
             @"Checksum", @"UEFI Support",@"Main Table Size",
-            @"Main Table Offset",@"Data Tbl. Addr. Off.",@"Data Tbl. Addr. Size",
-            @"Cmd Tbl. Addr. Off.",@"Cmd Tbl. Addr. Size"
+            @"Main Table Offset",@"Cmd Tbl. Addr. Off.",@"Cmd Tbl. Addr. Size",
+            @"Data Tbl. Addr. Off.",@"Data Tbl. Addr. Size"
         };
         [self setRowDesc:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows
         [self setRowValue:  [[NSMutableArray alloc] initWithCapacity: 20]]; // rows

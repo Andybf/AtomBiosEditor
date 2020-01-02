@@ -34,6 +34,7 @@
 
 @interface WindowView : NSWindow
 
-@property (nonatomic, strong) NSMenuItem * menuTools;
+    @property (nonatomic, strong) NSMenuItem * menuTools;
+    @property (nonatomic) struct ATOM_BIOS * atomBios;
 
 @end

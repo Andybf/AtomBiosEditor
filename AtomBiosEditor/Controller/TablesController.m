@@ -78,7 +78,7 @@
         [tableView setFormatRev : [[NSMutableArray alloc] initWithCapacity: rows]];
         [tableView setContentRev: [[NSMutableArray alloc] initWithCapacity: rows]];
         for (int a=aInitial; a<aFinal; a++) {
-            [[tableView tableName]  addObject: [NSString stringWithUTF8String: dataAndCmmdTables[a].name]];
+            [[tableView tableName]  addObject: [NSString stringWithUTF8String: dataAndCmmdTables[a].tableName]];
             [[tableView tableIndex] addObject: [NSString stringWithFormat: stringFormat[viewMode], dataAndCmmdTables[a].index ]];
             if (dataAndCmmdTables[a].offset == 0) {
                 [[tableView offset]     addObject: [NSString stringWithFormat: @""]];
@@ -118,7 +118,7 @@
             } else {
                 selectedRow = tableView.selectedRow+QUANTITY_COMMAND_TABLES;
             }
-            [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-%s.bin",self->filename,dataAndCmmdTables[selectedRow].name]];
+            [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-%s.bin",self->filename,dataAndCmmdTables[selectedRow].tableName]];
             [saveFile beginSheetModalForWindow: self.view.window completionHandler:^(NSInteger returnCode) {
                 if (returnCode == 1) { // if the save button was triggered
                     ExtractTable(self->dataAndCmmdTables[selectedRow], [saveFile.URL.path UTF8String]);
@@ -142,13 +142,7 @@
             }
             [openPanel beginSheetModalForWindow: self.view.window completionHandler:^(NSModalResponse result) {
                 if (openPanel.URL.path != NULL) {
-                    ReplaceTable( &self->dataAndCmmdTables[selectedRow], selectedRow, [openPanel.URL.path UTF8String]);
-                    char size[6];
-                    sprintf(&size[0], "%02X", self->dataAndCmmdTables[selectedRow].content[1] & 0xff);
-                    sprintf(&size[2], "%02X", self->dataAndCmmdTables[selectedRow].content[0] & 0xff);
-                    self->dataAndCmmdTables[selectedRow].size = HexToDec(size, 4);
-                    self->dataAndCmmdTables[selectedRow].formatRev = self->dataAndCmmdTables[selectedRow].content[2];
-                    self->dataAndCmmdTables[selectedRow].contentRev = self->dataAndCmmdTables[selectedRow].content[3];
+                    ReplaceTable( self->dataAndCmmdTables, selectedRow, [openPanel.URL.path UTF8String]);
                     [self ReloadTableView: [self->_selectorTable indexOfSelectedItem ] : [self->_radioHexadecimal state ] ];
                     //Realoading tables powerplay and firmawareinfo
                     *self->powerPlayData = LoadPowerPlayData(self->dataAndCmmdTables[96]);

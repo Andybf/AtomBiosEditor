@@ -47,7 +47,7 @@ struct FIRMWARE_FILE {
 struct ATOM_DATA_AND_CMMD_TABLES {
     
     ushort index;
-    char * name;
+    char * tableName;
     ushort offset;
     ushort size;
     ushort formatRev;

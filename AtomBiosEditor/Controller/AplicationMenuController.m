@@ -133,6 +133,7 @@
                     [_menuItemExtractExeBinaries setEnabled:YES];
                     [_menuItemExtractExeBinaries setHidden:NO];
                     [windowView setMenuTools: _menuTools];
+                    [windowView setAtomBios: &(self->atomBios)];
                     [_launchScreenWindow close];
                 }
             }
@@ -145,10 +146,15 @@
     - (void)close {
         [self setReleasedWhenClosed: NO];
         [_menuTools setEnabled:NO];
+        _atomBios = NULL;
         [super close];
     }
 
     - (void)setMenuTools:(NSMenuItem *)menuTools {
         _menuTools = menuTools;
+    }
+
+    - (void)setAtomBios:(struct ATOM_BIOS *)at {
+        _atomBios = at;
     }
 @end
