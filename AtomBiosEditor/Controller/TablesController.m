@@ -109,16 +109,20 @@
         }
     }
 
-    - (IBAction)DumpButtonTriggered:(id)sender {
+    - (IBAction)ExtractButtonTriggered:(id)sender {
         NSSavePanel * saveFile = [NSSavePanel savePanel];
-        long selectedRow;
+        uchar selectedRow;
         if (self->tableView.selectedRow > -1) {
             if ([self.selectorTable.title isEqualToString: @"Command Tables"]) {
                 selectedRow = tableView.selectedRow;
             } else {
                 selectedRow = tableView.selectedRow+QUANTITY_COMMAND_TABLES;
             }
-            [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%@-%s.bin",self->filename,dataAndCmmdTables[selectedRow].tableName]];
+            /*Disable showing the file name at this point of the program due to technical dificulties
+              NSArray<NSString*> * filename = [self->filename componentsSeparatedByString: @"/"];
+              [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s-%s.bin", [filename[filename.count - 1] UTF8String], dataAndCmmdTables[selectedRow].tableName]];
+            */
+            [saveFile setNameFieldStringValue: [NSString stringWithFormat: @"%s.bin", dataAndCmmdTables[selectedRow].tableName]];
             [saveFile beginSheetModalForWindow: self.view.window completionHandler:^(NSInteger returnCode) {
                 if (returnCode == 1) { // if the save button was triggered
                     ExtractTable(self->dataAndCmmdTables[selectedRow], [saveFile.URL.path UTF8String]);
@@ -127,8 +131,8 @@
         }
     }
     - (IBAction)ButtonReplaceTriggered:(id)sender {
-        NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Criando objeto NSOpenPanel
-        //Configuração
+        NSOpenPanel* openPanel = [NSOpenPanel openPanel]; //Creating NSOpenPanel
+        //Config
         openPanel.allowsMultipleSelection = false;
         openPanel.canChooseDirectories    = false;
         openPanel.canChooseFiles          = true;

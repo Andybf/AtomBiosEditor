@@ -28,9 +28,10 @@
         atomBios->mainTable = loadMainTable(atomBios);
         loadOffsetsTable(     atomBios);
         loadCmmdAndDataTables(atomBios);
-        *firmwareInfo = LoadFirmwareInfo(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
-        *powerPlay = LoadPowerPlayData(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
-        
+        if (atomBios->firmware.genType == 2) {
+            *firmwareInfo = LoadFirmwareInfo(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x04]);
+            *powerPlay = LoadPowerPlayData(atomBios->dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F]);
+        }
         //Creating the sidebar
         NSScrollView * sideBarContainer = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, 160, 460)];
         [sideBarContainer setDrawsBackground:NO];
@@ -85,7 +86,7 @@
                 break;
             case 1:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varTablesController] view]];
-                [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.fileName : firmwareInfo : powerPlay];
+                [[mvc varTablesController] InitTableTabInfo: at->dataAndCmmdTables : at->firmware.filePath : firmwareInfo : powerPlay];
                 break;
             case 2:
                 [[mvc contentView] replaceSubview: mvc.contentView.subviews[0] with: [[mvc varFirmwareInfoController] view]];

@@ -36,7 +36,7 @@
 // an integer value between 0 and 65.535 (2 bytes of size)
 typedef unsigned short ushort;
 // an integer value between 0 and 255 (1 byte of size)
-typedef unsigned char byte;
+typedef unsigned char uchar;
 
 // Core Functions
 unsigned char * BigToLittleEndian     (unsigned int num);

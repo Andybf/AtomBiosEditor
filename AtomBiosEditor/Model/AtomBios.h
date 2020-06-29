@@ -23,22 +23,19 @@
 #define OFFSET_STR_START          0x6E
 
 //static information found in firmware files
-#define ATOM_BIOS_MAGIC           "AA55" //Filetype
-#define ATOM_BIOS_ARCH_TERASCALE2 "E97E"
-#define ATOM_BIOS_ARCH_CGN1       "E980"
-#define ATOM_BIOS_ARCH_CGN3       "E977"
-#define ATOM_BIOS_ARCH_CGN4       "E974"
-#define ATOM_ROM_MESSAGE_BEGIN    "000D0A"
-#define ATOM_ROM_SIGNATURE        "20373631323935353230"  // 761295520
-#define ATOM_ROM_MAGIC            "41544F4D"            //ATOM
-
-
+#define ATOM_VBIOS_MAGIC           "AA55" //Filetype
+#define ATOM_VBIOS_ARCH_TERASCALE2 "E97E"
+#define ATOM_VBIOS_ARCH_CGN1       "E980"
+#define ATOM_VBIOS_ARCH_CGN3       "E977"
+#define ATOM_VBIOS_ARCH_CGN4       "E974"
+#define ATOM_VBIOS_MESSAGE_BEGIN   "000D0A"
+#define ATOM_VBIOS_SIGNATURE       "20373631323935353230"  // 761295520
+#define ATOM_VBIOS_STRING          "41544F4D"            //ATOM
 
 struct FIRMWARE_FILE {
-    FILE * file; // Deprecated
+    FILE * file;
     char * fileContent;
     char * filePath;
-    char * fileName;
     struct stat fileInfo;
     ushort genType;
 };
@@ -91,10 +88,10 @@ struct ATOM_MAIN_TABLE {
     
     char   biosVersion[23];
     char   compTime[15];
-    byte   subsystemId[5];
-    byte   subsystemVendorId[5];
+    uchar   subsystemId[5];
+    uchar   subsystemVendorId[5];
     char   vendorName[11];
-    byte   deviceId[9];
+    uchar   deviceId[9];
     ushort checksum;
     short  checksumStatus;
     ushort size;

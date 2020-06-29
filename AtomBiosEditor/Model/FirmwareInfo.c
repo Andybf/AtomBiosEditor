@@ -1,10 +1,9 @@
-//
-//  FirmwareInfo.c
-//  AtomBiosEditor
-//
-//  Created by Anderson Bucchianico on 22/09/19.
-//  Copyright © 2019 Anderson Bucchianico. All rights reserved.
-//
+/*
+* Name:          AtomBiosEditor > Model > FirmwareInfo.h
+* Created By:    Anderson Bucchianico
+* Date:          22/sep/2019
+* Description:   FirmwareInfo table Logic Definitions
+*/
 
 #include "FirmwareInfo.h"
 
@@ -31,7 +30,7 @@ struct FIRMWARE_INFO LoadFirmwareInfo (struct ATOM_DATA_AND_CMMD_TABLES abstract
 
 void SaveFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct FIRMWARE_INFO firmwareInfo) {
     
-    //    Function   | target | Big Endian to Little |              property          |     table offset    | Size Multiplier by 2
+    //Function  | target | Big Endian to Little |              property          |     table offset    | Size Multiplier by 2
     SetFileData(firmware, BigToLittleEndian(firmwareInfo.defaultEngineClock*100), abstractTable.offset + OFFSET_DEFAULT_ENGINE_CLOCK  , 2);
     SetFileData(firmware, BigToLittleEndian(firmwareInfo.defaultMemoryClock*100), abstractTable.offset + OFFSET_DEFAULT_MEMORY_CLOCK  , 2);
     SetFileData(firmware, BigToLittleEndian(firmwareInfo.deftDispEngineClk *100), abstractTable.offset + OFFSET_DEFT_DISP_ENGINE_CLK  , 2);

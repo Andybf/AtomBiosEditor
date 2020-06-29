@@ -1,16 +1,17 @@
-//
-//  FirmwareInfo.h
-//  AtomBiosEditor
-//
-//  Created by Anderson Bucchianico on 22/09/19.
-//  Copyright © 2019 Anderson Bucchianico. All rights reserved.
-//
+/*
+* Name:          AtomBiosEditor > Model > FirmwareInfo.h
+* Created By:    Anderson Bucchianico
+* Date:          22/sep/2019
+* Description:   FirmwareInfo table Data Definitions
+*/
 
 #ifndef FirmwareInfo_h
 #define FirmwareInfo_h
 
 #include "AtomBios.h"
 #include "CoreFunctions.h"
+
+// Addresses inside the table
 
 #define OFFSET_DEFAULT_ENGINE_CLOCK   0x08
 #define OFFSET_DEFAULT_MEMORY_CLOCK   0x0C
@@ -25,6 +26,8 @@
 
 #define OFFSET_CORE_REFERENCE_CLOCK   0x52
 #define OFFSET_MEMORY_REFERENCE_CLOCK 0x54
+
+//Data Sctructure
 
 struct FIRMWARE_INFO {
     
@@ -43,9 +46,9 @@ struct FIRMWARE_INFO {
     ushort memoryReferenceClock;
 };
 
-// Functions Declarations
+// Functions
 
 struct FIRMWARE_INFO LoadFirmwareInfo (struct ATOM_DATA_AND_CMMD_TABLES abstractTable);
-void SaveFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct FIRMWARE_INFO firmwareInfo);
+void                 SaveFirmwareInfo (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct FIRMWARE_INFO firmwareInfo);
 
 #endif /* FirmwareInfo_h */

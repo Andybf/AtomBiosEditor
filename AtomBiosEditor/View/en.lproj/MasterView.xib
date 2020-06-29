@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,16 +41,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box boxType="custom" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="YgI-ds-akQ">
-                    <rect key="frame" x="20" y="20" width="420" height="373"/>
+                    <rect key="frame" x="20" y="20" width="420" height="374"/>
                     <view key="contentView" id="9nS-Ka-s43">
-                        <rect key="frame" x="1" y="1" width="418" height="371"/>
+                        <rect key="frame" x="1" y="1" width="418" height="372"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mrd-Nx-ali">
-                                <rect key="frame" x="18" y="16" width="382" height="340"/>
+                                <rect key="frame" x="18" y="26" width="382" height="320"/>
                                 <textFieldCell key="cell" selectable="YES" alignment="justified" id="BNE-te-mj6">
                                     <font key="font" usesAppearanceFont="YES"/>
-                                    <mutableString key="title">Please, read this before using this software:
+                                    <string key="title">Please, read this before using this software:
 
 This tool is not meant to be used by people with very low knowledge about graphics processing mechanics, the application is not 100% reliable and bugs can occour during the execution.
 
@@ -58,7 +58,7 @@ Make sure that you will only change the values if you know what they are represe
 
 Flashing a custom firmware on your GPU can be a dangerous process, if this are done in a bad way it may brick you graphics card or in extreme cases destroying the internal components.
 
-Before flashing the firmware in your GPU that has been modified by this tool, keep in mind that the creator of this application is not responsible for any type of damage caused by bad flashing. Use this tool in your own risk.</mutableString>
+Before flashing the firmware in your GPU that has been modified by this tool, keep in mind that the creator of this application is not responsible for any type of damage caused by bad flashing. Use this tool in your own risk.</string>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
@@ -73,7 +73,7 @@ Before flashing the firmware in your GPU that has been modified by this tool, ke
                     <color key="borderColor" name="underPageBackgroundColor" catalog="System" colorSpace="catalog"/>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1B4-eu-wbb">
-                    <rect key="frame" x="191" y="415" width="79" height="25"/>
+                    <rect key="frame" x="191" y="416" width="79" height="24"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Warning" id="XNt-Fj-GmJ">
                         <font key="font" size="20" name="Helvetica-Light"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>

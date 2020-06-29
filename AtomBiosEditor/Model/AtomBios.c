@@ -1,10 +1,9 @@
-//
-//  AtomBios.c
-//  AtomBiosEditor
-//
-//  Created by Anderson Bucchianico on 22/08/19.
-//  Copyright © 2019 Anderson Bucchianico. All rights reserved.
-//
+/*
+* Name:          AtomBiosEditor > Model > AtomBios.c
+* Created By:    Anderson Bucchianico
+* Date:          22/ago/2019
+* Description:   AtomBios Logic Definitions.
+*/
 
 #include "AtomBios.h"
 
@@ -131,7 +130,7 @@ struct ATOM_MAIN_TABLE loadMainTable(struct ATOM_BIOS * atomBios) {
     }
     
     // Checking UEFI Support
-    if( strcmp(GetFileData(atomBios->firmware.file, QUANTITY_64KB, 0x2, 0), ATOM_BIOS_MAGIC) == 0 ) {
+    if( strcmp(GetFileData(atomBios->firmware.file, QUANTITY_64KB, 0x2, 0), ATOM_VBIOS_MAGIC) == 0 ) {
         mainTable.uefiSupport = 1;
     } else {
         mainTable.uefiSupport = 0;
@@ -238,7 +237,7 @@ void SaveAtomBiosData(struct ATOM_BIOS * atomBios, FILE * firmware) {
     //Writing Address table, without writing size and content rev
     fseek(firmware, atomBios->offsetsTable[0].offset+0x4, SEEK_SET);
     for (int a=0; a<QUANTITY_TOTAL_TABLES; a++) {
-        if (a == 81) {
+        if (a == QUANTITY_COMMAND_TABLES) {
             fseek(firmware, atomBios->dataAndCmmdTables[a].offset+0x4, SEEK_CUR);
         }
         fwrite(BigToLittleEndian(atomBios->dataAndCmmdTables[a].offset), sizeof(char), 0x2, firmware);
@@ -297,7 +296,7 @@ short VerifyFirmwareSize(struct stat fileInfo) {
 }
 
 short VerifyFirmwareSignature(FILE * file) {
-    if ( strcmp(ATOM_BIOS_MAGIC, GetFileData(file, 0x0, 0x2, 0)) != 0) {
+    if ( strcmp(ATOM_VBIOS_MAGIC, GetFileData(file, 0x0, 0x2, 0)) != 0) {
         return 0;
     } else {
         return 1;
@@ -305,13 +304,13 @@ short VerifyFirmwareSignature(FILE * file) {
 }
 
 short VerifyFirmwareArchitecture(FILE * file) {
-    if ( strcmp(ATOM_BIOS_ARCH_TERASCALE2, GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    if ( strcmp(ATOM_VBIOS_ARCH_TERASCALE2, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 1;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN1, GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_VBIOS_ARCH_CGN1, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 2;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN3, GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_VBIOS_ARCH_CGN3, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 3;
-    } else if (strcmp(ATOM_BIOS_ARCH_CGN4, GetFileData(file, 0x2, 2, 0)) == 0 ) {
+    } else if (strcmp(ATOM_VBIOS_ARCH_CGN4, GetFileData(file, 0x2, 2, 0)) == 0 ) {
         return 4;
     } else {
         return 0;

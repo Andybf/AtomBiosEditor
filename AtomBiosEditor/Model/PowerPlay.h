@@ -1,16 +1,16 @@
 /*
- * Nome:        AtomBiosReader > Modules > PowerPlay > PowerPlay.h
- * Criado por:  Anderson Bucchianico
- * Criação:     15 de julho de 2019
- * Descrição:   Estruturas de dados da table PowerPlay
- */
+* Name:          AtomBiosEditor > Model > PowerPlay.h
+* Created By:    Anderson Bucchianico
+* Date:          15/jul/2019
+* Description:   PowerPlay table Data Definitions.
+*/
 
 #ifndef PowerPlay_h
 #define PowerPlay_h
 
 #include "AtomBios.h"
 
-// Addresses
+// Addresses inside the table
 #define OFFSET_SUBTABLE_CLOCK     0x0B
 #define OFFSET_SUBTABLE_UNKNOWN   0x26
 #define OFFSET_SUBTABLE_FAN       0x2A
@@ -22,7 +22,7 @@
 #define OFFSET_INFO_MAX_TDP       0x42
 #define OFFSET_INFO_MIN_TDP       0x46
 
-// Data Structures
+// Data Structure to store the informations
 struct POWERPLAY_DATA {
     ushort clockInfoOffset;
     ushort numberOfStates;
@@ -54,7 +54,9 @@ struct POWERPLAY_DATA {
     ushort maxTdp;
 };
 
-struct POWERPLAY_DATA LoadPowerPlayData  (struct ATOM_DATA_AND_CMMD_TABLES);
-void SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct POWERPLAY_DATA * powerPlay);
+// Functions
+
+struct POWERPLAY_DATA LoadPowerPlayData (struct ATOM_DATA_AND_CMMD_TABLES);
+void                  SavePowerPlayData (FILE * firmware, struct ATOM_DATA_AND_CMMD_TABLES abstractTable, struct POWERPLAY_DATA * powerPlay);
 
 #endif /* PowerPlay_h */

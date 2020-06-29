@@ -1,9 +1,9 @@
 /*
- * Nome:        PowerPlay.c
- * Criado por:  Anderson Bucchianico
- * Criação:     09 de julho de 2019
- * Descrição:   Contém funçoes para pegar informações de dentro das data tables.
- */
+* Name:          AtomBiosEditor > Model > PowerPlay.c
+* Created By:    Anderson Bucchianico
+* Date:          09/jul/2019
+* Description:   PowerPlay table Logic Definitions.
+*/
 
 #include "PowerPlay.h"
 

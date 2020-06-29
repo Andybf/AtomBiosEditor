@@ -62,7 +62,7 @@
             [[stTable[1] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
             [[stTable[1] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqState[a] ]];
             [[stTable[1] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->gpuFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
-            [[stTable[1] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+            [[stTable[1] size]   addObject: [NSString stringWithFormat: stringFormat[HexActived],3]];
             [stTable[1] setEnabled:NO];
         }
         
@@ -70,7 +70,7 @@
             [[stTable[2] index]  addObject: [NSString stringWithFormat: stringFormat[HexActived],a+1]];
             [[stTable[2] Clock]  addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqState[a] ]];
             [[stTable[2] offset] addObject: [NSString stringWithFormat: stringFormat[HexActived],powerPlay->memFreqOffset + dataAndCmmdTables[QUANTITY_COMMAND_TABLES+0x0F].offset + a * 3 ]];
-            [[stTable[2] size]   addObject: [NSString stringWithFormat: @"0x3"]];
+            [[stTable[2] size]   addObject: [NSString stringWithFormat: stringFormat[HexActived],3]];
             [stTable[2] setEnabled:NO];
         }
         for (int a=0; a<3; a++){
@@ -91,7 +91,6 @@
             [self InitPowerPlayInfo : dcTable : &(pPlay) : 0];
         }
     }
-
 @end
 
 @implementation StatesTable {
