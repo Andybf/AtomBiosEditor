@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 //Quantities
 #define QUANTITY_COMMAND_TABLES 81
@@ -44,7 +45,7 @@ char          * GetContentData        (char * data, int initialOffset, ushort si
 char          * GetFileData           (FILE * file, int offset, int size, short endianness);
 void            SetFileData           (FILE * fileOutput, unsigned char * data, ushort offset, ushort size);
 ushort          GetNumBytesBeforeZero (FILE * file, ushort initialPos);
-int             HexToDec              (char [], int );
+int             HexToDec              (char *);
 unsigned char * DecToHex              (unsigned int result);
 int             count                 (int num);
 

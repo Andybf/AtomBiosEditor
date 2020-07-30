@@ -42,55 +42,28 @@ unsigned char * BigToLittleEndian(unsigned int num) {
 
 unsigned char* DecToHex(unsigned int result) {
     static unsigned char hex[9];
-    unsigned int resto[8];
+    unsigned int rest[8];
     for (int p=7; p>=0; p--) {
-        resto[p] = (int) result % 16;
+        rest[p] = (int) result % 16;
         result   = (int) result / 16;
     }
     for (int c=7; c>=0; c--) {
-        if (resto[c] < 10) {
-            hex[c] = resto[c] + 48;
+        if (rest[c] < 10) {
+            hex[c] = rest[c] + 48;
         } else {
-            hex[c] = (resto[c]-10) + 65;
+            hex[c] = (rest[c]-10) + 65;
         }
     }
     return hex;
 }
 
-// Transforma um vetor de caracteres[4] com hexadecimais em um numero decimal
-int HexToDec(char input[8],int quantHex) {
-    int c, d, asciiCode;
-    unsigned int output = 0;
-    d = 8-quantHex;
-    for (c=0; c<8; c++) {
-        asciiCode = input[c] > ASCII_DEC_CODE_9 ? 55 : ASCII_DEC_CODE_0;
-        switch (d) {
-            case 0:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16 *16 *16;
-                break;
-            case 1:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16 *16;
-                break;
-            case 2:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16 *16;
-                break;
-            case 3:
-                output += (input[c]-asciiCode) * 16 * 16 * 16 * 16;
-                break;
-            case 4:
-                output += (input[c]-asciiCode) * 16 * 16 * 16;
-                break;
-            case 5:
-                output += (input[c]-asciiCode) * 16 * 16;
-                break;
-            case 6:
-                output += (input[c]-asciiCode) * 16;
-                break;
-            case 7:
-                output += (input[c]-asciiCode) * 1;
-                break;
-        }
-        d++;
+// Transforms the hex in string format to a decimal one
+int HexToDec(char * input) {
+    uchar c, asciiCode;
+    uint output = 0;
+    for (c=0; c<(uchar)strlen(input); c++) {
+        asciiCode = input[c] >  ASCII_DEC_CODE_9 ? 55 : ASCII_DEC_CODE_0;
+        output += (input[c]-asciiCode) * pow(16, (uchar)strlen(input)-c-1);
     }
     return output;
 }
@@ -138,14 +111,4 @@ ushort GetNumBytesBeforeZero(FILE * file, ushort initialPos) {
         bytes++;
     }
     return bytes;
-}
-
-//count the number of digits in a int variable
-int count(int num){
-    int contagem = 0;
-    while(num != 0){
-        contagem++;
-        num /= 10;
-    }
-    return contagem;
 }

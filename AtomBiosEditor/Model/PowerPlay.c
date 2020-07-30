@@ -10,23 +10,23 @@
 struct POWERPLAY_DATA LoadPowerPlayData (struct ATOM_DATA_AND_CMMD_TABLES abstractTable) {
     struct POWERPLAY_DATA powerPlay = *(struct POWERPLAY_DATA *) malloc(sizeof(struct POWERPLAY_DATA *));
     
-    //            property                                 content of the table |        initial offset      | size | chars
-    powerPlay.overDriveOffset   = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_LIMITS,       0x2),   4);
-    powerPlay.maxGpuClock       = HexToDec(GetContentData(abstractTable.content, powerPlay.overDriveOffset +2, 0x3),   6)/100;
-    powerPlay.maxMemClock       = HexToDec(GetContentData(abstractTable.content, powerPlay.overDriveOffset +6, 0x3),   6)/100;
-    powerPlay.maxTdp            = HexToDec(GetContentData(abstractTable.content, OFFSET_INFO_MAX_TDP,          0x1),   2);
-    powerPlay.minTdp            = HexToDec(GetContentData(abstractTable.content, OFFSET_INFO_MIN_TDP,          0x1),   2);
-    powerPlay.clockInfoOffset   = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_CLOCK,        0x2),   4);
-    powerPlay.numberOfStates    = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset,    0x1),   2);
-    powerPlay.lengthPerState    = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset +1, 0x1),   2);
-    powerPlay.gpuFreqOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_GPU_FREQ,     0x2),   4);
-    powerPlay.numberOfGpuStates = HexToDec(GetContentData(abstractTable.content, powerPlay.gpuFreqOffset,      0x1),   2);
-    powerPlay.memFreqOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_MEM_FREQ,     0x2),   4);
-    powerPlay.numberOfMemStates = HexToDec(GetContentData(abstractTable.content, powerPlay.memFreqOffset,      0x1),   2);
-    powerPlay.fanInfoOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_FAN,          0x2),   4);
-    powerPlay.hysteresis        = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   +1, 0x1),   2);
-    powerPlay.maxTemp           = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset  +14, 0x2),   4)/100;
-    powerPlay.maxFanSpeed       = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset  +17, 0x1),   2);
+    //            property                                 content of the table |        initial offset      | size
+    powerPlay.overDriveOffset   = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_LIMITS,       0x2));
+    powerPlay.maxGpuClock       = HexToDec(GetContentData(abstractTable.content, powerPlay.overDriveOffset +2, 0x3))/100;
+    powerPlay.maxMemClock       = HexToDec(GetContentData(abstractTable.content, powerPlay.overDriveOffset +6, 0x3))/100;
+    powerPlay.maxTdp            = HexToDec(GetContentData(abstractTable.content, OFFSET_INFO_MAX_TDP,          0x1));
+    powerPlay.minTdp            = HexToDec(GetContentData(abstractTable.content, OFFSET_INFO_MIN_TDP,          0x1));
+    powerPlay.clockInfoOffset   = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_CLOCK,        0x2));
+    powerPlay.numberOfStates    = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset,    0x1));
+    powerPlay.lengthPerState    = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset +1, 0x1));
+    powerPlay.gpuFreqOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_GPU_FREQ,     0x2));
+    powerPlay.numberOfGpuStates = HexToDec(GetContentData(abstractTable.content, powerPlay.gpuFreqOffset,      0x1));
+    powerPlay.memFreqOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_MEM_FREQ,     0x2));
+    powerPlay.numberOfMemStates = HexToDec(GetContentData(abstractTable.content, powerPlay.memFreqOffset,      0x1));
+    powerPlay.fanInfoOffset     = HexToDec(GetContentData(abstractTable.content, OFFSET_SUBTABLE_FAN,          0x2));
+    powerPlay.hysteresis        = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   +1, 0x1));
+    powerPlay.maxTemp           = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset  +14, 0x2))/100;
+    powerPlay.maxFanSpeed       = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset  +17, 0x1));
     powerPlay.memFreqState      = malloc(powerPlay.numberOfMemStates * sizeof(unsigned char*));
     powerPlay.gpuFreqState      = malloc(powerPlay.numberOfGpuStates * sizeof(unsigned char*));
     powerPlay.gpuClock          = malloc(powerPlay.numberOfStates    * sizeof(unsigned char*));
@@ -35,23 +35,23 @@ struct POWERPLAY_DATA LoadPowerPlayData (struct ATOM_DATA_AND_CMMD_TABLES abstra
     int step = 0;
     for (int c=0; c<powerPlay.numberOfStates; c++) {
         if (c == 0) { step = 2; } else { step += powerPlay.lengthPerState;}
-        powerPlay.gpuClock[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step,       0x3),6)/100;
-        powerPlay.memClock[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step + 0x3, 0x3),6)/100;
-        powerPlay.voltage[c]      = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step + 0x6, 0x2),4);
+        powerPlay.gpuClock[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step,       0x3))/100;
+        powerPlay.memClock[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step + 0x3, 0x3))/100;
+        powerPlay.voltage[c]      = HexToDec(GetContentData(abstractTable.content, powerPlay.clockInfoOffset + step + 0x6, 0x2));
     }
     step = 0;
     for (int c=0; c<powerPlay.numberOfGpuStates; c++) {
         if (c == 0) { step = 1; } else { step += 5;}
-        powerPlay.gpuFreqState[c] = HexToDec(GetContentData(abstractTable.content, powerPlay.gpuFreqOffset   + step,       0x3),6)/100;
+        powerPlay.gpuFreqState[c] = HexToDec(GetContentData(abstractTable.content, powerPlay.gpuFreqOffset   + step,       0x3))/100;
     }
     for (int c=0; c<powerPlay.numberOfMemStates; c++) {
         if (c == 0) { step = 0; } else { step += 5;}
-        powerPlay.memFreqState[c] = HexToDec(GetContentData(abstractTable.content, powerPlay.memFreqOffset   + step + 0x1, 0x3),6)/100;
+        powerPlay.memFreqState[c] = HexToDec(GetContentData(abstractTable.content, powerPlay.memFreqOffset   + step + 0x1, 0x3))/100;
     }
     for (short c=0; c<3; c++) {
         if (c == 0) { step = 0; } else { step += 2;}
-        powerPlay.tempTarget[c]   = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   + step + 0x2, 0x2),4)/100;
-        powerPlay.fanSpeed[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   + step + 0x8, 0x2),4)/100;
+        powerPlay.tempTarget[c]   = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   + step + 0x2, 0x2))/100;
+        powerPlay.fanSpeed[c]     = HexToDec(GetContentData(abstractTable.content, powerPlay.fanInfoOffset   + step + 0x8, 0x2))/100;
     }
     return powerPlay;
 }

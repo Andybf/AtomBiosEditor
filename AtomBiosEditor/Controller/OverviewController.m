@@ -68,20 +68,20 @@
 
     -(void)initTableStructure {
         stringFormat = [NSArray arrayWithObjects: @"%i",@"%02X", nil];
-        NSString * tempColumnIdentifiers[] = {@"description",@"value"};
+        NSString * tempColumnIdentifiers[] = {@"key",@"value"};
         for (int a=0; a<2; a++) {
             columnIdentifiers[a] = tempColumnIdentifiers[a];
         }
         NSTableColumn * columns[2];
         CGFloat widths[] = {120.0,300.0};
-        NSString * titles[] = {@"Description",@"Value"};
+        NSString * titles[] = {@"Key",@"Value"};
         for (int a=0; a<2; a++) {
             columns[a] = [[NSTableColumn alloc] initWithIdentifier: columnIdentifiers[a]];
             [columns[a] setWidth:widths[a]];
             [columns[a] setTitle:titles[a]];
             [self       addTableColumn:columns[a]];
         }
-        [self setDelegate:self];
+        [self setDelegate: self];
         [self setDataSource: self];
         [self setUsesAlternatingRowBackgroundColors: YES];
         [self setAllowsColumnResizing: NO];

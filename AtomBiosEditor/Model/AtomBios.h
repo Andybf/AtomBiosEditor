@@ -128,10 +128,10 @@ void                   SaveUefiBinaries      (FILE * file, struct ATOM_BIOS * at
 void                   SaveChecksum          (FILE * firmware, const char * filePath);
 
 //Verify
-short                  VerifyFirmwareSize    (struct stat);
-short                  VerifyFirmwareSignature    (FILE *);
-short                  VerifyFirmwareArchitecture (FILE *);
-short                  VerifyChecksum        (struct ATOM_BIOS * atomBios);
+uchar                  VerifyFirmwareSize    (struct stat);
+uchar                  VerifyFirmwareSignature    (FILE *);
+uchar                  VerifyFirmwareArchitecture (FILE *);
+uchar                  VerifyChecksum        (struct ATOM_BIOS * atomBios);
 short                  VerifySubSysCompany   (struct ATOM_MAIN_TABLE *);
 
 #endif /* AtomBios */

@@ -12,18 +12,18 @@ struct FIRMWARE_INFO LoadFirmwareInfo (struct ATOM_DATA_AND_CMMD_TABLES abstract
     // Initializing the firmwareinfo structure
     struct FIRMWARE_INFO firmwareInfo = *(struct FIRMWARE_INFO *) malloc(sizeof(struct FIRMWARE_INFO *));
     
-    // struct   |    property                                    |       content      |        Initial Offset        | size | chars
-    firmwareInfo.defaultEngineClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFAULT_ENGINE_CLOCK,   0x2),   4)/100;
-    firmwareInfo.defaultMemoryClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFAULT_MEMORY_CLOCK,   0x2),   4)/100;
-    firmwareInfo.deftDispEngineClk     = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFT_DISP_ENGINE_CLK,   0x2),   4)/100;
-    firmwareInfo.bootUpVDDCVoltage     = HexToDec(GetContentData(abstractTable.content, OFFSET_BOOT_VDDC_VOLTAGE,      0x2),   4);
-    firmwareInfo.LcdMinPixelClock      = HexToDec(GetContentData(abstractTable.content, OFFSET_LCD_MIN_PIXEL_CLOCK,    0x2),   4);
-    firmwareInfo.LcdMaxPixelClock      = HexToDec(GetContentData(abstractTable.content, OFFSET_LCD_MAX_PIXEL_CLOCK,    0x2),   4);
-    firmwareInfo.maxPixelClock         = HexToDec(GetContentData(abstractTable.content, OFFSET_MAX_PIXEL_CLOCK,        0x2),   4)/100;
-    firmwareInfo.minPixelClockPLLInput = HexToDec(GetContentData(abstractTable.content, OFFSET_MIN_PIXEL_CLK_INPUT,    0x2),   4);
-    firmwareInfo.maxPixelClockPLLInput = HexToDec(GetContentData(abstractTable.content, OFFSET_MAX_PIXEL_CLK_INPUT,    0x2),   4);
-    firmwareInfo.coreReferenceClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_CORE_REFERENCE_CLOCK,   0x2),   4);
-    firmwareInfo.memoryReferenceClock  = HexToDec(GetContentData(abstractTable.content, OFFSET_MEMORY_REFERENCE_CLOCK, 0x2),   4);
+    // struct   |    property                                    |       content      |        Initial Offset        | size
+    firmwareInfo.defaultEngineClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFAULT_ENGINE_CLOCK,   0x2))/100;
+    firmwareInfo.defaultMemoryClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFAULT_MEMORY_CLOCK,   0x2))/100;
+    firmwareInfo.deftDispEngineClk     = HexToDec(GetContentData(abstractTable.content, OFFSET_DEFT_DISP_ENGINE_CLK,   0x2))/100;
+    firmwareInfo.bootUpVDDCVoltage     = HexToDec(GetContentData(abstractTable.content, OFFSET_BOOT_VDDC_VOLTAGE,      0x2));
+    firmwareInfo.LcdMinPixelClock      = HexToDec(GetContentData(abstractTable.content, OFFSET_LCD_MIN_PIXEL_CLOCK,    0x2));
+    firmwareInfo.LcdMaxPixelClock      = HexToDec(GetContentData(abstractTable.content, OFFSET_LCD_MAX_PIXEL_CLOCK,    0x2));
+    firmwareInfo.maxPixelClock         = HexToDec(GetContentData(abstractTable.content, OFFSET_MAX_PIXEL_CLOCK,        0x2))/100;
+    firmwareInfo.minPixelClockPLLInput = HexToDec(GetContentData(abstractTable.content, OFFSET_MIN_PIXEL_CLK_INPUT,    0x2));
+    firmwareInfo.maxPixelClockPLLInput = HexToDec(GetContentData(abstractTable.content, OFFSET_MAX_PIXEL_CLK_INPUT,    0x2));
+    firmwareInfo.coreReferenceClock    = HexToDec(GetContentData(abstractTable.content, OFFSET_CORE_REFERENCE_CLOCK,   0x2));
+    firmwareInfo.memoryReferenceClock  = HexToDec(GetContentData(abstractTable.content, OFFSET_MEMORY_REFERENCE_CLOCK, 0x2));
     
     return firmwareInfo;
 }
