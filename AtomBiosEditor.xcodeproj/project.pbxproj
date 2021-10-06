@@ -62,6 +62,8 @@
 		713D123E2325F22600CDBC90 /* AplicationMenuController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AplicationMenuController.m; sourceTree = "<group>"; };
 		71A11B282340251900803BEB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		71A11B292340251900803BEB /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		71BCB1E224D24EDA00247564 /* teste.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = teste.h; path = ../../../../../../../../../Users/anderson/Desktop/teste.h; sourceTree = "<group>"; };
+		71BCB1E324D24EDA00247564 /* teste.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = teste.c; path = ../../../../../../../../../Users/anderson/Desktop/teste.c; sourceTree = "<group>"; };
 		71D855CD231C333300EC0BB3 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		71D855CF231C654100EC0BB3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71F4CC082337BEDE0074B0E3 /* FirmwareInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirmwareInfo.h; sourceTree = "<group>"; };
@@ -144,6 +146,8 @@
 				7111EA832316D9F6006FCC02 /* AtomBios.c */,
 				7127B8052320B9C6006F3A49 /* PowerPlay.h */,
 				7127B8042320B9C5006F3A49 /* PowerPlay.c */,
+				71BCB1E224D24EDA00247564 /* teste.h */,
+				71BCB1E324D24EDA00247564 /* teste.c */,
 				71F4CC082337BEDE0074B0E3 /* FirmwareInfo.h */,
 				71F4CC092337BEDE0074B0E3 /* FirmwareInfo.c */,
 			);
@@ -400,7 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "29 jul 2020";
@@ -423,7 +427,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "29 jul 2020";
